@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;600;700&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./src/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <a href="#" class="logo">FIT<span>24</span></a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#trainers">Trainers</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+        </ul>
+        <div id="authActions">
+            <button class="nav-cta" onclick="document.getElementById('loginModal').classList.add('active')">Sign
+                In</button>
+        </div>
+        <div id="userProfile">
+            <span id="userNameDisplay">John Doe</span>
+            <button onclick="alert('Logout clicked')">Logout</button>
+        </div>
+    </nav>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">ACCESS PORTAL</div>
+            <div id="loginError" class="error-msg">Invalid email or password</div>
+            <form id="loginForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password" />
+                </div>
+                <button type="submit" class="modal-btn">Sign In</button>
+            </form>
+            <div class="modal-switch">
+                New to FIT24? <button type="button" onclick="switchModal('registerModal')">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">JOIN THE ELITE</div>
+            <div id="registerError" class="error-msg">Email already registered</div>
+            <form id="registerForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" required placeholder="Enter your full name" />
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" required placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required placeholder="Create a password" />
+                </div>
+                <button type="submit" class="modal-btn">Register</button>
+            </form>
+            <div class="modal-switch">
+                Already a member? <button type="button" onclick="switchModal('loginModal')">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">CHECKOUT</div>
+            <div id="paymentPlanDetails"
+                style="text-align: center; margin-bottom: 24px; color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+            </div>
+            <form id="paymentForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="paymentMethod" required
+                        style="width: 100%; padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--white); font-family: inherit; outline: none; margin-bottom: 16px; -webkit-appearance: none; appearance: none;">
+                        <option value="" disabled selected style="color: #000;">Select a payment method</option>
+                        <option value="Card" style="color: #000;">Credit / Debit Card</option>
+                        <option value="UPI" style="color: #000;">UPI</option>
+                        <option value="COD" style="color: #000;">Pay at Gym (COD)</option>
+                    </select>
+                </div>
+                <button type="submit" class="modal-btn" id="confirmPaymentBtn">Confirm Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="ticker">FIT24</div>
+        <div class="hero-content">
+            <div class="hero-eyebrow">Open 24 Hours &middot; 7 Days a Week</div>
+            <h1 class="hero-title">
+                TRAIN<br />
+                <span class="outline">WITHOUT</span><br />
+                <span class="red">LIMITS</span>
+            </h1>
+            <p class="hero-sub">Elite fitness facility built for those who refuse to settle. World-class equipment,
+                expert coaching, zero excuses.</p>
+            <div class="hero-actions">
+                <a href="#pricing" class="btn-primary">Start Free Trial</a>
+                <a href="#classes" class="btn-ghost">Explore Classes &rarr;</a>
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-num">12<span>K+</span></div>
+                <div class="stat-label">Members</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">48<span>+</span></div>
+                <div class="stat-label">Classes/Week</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">24<span>/7</span></div>
+                <div class="stat-label">Access</div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-line"></div>
+            Scroll
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span>HIIT TRAINING</span><span class="dot">✦</span>
+            <span>POWERLIFTING</span><span class="dot">✦</span>
+            <span>YOGA & MOBILITY</span><span class="dot">✦</span>
+            <span>BOXING</span><span class="dot">✦</span>
+            <span>CYCLING</span><span class="dot">✦</span>
+            <span>PILATES</span><span class="dot">✦</span>
+            <span>CROSSFIT</span><span class="dot">✦</span>
+            <span>OPEN 24/7</span><span class="dot">✦</span>
+            <span>HIIT TRAINING</span><span class="dot">✦</span>
+            <span>POWERLIFTING</span><span class="dot">✦</span>
+            <span>YOGA & MOBILITY</span><span class="dot">✦</span>
+            <span>BOXING</span><span class="dot">✦</span>
+            <span>CYCLING</span><span class="dot">✦</span>
+            <span>PILATES</span><span class="dot">✦</span>
+            <span>CROSSFIT</span><span class="dot">✦</span>
+            <span>OPEN 24/7</span><span class="dot">✦</span>
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" style="padding: 120px 60px;">
+        <div class="about reveal">
+            <div class="about-visual">
+                <div class="about-visual-inner">
+                    <div class="about-visual-text">FIT</div>
+                </div>
+                <div class="about-badge">
+                    <div class="about-badge-num">2019</div>
+                    <div class="about-badge-text">Est. in the city</div>
+                </div>
+            </div>
+            <div class="about-text">
+                <div class="section-label">About FIT24</div>
+                <h2 class="section-title">MORE THAN<br />A <span style="color: var(--red);">GYM</span></h2>
+                <p>FIT24 was built on a simple belief — that access to elite training shouldn't be a privilege. We
+                    created a space where beginners and professionals train side by side, fueled by the same fire.</p>
+                <p>From cutting-edge equipment to world-class coaches, every detail is engineered to unlock your best
+                    performance — day or night.</p>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                        <div class="feature-name">Elite Equipment</div>
+                        <div class="feature-desc">500+ machines from top brands</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-user-tie"></i></div>
+                        <div class="feature-name">Expert Coaches</div>
+                        <div class="feature-desc">Certified personal trainers</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-unlock-keyhole"></i></div>
+                        <div class="feature-name">24/7 Access</div>
+                        <div class="feature-desc">Train on your schedule</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <div class="feature-name">FIT24 App</div>
+                        <div class="feature-desc">Track progress, book classes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLASSES -->
+    <section id="classes" class="classes-section" style="padding: 0;">
+        <div style="padding: 80px 60px 48px;">
+            <div class="section-label reveal">Our Programs</div>
+            <h2 class="section-title reveal">FIND YOUR<br /><span style="color: var(--red);">DISCIPLINE</span></h2>
+        </div>
+        <div class="classes-grid reveal">
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="class-tag">High Intensity</div>
+                    <div class="class-name">HIIT Blast</div>
+                    <div class="class-desc">Maximum burn in minimum time. 45-min full-body circuits.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-hand-fist"></i></div>
+                    <div class="class-tag">Combat</div>
+                    <div class="class-name">Boxing</div>
+                    <div class="class-desc">Master technique and destroy stress. All skill levels welcome.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-person-praying"></i></div>
+                    <div class="class-tag">Mind &amp; Body</div>
+                    <div class="class-name">Power Yoga</div>
+                    <div class="class-desc">Strength through stillness. Flexibility meets focus.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-bicycle"></i></div>
+                    <div class="class-tag">Cardio</div>
+                    <div class="class-name">Spin Class</div>
+                    <div class="class-desc">High-energy indoor cycling to burn calories and build endurance.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                    <div class="class-tag">Strength</div>
+                    <div class="class-name">Powerlifting</div>
+                    <div class="class-desc">Master the big three lifts. Get stronger, build muscle.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-stopwatch"></i></div>
+                    <div class="class-tag">Foundation</div>
+                    <div class="class-name">Mobility</div>
+                    <div class="class-desc">Improve range of motion, prevent injury, and feel better.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule" style="padding: 120px 60px;">
+        <div class="schedule-header reveal">
+            <div>
+                <div class="section-label">Weekly Schedule</div>
+                <h2 class="section-title" style="margin-bottom: 0;">TODAY'S<br /><span
+                        style="color: var(--red);">CLASSES</span></h2>
+            </div>
+            <div class="days-nav">
+                <button class="day-btn">Mon</button>
+                <button class="day-btn active">Tue</button>
+                <button class="day-btn">Wed</button>
+                <button class="day-btn">Thu</button>
+                <button class="day-btn">Fri</button>
+                <button class="day-btn">Sat</button>
+                <button class="day-btn">Sun</button>
+            </div>
+        </div>
+        <table class="schedule-table reveal">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Class</th>
+                    <th>Trainer</th>
+                    <th>Duration</th>
+                    <th>Availability</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="schedule-time">6:00</div>
+                        <div style="font-size: 0.7rem; color: var(--muted);">AM</div>
+                    </td>
+                    <td>
+                        <div class="schedule-class">HIIT Blast</div>
+                        <div class="schedule-trainer">Zone A</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem;">Alex Rivera</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: var(--muted);">45 min</div>
+                    </td>
+                    <td><span class="schedule-spots spots-open">6 Spots Left</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="schedule-time">7:30</div>
+                        <div style="font-size: 0.7rem; color: var(--muted);">AM</div>
+                    </td>
+                    <td>
+                        <div class="schedule-class">Power Yoga</div>
+                        <div class="schedule-trainer">Studio 2</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem;">Maya Chen</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: var(--muted);">60 min</div>
+                    </td>
+                    <td><span class="schedule-spots spots-open">12 Spots Left</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="schedule-time">9:00</div>
+                        <div style="font-size: 0.7rem; color: var(--muted);">AM</div>
+                    </td>
+                    <td>
+                        <div class="schedule-class">Cycle Studio</div>
+                        <div class="schedule-trainer">Cycle Room</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem;">Jordan Lee</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: var(--muted);">45 min</div>
+                    </td>
+                    <td><span class="schedule-spots spots-few">2 Spots Left</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="schedule-time">12:00</div>
+                        <div style="font-size: 0.7rem; color: var(--muted);">PM</div>
+                    </td>
+                    <td>
+                        <div class="schedule-class">Boxing</div>
+                        <div class="schedule-trainer">Ring Room</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem;">Marcus Taylor</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: var(--muted);">50 min</div>
+                    </td>
+                    <td><span class="schedule-spots spots-full">Full</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="schedule-time">5:30</div>
+                        <div style="font-size: 0.7rem; color: var(--muted);">PM</div>
+                    </td>
+                    <td>
+                        <div class="schedule-class">CrossFit</div>
+                        <div class="schedule-trainer">Zone B</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem;">Sam Ortiz</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: var(--muted);">60 min</div>
+                    </td>
+                    <td><span class="schedule-spots spots-open">8 Spots Left</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="schedule-time">7:00</div>
+                        <div style="font-size: 0.7rem; color: var(--muted);">PM</div>
+                    </td>
+                    <td>
+                        <div class="schedule-class">Powerlifting</div>
+                        <div class="schedule-trainer">Weight Floor</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem;">Chris Nakamura</div>
+                    </td>
+                    <td>
+                        <div style="font-size: 0.85rem; color: var(--muted);">75 min</div>
+                    </td>
+                    <td><span class="schedule-spots spots-few">3 Spots Left</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="pricing">
+        <div style="padding: 80px 60px 0;">
+            <div class="section-label reveal">Membership Plans</div>
+            <h2 class="section-title reveal">INVEST IN<br /><span style="color: var(--red);">YOURSELF</span></h2>
+        </div>
+        <div style="padding: 0 60px 80px;">
+            <div class="pricing-grid reveal">
+                <div class="plan-card">
+                    <div class="plan-label">1 Month</div>
+                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>4,999</div>
+                    <div class="plan-period">Monthly Package</div>
+                    <ul class="plan-features">
+                        <li>Gym Floor Access</li>
+                        <li>Locker Room &amp; Showers</li>
+                        <li>FIT24 App Access</li>
+                        <li>24/7 Gym Entry</li>
+                    </ul>
+                    <button class="btn-plan" onclick="alert('Processing payment for 1 Month plan: ₹4999')">Pay
+                        Now</button>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-label">3 Months</div>
+                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>12,000</div>
+                    <div class="plan-period">Quarterly Package</div>
+                    <ul class="plan-features">
+                        <li>Gym Floor Access</li>
+                        <li>Locker Room &amp; Showers</li>
+                        <li>2 Group Classes/Month</li>
+                        <li>FIT24 App Access</li>
+                        <li>24/7 Gym Entry</li>
+                    </ul>
+                    <button class="btn-plan" onclick="alert('Processing payment for 3 Months plan: ₹12000')">Pay
+                        Now</button>
+                </div>
+                <div class="plan-card featured">
+                    <div class="plan-label">⚡ 6 Months</div>
+                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>22,999</div>
+                    <div class="plan-period">Semi-Annual Package</div>
+                    <ul class="plan-features">
+                        <li>Unlimited Group Classes</li>
+                        <li>1 PT Session/Month</li>
+                        <li>Nutrition Consultation</li>
+                        <li>Guest Pass (2/month)</li>
+                        <li>Priority Class Booking</li>
+                    </ul>
+                    <button class="btn-plan" onclick="alert('Processing payment for 6 Months plan: ₹22999')">Pay
+                        Now</button>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-label">1 Year</div>
+                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>39,999</div>
+                    <div class="plan-period">Annual Package</div>
+                    <ul class="plan-features">
+                        <li>4 PT Sessions/Month</li>
+                        <li>Custom Training Plan</li>
+                        <li>Body Composition Analysis</li>
+                        <li>Recovery Suite Access</li>
+                        <li>Unlimited Guest Passes</li>
+                    </ul>
+                    <button class="btn-plan" onclick="alert('Processing payment for 1 Year plan: ₹39999')">Pay
+                        Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRAINERS -->
+    <section id="trainers" class="trainers-section">
+        <div style="padding: 0 60px;">
+            <div class="section-label reveal">Our Experts</div>
+            <h2 class="section-title reveal">LEADERS IN<br /><span style="color: var(--red);">FITNESS</span></h2>
+
+            <div class="trainers-grid reveal">
+                <div class="trainer-card">
+                    <div class="trainer-img" style="background-image: url('public/img/trainer_1.png');">
+                        <div class="trainer-exp-badge">10+ YEARS EXP</div>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Rahul Sharma</h3>
+                        <span class="trainer-spec">Bodybuilding &amp; Weight Loss</span>
+                        <ul class="trainer-certs">
+                            <li>ACE Certified Personal Trainer</li>
+                            <li>Precision Nutrition Level 1</li>
+                            <li>Strength &amp; Conditioning Specialist</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="trainer-card">
+                    <div class="trainer-img" style="background-image: url('public/img/trainer_2.png');">
+                        <div class="trainer-exp-badge">7 YEARS EXP</div>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Priya Desai</h3>
+                        <span class="trainer-spec">Yoga &amp; Functional Mobility</span>
+                        <ul class="trainer-certs">
+                            <li>RYT 500 Certified Yoga Instructor</li>
+                            <li>FMS Certified Level 2</li>
+                            <li>Holistic Wellness Coach</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="trainer-card">
+                    <div class="trainer-img" style="background-image: url('public/img/trainer_3.png');">
+                        <div class="trainer-exp-badge">12 YEARS EXP</div>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Vikram Singh</h3>
+                        <span class="trainer-spec">CrossFit &amp; Powerlifting</span>
+                        <ul class="trainer-certs">
+                            <li>CrossFit Level 3 Coach</li>
+                            <li>USAW Sports Performance Coach</li>
+                            <li>Advanced First Aid / CPR</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section style="padding: 120px 60px;">
+        <div class="section-label reveal">Real Results</div>
+        <h2 class="section-title reveal">MEMBERS<br /><span style="color: var(--red);">SPEAK</span></h2>
+        <div class="testi-grid reveal">
+            <div class="testi-card">
+                <div class="testi-quote">FIT24 completely changed my relationship with fitness. The coaches push you
+                    just enough, the vibe is electric, and the 24/7 access fits my crazy schedule perfectly.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">R</div>
+                    <div>
+                        <div class="testi-name">Rohan Mehta</div>
+                        <div class="testi-meta">Member since 2022 &middot; Lost 18kg</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-quote">I've been to gyms across the city. Nothing compares. The equipment is premium,
+                    the classes are genuinely challenging, and the community keeps you accountable.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">P</div>
+                    <div>
+                        <div class="testi-name">Priya Sharma</div>
+                        <div class="testi-meta">Member since 2021 &middot; Ran first marathon</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-quote">The boxing classes alone are worth it. Marcus is a world-class trainer and the
+                    midnight sessions when I finish late work are a lifesaver. 10/10 no questions.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">A</div>
+                    <div>
+                        <div class="testi-name">Arjun Nair</div>
+                        <div class="testi-meta">Member since 2023 &middot; Boxing champion</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-quote">As a working mom, I needed flexibility. FIT24 gives me that and more — great
+                    childcare hours, fast classes, and results I never thought possible in my 40s.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">S</div>
+                    <div>
+                        <div class="testi-name">Sneha Kapoor</div>
+                        <div class="testi-meta">Member since 2022 &middot; Gained strength +40%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="section-label reveal">Take The First Step</div>
+        <h2 class="section-title reveal" style="margin-bottom: 24px;">READY TO <span
+                style="color: var(--black);">COMMIT?</span></h2>
+        <p class="cta-sub reveal">Join the elite. Start your fitness journey today and experience the difference.</p>
+        <div class="cta-actions reveal">
+            <a href="#pricing" class="btn-white">View Memberships</a>
+            <button class="btn-ghost"
+                style="border-color: rgba(255,255,255,0.7); padding: 18px 0; border: none; border-bottom: 1px solid rgba(255,255,255,0.3);"
+                onclick="document.getElementById('registerModal').classList.add('active')">Create Free Account</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">FIT<span>24</span></a>
+                <p>Elite fitness for everyone. Open 24 hours a day, 7 days a week. No limits, no excuses.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Programs</h4>
+                <ul>
+                    <li><a href="#">HIIT Blast</a></li>
+                    <li><a href="#">Boxing</a></li>
+                    <li><a href="#">Power Yoga</a></li>
+                    <li><a href="#">Cycle Studio</a></li>
+                    <li><a href="#">CrossFit</a></li>
+                    <li><a href="#">Powerlifting</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Coaches</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 FIT24. All rights reserved.</span>
+            <span>Bengaluru &middot; Mumbai &middot; Delhi &middot; Hyderabad</span>
+        </div>
+    </footer>
+
+    <div class="open-badge">
+        <div class="open-dot"></div>
+        <div class="open-text">We are open 24/7</div>
+    </div>
+
+    <!-- Chatbot Button -->
+    <button class="chat-toggle" onclick="toggleChat()" aria-label="Toggle Chat"
+        style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: #ff4d00; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255, 77, 0, 0.4); z-index: 1000; transition: transform 0.3s ease;">
+        <i class="fa-solid fa-message" style="font-size: 24px;"></i>
+    </button>
+
+    <script>
+        // Modal functionality
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+        }
+
+        function switchModal(modalId) {
+            closeModals();
+            const el = document.getElementById(modalId);
+            if (el) el.classList.add('active');
+        }
+
+        // Chatbot functionality
+        function toggleChat() {
+            alert('Chatbot UI would open here');
+        }
+
+        // Custom Cursor functionality
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursorRing');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+
+            // delayed ring
+            setTimeout(() => {
+                cursorRing.style.left = e.clientX + 'px';
+                cursorRing.style.top = e.clientY + 'px';
+            }, 50);
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+            cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            cursorRing.style.borderColor = 'rgba(232,37,26,1)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursorRing.style.borderColor = 'rgba(232,37,26,0.5)';
+        });
+
+        // Hover effects for cursor on clickable elements
+        const clickables = document.querySelectorAll('a, button, input, select');
+        clickables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorRing.style.backgroundColor = 'rgba(232, 37, 26, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorRing.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Reveal animations on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        function reveal() {
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("visible");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>
