@@ -9,7 +9,7 @@ const Trainers = () => {
 
                 <div className="trainers-grid reveal">
                     <div className="trainer-card">
-                        <div className="trainer-img" style={{ backgroundImage: "url('img/trainer_1.png')" }}>
+                        <div className="trainer-img" style={{ backgroundImage: "url('/img/trainer_1.png')" }}>
                             <div className="trainer-exp-badge">10+ YEARS EXP</div>
                         </div>
                         <div className="trainer-info">
@@ -24,7 +24,7 @@ const Trainers = () => {
                     </div>
 
                     <div className="trainer-card">
-                        <div className="trainer-img" style={{ backgroundImage: "url('img/trainer_2.png')" }}>
+                        <div className="trainer-img" style={{ backgroundImage: "url('/img/trainer_2.png')" }}>
                             <div className="trainer-exp-badge">7 YEARS EXP</div>
                         </div>
                         <div className="trainer-info">
@@ -39,7 +39,7 @@ const Trainers = () => {
                     </div>
 
                     <div className="trainer-card">
-                        <div className="trainer-img" style={{ backgroundImage: "url('img/trainer_3.png')" }}>
+                        <div className="trainer-img" style={{ backgroundImage: "url('/img/trainer_3.png')" }}>
                             <div className="trainer-exp-badge">12 YEARS EXP</div>
                         </div>
                         <div className="trainer-info">

@@ -3,8 +3,11 @@ import React from 'react';
 const Pricing = () => {
 
     const processPayment = (plan, amount) => {
-        // Placeholder function for clicking on pay now
-        alert(`Processing payment for ${plan} plan: ₹${amount}`);
+        if (window.triggerPayment) {
+            window.triggerPayment(plan, amount);
+        } else {
+            alert(`Processing payment for ${plan} plan: ₹${amount}`);
+        }
     };
 
     return (

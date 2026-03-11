@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -13,6 +13,90 @@ import Modals from './components/Modals';
 import Chatbot from './components/Chatbot';
 
 function App() {
+    useEffect(() => {
+        // Scroll Reveal Logic
+        const reveal = () => {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("visible");
+                }
+            }
+        };
+
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on load
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursorRing');
+
+        const moveCursor = (e) => {
+            if (cursor && cursorRing) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+
+                setTimeout(() => {
+                    cursorRing.style.left = e.clientX + 'px';
+                    cursorRing.style.top = e.clientY + 'px';
+                }, 50);
+            }
+        };
+
+        const onMouseDown = () => {
+            if (cursor && cursorRing) {
+                cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+                cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorRing.style.borderColor = 'rgba(232,37,26,1)';
+            }
+        };
+
+        const onMouseUp = () => {
+            if (cursor && cursorRing) {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorRing.style.borderColor = 'rgba(232,37,26,0.5)';
+            }
+        };
+
+        document.addEventListener('mousemove', moveCursor);
+        document.addEventListener('mousedown', onMouseDown);
+        document.addEventListener('mouseup', onMouseUp);
+
+        // Hover effects for clickables
+        const addHoverEffects = () => {
+            const clickables = document.querySelectorAll('a, button, input, select');
+            clickables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    if (cursorRing) {
+                        cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                        cursorRing.style.backgroundColor = 'rgba(232, 37, 26, 0.1)';
+                    }
+                });
+                el.addEventListener('mouseleave', () => {
+                    if (cursorRing) {
+                        cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
+                        cursorRing.style.backgroundColor = 'transparent';
+                    }
+                });
+            });
+        };
+
+        // Timeout to ensure elements are rendered before attaching hover events
+        setTimeout(addHoverEffects, 500);
+
+        return () => {
+            window.removeEventListener("scroll", reveal);
+            document.removeEventListener('mousemove', moveCursor);
+            document.removeEventListener('mousedown', onMouseDown);
+            document.removeEventListener('mouseup', onMouseUp);
+        };
+    }, []);
+
     return (
         <>
             <div className="cursor" id="cursor"></div>

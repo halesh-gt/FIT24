@@ -310,7 +310,7 @@ nav.scrolled {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: url('../public/img/hero.png') center/cover no-repeat;
+  background: url('/img/hero.png') center/cover no-repeat;
 }
 
 .hero-bg::after {
@@ -625,7 +625,7 @@ section {
 .about-visual-inner {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../public/img/about.png') center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/img/about.png') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -735,27 +735,27 @@ section {
 }
 
 .class-card:nth-child(1) .class-card-bg {
-  background: url('../public/img/strength.png') center/cover no-repeat;
+  background: url('/img/strength.png') center/cover no-repeat;
 }
 
 .class-card:nth-child(2) .class-card-bg {
-  background: url('../public/img/boxing.png') center/cover no-repeat;
+  background: url('/img/boxing.png') center/cover no-repeat;
 }
 
 .class-card:nth-child(3) .class-card-bg {
-  background: url('../public/img/yoga.png') center/cover no-repeat;
+  background: url('/img/yoga.png') center/cover no-repeat;
 }
 
 .class-card:nth-child(4) .class-card-bg {
-  background: url('../public/img/cycle.png') center/cover no-repeat;
+  background: url('/img/cycle.png') center/cover no-repeat;
 }
 
 .class-card:nth-child(5) .class-card-bg {
-  background: url('../public/img/strength.png') center/cover no-repeat;
+  background: url('/img/strength.png') center/cover no-repeat;
 }
 
 .class-card:nth-child(6) .class-card-bg {
-  background: url('../public/img/about.png') center/cover no-repeat;
+  background: url('/img/about.png') center/cover no-repeat;
 }
 
 .class-card-pattern {
