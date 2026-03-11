@@ -89,8 +89,20 @@ function App() {
         // Timeout to ensure elements are rendered before attaching hover events
         setTimeout(addHoverEffects, 500);
 
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                if (navbar) navbar.classList.add('scrolled');
+            } else {
+                if (navbar) navbar.classList.remove('scrolled');
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+
         return () => {
             window.removeEventListener("scroll", reveal);
+            window.removeEventListener('scroll', handleScroll);
             document.removeEventListener('mousemove', moveCursor);
             document.removeEventListener('mousedown', onMouseDown);
             document.removeEventListener('mouseup', onMouseUp);
