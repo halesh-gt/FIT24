@@ -48,14 +48,14 @@ const Chatbot = () => {
                     width: '60px',
                     height: '60px',
                     borderRadius: '50%',
-                    backgroundColor: '#ff4d00',
-                    color: 'white',
+                    backgroundColor: '#fde047',
+                    color: '#050505',
                     border: 'none',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 4px 15px rgba(255, 77, 0, 0.4)',
+                    boxShadow: '0 4px 15px rgba(253, 224, 71, 0.4)',
                     zIndex: 1000,
                     transition: 'transform 0.3s ease'
                 }}
@@ -96,18 +96,18 @@ const Chatbot = () => {
                             width: '40px',
                             height: '40px',
                             borderRadius: '50%',
-                            backgroundColor: '#ff4d00',
+                            backgroundColor: '#fde047',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: 'white',
+                            color: '#050505',
                             fontWeight: 'bold'
                         }}>
                             AI
                         </div>
                         <div>
                             <h3 style={{ margin: 0, color: 'white', fontSize: '1.1rem' }}>FIT24 Assistant</h3>
-                            <p style={{ margin: 0, color: '#ff4d00', fontSize: '0.8rem' }}>Online</p>
+                            <p style={{ margin: 0, color: '#fde047', fontSize: '0.8rem' }}>Online</p>
                         </div>
                     </div>
 
@@ -128,8 +128,8 @@ const Chatbot = () => {
                                     maxWidth: '80%',
                                     padding: '12px 16px',
                                     borderRadius: msg.sender === 'user' ? '15px 15px 0 15px' : '15px 15px 15px 0',
-                                    backgroundColor: msg.sender === 'user' ? '#ff4d00' : '#2a2a2a',
-                                    color: 'white',
+                                    backgroundColor: msg.sender === 'user' ? '#fde047' : '#2a2a2a',
+                                    color: msg.sender === 'user' ? '#050505' : 'white',
                                     fontSize: '0.9rem',
                                     lineHeight: '1.4'
                                 }}
@@ -167,9 +167,9 @@ const Chatbot = () => {
                                     width: '45px',
                                     height: '45px',
                                     borderRadius: '50%',
-                                    backgroundColor: '#ff4d00',
+                                    backgroundColor: '#fde047',
                                     border: 'none',
-                                    color: 'white',
+                                    color: '#050505',
                                     cursor: 'pointer',
                                     display: 'flex',
                                     alignItems: 'center',

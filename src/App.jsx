@@ -7,6 +7,7 @@ import Classes from './components/Classes';
 import Schedule from './components/Schedule';
 import Trainers from './components/Trainers';
 import Pricing from './components/Pricing';
+import BMICalculator from './components/BMICalculator';
 import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import Modals from './components/Modals';
@@ -74,7 +75,7 @@ function App() {
                 el.addEventListener('mouseenter', () => {
                     if (cursorRing) {
                         cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                        cursorRing.style.backgroundColor = 'rgba(232, 37, 26, 0.1)';
+                        cursorRing.style.backgroundColor = 'rgba(255, 221, 0, 0.1)';
                     }
                 });
                 el.addEventListener('mouseleave', () => {
@@ -146,17 +147,18 @@ function App() {
             <Classes />
             <Schedule />
             <Pricing />
+            <BMICalculator />
             <Trainers />
             <Testimonials />
 
             <section className="cta-section">
                 <div className="cta-bg"></div>
                 <div className="section-label reveal">Take The First Step</div>
-                <h2 className="section-title reveal" style={{ marginBottom: '24px' }}>READY TO <span style={{ color: 'var(--black)' }}>COMMIT?</span></h2>
+                <h2 className="section-title reveal" style={{ marginBottom: '24px', color: 'var(--black)' }}>READY TO COMMIT?</h2>
                 <p className="cta-sub reveal">Join the elite. Start your fitness journey today and experience the difference.</p>
                 <div className="cta-actions reveal">
                     <a href="#pricing" className="btn-white">View Memberships</a>
-                    <button className="btn-ghost" style={{ borderColor: 'rgba(255,255,255,0.7)', padding: '18px 0', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.3)' }} onClick={() => document.getElementById('registerModal').classList.add('active')}>Create Free Account</button>
+                    <button className="btn-ghost" style={{ borderColor: 'rgba(0,0,0,0.3)', color: 'var(--black)', padding: '18px 0', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.2)' }} onClick={() => document.getElementById('registerModal').classList.add('active')}>Create Free Account</button>
                 </div>
             </section>
 

@@ -10,12 +10,9 @@ const Navbar = () => {
                 <li><a href="#schedule">Schedule</a></li>
                 <li><a href="#trainers">Trainers</a></li>
                 <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#bmi">BMI Calculator</a></li>
             </ul>
-            <div id="authActions">
-                <button className="nav-cta" onClick={() => {
-                    const el = document.getElementById('loginModal');
-                    if (el) el.classList.add('active');
-                }}>Sign In</button>
+            <div id="authActions" style={{ display: 'none' }}>
             </div>
             <div id="userProfile">
                 <span id="userNameDisplay">John Doe</span>
