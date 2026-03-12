@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Pricing = () => {
+    const [plans, setPlans] = useState([]);
+
+    useEffect(() => {
+        const fetchPlans = async () => {
+            try {
+                const res = await fetch('http://localhost:5000/api/plans');
+                const data = await res.json();
+                setPlans(data);
+            } catch (err) {
+                console.error('Error fetching plans:', err);
+            }
+        };
+        fetchPlans();
+    }, []);
 
     const processPayment = (plan, amount) => {
         if (window.triggerPayment) {
@@ -18,57 +32,19 @@ const Pricing = () => {
             </div>
             <div style={{ padding: '0 60px 80px' }}>
                 <div className="pricing-grid reveal">
-                    <div className="plan-card">
-                        <div className="plan-label">1 Month</div>
-                        <div className="plan-price" style={{ fontSize: '4rem' }}><sup>₹</sup>4,999</div>
-                        <div className="plan-period">Monthly Package</div>
-                        <ul className="plan-features">
-                            <li>Gym Floor Access</li>
-                            <li>Locker Room & Showers</li>
-                            <li>FIT24 App Access</li>
-                            <li>24/7 Gym Entry</li>
-                        </ul>
-                        <button className="btn-plan" onClick={() => processPayment('1 Month', 4999)}>Pay Now</button>
-                    </div>
-                    <div className="plan-card">
-                        <div className="plan-label">3 Months</div>
-                        <div className="plan-price" style={{ fontSize: '4rem' }}><sup>₹</sup>12,000</div>
-                        <div className="plan-period">Quarterly Package</div>
-                        <ul className="plan-features">
-                            <li>Gym Floor Access</li>
-                            <li>Locker Room & Showers</li>
-                            <li>2 Group Classes/Month</li>
-                            <li>FIT24 App Access</li>
-                            <li>24/7 Gym Entry</li>
-                        </ul>
-                        <button className="btn-plan" onClick={() => processPayment('3 Months', 12000)}>Pay Now</button>
-                    </div>
-                    <div className="plan-card featured">
-                        <div className="plan-label">⚡ 6 Months</div>
-                        <div className="plan-price" style={{ fontSize: '4rem' }}><sup>₹</sup>22,999</div>
-                        <div className="plan-period">Semi-Annual Package</div>
-                        <ul className="plan-features">
-                            <li>Unlimited Group Classes</li>
-                            <li>1 PT Session/Month</li>
-                            <li>Nutrition Consultation</li>
-                            <li>Guest Pass (2/month)</li>
-                            <li>Priority Class Booking</li>
-                        </ul>
-                        <button className="btn-plan" onClick={() => processPayment('6 Months', 22999)}>Pay Now</button>
-                    </div>
-                    <div className="plan-card">
-                        <div className="plan-label">1 Year</div>
-                        <div className="plan-price" style={{ fontSize: '4rem' }}><sup>₹</sup>39,999</div>
-                        <div className="plan-period">Annual Package</div>
-                        <ul className="plan-features">
-                            <li>4 PT Sessions/Month</li>
-                            <li>Custom Training Plan</li>
-                            <li>Body Composition Analysis</li>
-                            <li>Recovery Suite Access</li>
-                            <li>Unlimited Guest Passes</li>
-                        </ul>
-                        <button className="btn-plan" onClick={() => processPayment('1 Year', 39999)}>Pay Now</button>
-                    </div>
+                    {plans.map((plan) => (
+                        <div key={plan.id} className={`plan-card ${plan.is_featured ? 'featured' : ''}`}>
+                            <div className="plan-label">{plan.is_featured ? '⚡ ' : ''}{plan.name}</div>
+                            <div className="plan-price" style={{ fontSize: '4rem' }}><sup>₹</sup>{plan.price.toLocaleString()}</div>
+                            <div className="plan-period">{plan.period}</div>
+                            <ul className="plan-features">
+                                {plan.features.split(',').map((feature, index) => (
+                                    <li key={index}>{feature}</li>
+                                ))}
+                            </ul>
+                            <button className="btn-plan" onClick={() => processPayment(plan.name, plan.price)}>Pay Now</button>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

@@ -1,38 +1,12 @@
 import React, { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './index.css';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Classes from './components/Classes';
-import Schedule from './components/Schedule';
-import Trainers from './components/Trainers';
-import Pricing from './components/Pricing';
-import BMICalculator from './components/BMICalculator';
-import Testimonials from './components/Testimonials';
-import Footer from './components/Footer';
-import Modals from './components/Modals';
-import Chatbot from './components/Chatbot';
+import Home from './components/Home';
+import Admin from './components/Admin';
 
 function App() {
     useEffect(() => {
-        // Scroll Reveal Logic
-        const reveal = () => {
-            const reveals = document.querySelectorAll('.reveal');
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 100;
-
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("visible");
-                }
-            }
-        };
-
-        window.addEventListener("scroll", reveal);
-        reveal(); // Trigger on load
-
-        // Custom Cursor Logic
+        // Global Cursor Logic
         const cursor = document.getElementById('cursor');
         const cursorRing = document.getElementById('cursorRing');
 
@@ -87,23 +61,9 @@ function App() {
             });
         };
 
-        // Timeout to ensure elements are rendered before attaching hover events
         setTimeout(addHoverEffects, 500);
 
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                if (navbar) navbar.classList.add('scrolled');
-            } else {
-                if (navbar) navbar.classList.remove('scrolled');
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-
         return () => {
-            window.removeEventListener("scroll", reveal);
-            window.removeEventListener('scroll', handleScroll);
             document.removeEventListener('mousemove', moveCursor);
             document.removeEventListener('mousedown', onMouseDown);
             document.removeEventListener('mouseup', onMouseUp);
@@ -115,59 +75,10 @@ function App() {
             <div className="cursor" id="cursor"></div>
             <div className="cursor-ring" id="cursorRing"></div>
 
-            <Navbar />
-
-            <Modals />
-
-            <Hero />
-
-            {/* MARQUEE */}
-            <div className="marquee-wrap">
-                <div className="marquee-track">
-                    <span>HIIT TRAINING</span><span className="dot">✦</span>
-                    <span>POWERLIFTING</span><span className="dot">✦</span>
-                    <span>YOGA & MOBILITY</span><span className="dot">✦</span>
-                    <span>BOXING</span><span className="dot">✦</span>
-                    <span>CYCLING</span><span className="dot">✦</span>
-                    <span>PILATES</span><span className="dot">✦</span>
-                    <span>CROSSFIT</span><span className="dot">✦</span>
-                    <span>OPEN 24/7</span><span className="dot">✦</span>
-                    <span>HIIT TRAINING</span><span className="dot">✦</span>
-                    <span>POWERLIFTING</span><span className="dot">✦</span>
-                    <span>YOGA & MOBILITY</span><span className="dot">✦</span>
-                    <span>BOXING</span><span className="dot">✦</span>
-                    <span>CYCLING</span><span className="dot">✦</span>
-                    <span>PILATES</span><span className="dot">✦</span>
-                    <span>CROSSFIT</span><span className="dot">✦</span>
-                    <span>OPEN 24/7</span><span className="dot">✦</span>
-                </div>
-            </div>
-
-            <About />
-            <Classes />
-            <Schedule />
-            <Pricing />
-            <BMICalculator />
-            <Trainers />
-            <Testimonials />
-
-            <section className="cta-section">
-                <div className="cta-bg"></div>
-                <div className="section-label reveal">Take The First Step</div>
-                <h2 className="section-title reveal" style={{ marginBottom: '24px', color: 'var(--black)' }}>READY TO COMMIT?</h2>
-                <p className="cta-sub reveal">Join the elite. Start your fitness journey today and experience the difference.</p>
-                <div className="cta-actions reveal">
-                    <a href="#pricing" className="btn-white">View Memberships</a>
-                    <button className="btn-ghost" style={{ borderColor: 'rgba(0,0,0,0.3)', color: 'var(--black)', padding: '18px 0', border: 'none', borderBottom: '1px solid rgba(0,0,0,0.2)' }} onClick={() => document.getElementById('registerModal').classList.add('active')}>Create Free Account</button>
-                </div>
-            </section>
-
-            <Footer />
-
-            <div className="open-badge">
-                <div className="open-dot"></div>
-                <div className="open-text">We are open 24/7</div>
-            </div>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/admin" element={<Admin />} />
+            </Routes>
         </>
     );
 }
