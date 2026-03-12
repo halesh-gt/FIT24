@@ -282,29 +282,57 @@ nav.scrolled {
 }
 
 .nav-cta {
-  background: var(--red);
+  background: var(--white);
   color: var(--black);
-  padding: 12px 28px;
+  padding: 10px 24px;
   font-family: 'Barlow', sans-serif;
   font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 2px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
   border: none;
-  cursor: none;
-  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-  transition: background 0.2s, transform 0.2s;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .nav-cta:hover {
-  background: var(--red-dark);
-  transform: scale(1.04);
+  background: #f1f5f9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
+
+.nav-cta.white {
+  background: var(--white);
+  color: var(--black);
+}
+
+.nav-cta.ghost {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  border: 1px solid var(--white);
+  box-shadow: none;
+}
+
+.nav-cta.ghost:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+
 
 /* HERO */
 .hero {
   position: relative;
   height: 100vh;
+  min-height: 700px;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -355,6 +383,7 @@ nav.scrolled {
   z-index: 2;
   padding: 0 60px;
   max-width: 900px;
+  margin-top: 80px;
 }
 
 .hero-eyebrow {
