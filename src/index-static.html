@@ -808,18 +808,46 @@
             // Bot Response logic
             setTimeout(() => {
                 let response = "I can definitely help with that. Could you provide a bit more detail?";
-                const lower = text.toLowerCase();
+                const lowerInput = text.toLowerCase();
                 
-                if (lower.includes('price') || lower.includes('cost')) {
-                    response = "Our plans start at ₹1,499/month. You can find more details in the Pricing section!";
-                } else if (lower.includes('class') || lower.includes('schedule')) {
-                    response = "We have a variety of classes including HIIT, Yoga, and Boxing. Check out our Schedule for timings.";
-                } else if (lower.includes('time') || lower.includes('open')) {
-                    response = "We are available anytime! You can train without limits, whenever you want.";
+                const qaPairs = [
+                    { keys: ['mindset', 'mentality'], response: "Transforming Mindset Before the Body: The Real Start of Fitness at Fit24 Gym in JP Nagar is key to long-term success." },
+                    { keys: ['workout working', 'results'], response: "Not seeing results? Learn how to know if your workout is actually working at Fit24 with structured, trackable training." },
+                    { keys: ['injury', 'safe', 'safety'], response: "Learn how smart, structured training at Fit24 Gym in JP Nagar reduces injury risk while helping you train safely." },
+                    { keys: ['quality', 'environment', 'value'], response: "Fitness is a long-term investment. Training in a quality environment like Fit24 delivers better consistency and results." },
+                    { keys: ['psychology', 'design', 'space'], response: "Your workout space affects your mindset. Fit24's well-designed space improves focus, confidence, and consistency." },
+                    { keys: ['recovery', 'rest', 'sleep'], response: "Recovery is where results happen. Fit24 treats rest, sleep, and recovery as essential parts of the workout." },
+                    { keys: ['cardio', 'myths', 'fat loss'], response: "Cardio myths can slow you down. Learn what really works for fat loss at Fit24 with smart, balanced training." },
+                    { keys: ['plateau', 'stuck', 'stall'], response: "Stuck with no progress? Fit24 helps you break through fitness plateaus with structured training and smart recovery." },
+                    { keys: ['habit', 'consistency', 'burnout'], response: "Building sustainable fitness habits is key. Fit24 helps you stay consistent without burnout." },
+                    { keys: ['technology', 'tracking', 'accountability'], response: "Technology is your accountability partner. Fit24 uses smart tracking and structured training for consistent results." },
+                    { keys: ['science', 'structure', 'random'], response: "Random training fails. Fit24 uses smart programming and structured workouts for consistent, science-based results." },
+                    { keys: ['premium', 'inside', 'look'], response: "What makes a gym 'premium'? Fit24 delivers a superior experience through space, guidance, and personalization." },
+                    { keys: ['professional', 'busy', 'guide'], response: "Busy schedule? Fit24's efficient, structured workouts help professionals stay fit without spending hours." },
+                    { keys: ['personalized', 'routine', 'generic'], response: "Personalized routines beat generic workouts. Fit24 focuses on custom plans for faster, safer, visible results." },
+                    { keys: ['equipment', 'modern', 'machine'], response: "Modern equipment isn’t just for looks. Advanced machines at Fit24 improve safety, efficiency, and results." },
+                    { keys: ['smart fitness', 'matters'], response: "Smart fitness focuses on structure and intention. Structured workouts lead to sustainable progress." },
+                    { keys: ['wellness', 'mind and body', 'detox'], response: "Mental wellness is vital. A daily workout at Fit24 becomes your mental detox ritual for mind and body." },
+                    { keys: ['progressive overload', 'hard'], response: "Progressive overload matters more than just working hard. It drives strength and consistent results." },
+                    { keys: ['strength training', 'muscle'], response: "Strength training is for everyone. It improves mobility, metabolism, and long-term health." },
+                    { keys: ['12 weeks', 'consistent'], response: "Staying consistent for 12 weeks requires structure. Fit24 supports you with realistic routines and tracking." },
+                    { keys: ['mental barrier', 'mind stops'], response: "Mental barriers often stop progress before the body does. Fit24 helps you influence mindset through structure." },
+                    { keys: ['ambience', 'focus'], response: "Space and ambience shape workout quality. They influence focus, consistency, and long-term results." },
+                    { keys: ['weight loss', 'fat loss'], response: "Fat loss and weight loss are different. Real fat loss requires structured training and understanding the science." },
+                    { keys: ['discipline', '9-5', '5 km'], response: "Discipline, structure, and consistency are the trap most people miss. Sustainable fitness is the real lesson." },
+                    { keys: ['willpower'], response: "Relying on willpower alone fails. Fit24 provides the structure and environment to keep you consistent." },
+                    { keys: ['trial and error'], response: "Random plans leave people stuck. Structured training at Fit24 creates sustainable, long-term progress." },
+                    { keys: ['price', 'cost'], response: "Our premium plans start at ₹1,499/month. You can find more details in the Pricing section!" }
+                ];
+
+                const found = qaPairs.find(qa => qa.keys.some(key => lowerInput.includes(key)));
+                if (found) {
+                    response = found.response;
                 }
                 
                 addMessage(response, 'bot');
             }, 1000);
+
         });
 
         // Custom Cursor functionality
