@@ -21,8 +21,12 @@ const Modals = () => {
 
     const [user, setUser] = useState(null);
 
-    // Expose a global function to trigger payment from Pricing component
     useEffect(() => {
+        const storedUser = localStorage.getItem('fit24_user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+
         window.triggerPayment = (plan, amount) => {
             setPaymentDetails({ plan, amount });
             switchModal('paymentModal');
@@ -62,6 +66,9 @@ const Modals = () => {
             if (res.ok) {
                 setLoginSuccess(data.message);
                 setUser(data.user);
+                localStorage.setItem('fit24_user', JSON.stringify(data.user));
+                window.dispatchEvent(new Event('userUpdate'));
+                
                 setTimeout(() => {
                     closeModals();
                     setLoginSuccess('');

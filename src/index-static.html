@@ -27,7 +27,8 @@
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#bmi">BMI Calculator</a></li>
         </ul>
-        <div id="authActions" style="display: none;">
+        <div id="authActions" class="nav-actions">
+            <a href="#footer" class="nav-cta ghost" style="text-decoration: none; padding: 10px 20px;">Contact Us</a>
         </div>
         <div id="userProfile">
             <span id="userNameDisplay">John Doe</span>
@@ -727,15 +728,34 @@
         </div>
     </footer>
 
-    <div class="open-badge">
-        <div class="open-dot"></div>
-        <div class="open-text">We are open 24/7</div>
+    <!-- Chatbot Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-header-avatar">AI</div>
+            <div class="chat-header-info">
+                <h3>FIT24 Assistant</h3>
+                <p>Online</p>
+            </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hi there! Welcome to FIT24. How can I help you regarding your fitness goals today?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <form class="chat-form" id="chatForm">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
+                <button type="submit" class="chat-send" id="chatSendBtn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- Chatbot Button -->
-    <button class="chat-toggle" onclick="toggleChat()" aria-label="Toggle Chat"
-        style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: #fde047; color: #050505; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(253, 224, 71, 0.4); z-index: 1000; transition: transform 0.3s ease;">
-        <i class="fa-solid fa-message" style="font-size: 24px;"></i>
+    <button class="chat-toggle" id="chatToggle" onclick="toggleChat()" aria-label="Toggle Chat"
+        style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: #25D366; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); z-index: 1000; transition: transform 0.3s ease;">
+        <i class="fa-brands fa-whatsapp" style="font-size: 32px;" id="chatIcon"></i>
     </button>
 
     <script>
@@ -751,9 +771,56 @@
         }
 
         // Chatbot functionality
+        const chatWindow = document.getElementById('chatWindow');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const chatIcon = document.getElementById('chatIcon');
+
         function toggleChat() {
-            alert('Chatbot UI would open here');
+            chatWindow.classList.toggle('active');
+            if (chatWindow.classList.contains('active')) {
+                chatIcon.className = 'fa-solid fa-xmark';
+                chatIcon.style.fontSize = '24px';
+                chatInput.focus();
+            } else {
+                chatIcon.className = 'fa-brands fa-whatsapp';
+                chatIcon.style.fontSize = '32px';
+            }
         }
+
+        function addMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}-message`;
+            msgDiv.textContent = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            chatInput.value = '';
+
+            // Bot Response logic
+            setTimeout(() => {
+                let response = "I can definitely help with that. Could you provide a bit more detail?";
+                const lower = text.toLowerCase();
+                
+                if (lower.includes('price') || lower.includes('cost')) {
+                    response = "Our plans start at ₹1,499/month. You can find more details in the Pricing section!";
+                } else if (lower.includes('class') || lower.includes('schedule')) {
+                    response = "We have a variety of classes including HIIT, Yoga, and Boxing. Check out our Schedule for timings.";
+                } else if (lower.includes('time') || lower.includes('open')) {
+                    response = "We are available anytime! You can train without limits, whenever you want.";
+                }
+                
+                addMessage(response, 'bot');
+            }, 1000);
+        });
 
         // Custom Cursor functionality
         const cursor = document.getElementById('cursor');

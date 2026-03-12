@@ -2,12 +2,18 @@ import express from 'express';
 import mysql from 'mysql2/promise';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 5000;
 
@@ -55,6 +61,21 @@ async function initDB() {
         plan VARCHAR(255) NOT NULL,
         amount INT NOT NULL,
         payment_method VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+        // Create member_registrations table
+        await connection.query(`
+      CREATE TABLE IF NOT EXISTS member_registrations (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        address TEXT NOT NULL,
+        primary_phone VARCHAR(20) NOT NULL,
+        secondary_phone VARCHAR(20),
+        email VARCHAR(255) NOT NULL,
+        dob DATE NOT NULL,
+        signature LONGTEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -145,6 +166,53 @@ app.post('/api/payment', async (req, res) => {
         console.error('Payment error:', error);
         res.status(500).json({ message: 'Server error during payment processing.' });
     }
+});
+
+// Member Registration API
+app.post('/api/member-register', async (req, res) => {
+    try {
+        const { name, address, primaryPhone, secondaryPhone, email, dob, signature } = req.body;
+
+        if (!name || !address || !primaryPhone || !email || !dob) {
+            return res.status(400).json({ message: 'Required fields are missing.' });
+        }
+
+        const [result] = await pool.query(
+            'INSERT INTO member_registrations (name, address, primary_phone, secondary_phone, email, dob, signature) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [name, address, primaryPhone, secondaryPhone, email, dob, signature]
+        );
+
+        res.status(201).json({ message: 'Member registration successful!', registrationId: result.insertId });
+    } catch (error) {
+        console.error('Member Register error:', error);
+        res.status(500).json({ message: 'Server error during member registration.' });
+    }
+});
+
+// Serve the registration form at a specific URL
+app.get('/register-form', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register_form.html'));
+});
+
+// Simple test route
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'Server is working!', time: new Date() });
+});
+
+// Admin API to fetch all registrations
+app.get('/api/member-registrations', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM member_registrations ORDER BY created_at DESC');
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Fetch Registrations error:', error);
+        res.status(500).json({ message: 'Server error during fetching registrations.' });
+    }
+});
+
+// Serve the admin registrations viewer
+app.get('/admin-registrations', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin_registrations.html'));
 });
 
 app.listen(PORT, () => {
