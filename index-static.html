@@ -25,7 +25,7 @@
             <li><a href="#schedule">Schedule</a></li>
             <li><a href="#trainers">Trainers</a></li>
             <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#bmi">BMI Calculator</a></li>
+            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
         </ul>
         <div id="authActions" class="nav-actions">
             <a href="#footer" class="nav-cta ghost" style="text-decoration: none; padding: 10px 20px;">Contact Us</a>
@@ -432,23 +432,19 @@
         </div>
         <div style="padding: 0 60px 80px;">
             <div class="pricing-grid reveal">
-                <div class="plan-card">
-                    <div class="plan-label">1 Month</div>
-                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>4,999</div>
-                    <div class="plan-period">Monthly Package</div>
+                <div class="plan-card" id="package-1">
+                    <div class="plan-label">1 month</div>
                     <ul class="plan-features">
                         <li>Gym Floor Access</li>
                         <li>Locker Room &amp; Showers</li>
                         <li>FIT24 App Access</li>
                         <li>24/7 Gym Entry</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Processing payment for 1 Month plan: ₹4999')">Pay
-                        Now</button>
+                    <button class="btn-plan" onclick="alert('Inquiry sent for 1 Month plan')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
                 </div>
-                <div class="plan-card">
+                <div class="plan-card" id="package-3">
                     <div class="plan-label">3 Months</div>
-                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>12,000</div>
-                    <div class="plan-period">Quarterly Package</div>
                     <ul class="plan-features">
                         <li>Gym Floor Access</li>
                         <li>Locker Room &amp; Showers</li>
@@ -456,13 +452,11 @@
                         <li>FIT24 App Access</li>
                         <li>24/7 Gym Entry</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Processing payment for 3 Months plan: ₹12000')">Pay
-                        Now</button>
+                    <button class="btn-plan" onclick="alert('Inquiry sent for 3 Months plan')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
                 </div>
-                <div class="plan-card featured">
+                <div class="plan-card featured" id="package-6">
                     <div class="plan-label">⚡ 6 Months</div>
-                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>22,999</div>
-                    <div class="plan-period">Semi-Annual Package</div>
                     <ul class="plan-features">
                         <li>Unlimited Group Classes</li>
                         <li>1 PT Session/Month</li>
@@ -470,13 +464,11 @@
                         <li>Guest Pass (2/month)</li>
                         <li>Priority Class Booking</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Processing payment for 6 Months plan: ₹22999')">Pay
-                        Now</button>
+                    <button class="btn-plan" onclick="alert('Inquiry sent for 6 Months plan')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
                 </div>
-                <div class="plan-card">
+                <div class="plan-card" id="package-12">
                     <div class="plan-label">1 Year</div>
-                    <div class="plan-price" style="font-size: 4rem;"><sup>₹</sup>39,999</div>
-                    <div class="plan-period">Annual Package</div>
                     <ul class="plan-features">
                         <li>4 PT Sessions/Month</li>
                         <li>Custom Training Plan</li>
@@ -484,84 +476,27 @@
                         <li>Recovery Suite Access</li>
                         <li>Unlimited Guest Passes</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Processing payment for 1 Year plan: ₹39999')">Pay
-                        Now</button>
+                    <button class="btn-plan" onclick="alert('Inquiry sent for 1 Year plan')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- BMI CALCULATOR SECTION -->
-    <section id="bmi" class="bmi-section">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">Fitness Tools</span>
-                <h2 class="section-title">BMI <span class="text-stroke">CALCULATOR</span></h2>
-                <p class="section-sub">Quickly calculate your Body Mass Index to see where you stand in your fitness
-                    journey.</p>
-            </div>
 
-            <div class="bmi-grid reveal">
-                <div class="bmi-form-card">
-                    <form id="bmiForm">
-                        <div class="input-group">
-                            <label>Height (cm)</label>
-                            <input type="number" id="bmiHeight" placeholder="e.g. 175" required>
-                        </div>
-                        <div class="input-group">
-                            <label>Weight (kg)</label>
-                            <input type="number" id="bmiWeight" placeholder="e.g. 70" required>
-                        </div>
-                        <button type="submit" class="btn-primary">Calculate BMI</button>
-                    </form>
-                </div>
-
-                <div class="bmi-result-card" id="bmiResultCard">
-                    <div class="result-placeholder">
-                        <i class="fa-solid fa-calculator"></i>
-                        <p>Enter your details to see your result</p>
-                    </div>
-                </div>
+    <!-- BMI CTA SECTION -->
+    <section id="bmi" class="bmi-cta" style="padding: 120px 60px; background: var(--black); text-align: center;">
+        <div class="container reveal">
+            <div class="bmi-icon-badge" style="margin: 0 auto 24px;">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>BMI TOOL</span>
             </div>
+            <h2 class="section-title">CHECK YOUR<br /><span style="color: var(--red);">BODY METRICS</span></h2>
+            <p style="max-width: 600px; margin: 24px auto; color: var(--muted);">Track your progress with our advanced BMI calculator and get expert recommendations on which fitness program fits your goals.</p>
+            <a href="bmi-calculator.html" class="btn-primary" style="margin-top: 24px; display: inline-block;">Open BMI Calculator</a>
         </div>
     </section>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const bmiForm = document.getElementById('bmiForm');
-            if (bmiForm) {
-                bmiForm.addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    const hVal = document.getElementById('bmiHeight').value;
-                    const wVal = document.getElementById('bmiWeight').value;
-                    const height = hVal / 100;
-                    const weight = wVal;
-
-                    if (height && weight) {
-                        const bmi = (weight / (height * height)).toFixed(1);
-                        let category = '';
-                        if (bmi < 18.5) category = 'Underweight';
-                        else if (bmi < 25) category = 'Normal';
-                        else if (bmi < 30) category = 'Overweight';
-                        else category = 'Obese';
-
-                        const percent = Math.min(Math.max((bmi - 15) * (100 / 25), 0), 100);
-
-                        document.getElementById('bmiResultCard').innerHTML = `
-                            <div class="result-content">
-                                <div class="bmi-number">${bmi}</div>
-                                <div class="bmi-category">Category: <span>${category}</span></div>
-                                <div class="bmi-meter">
-                                    <div class="bmi-pointer" style="left: ${percent}%"></div>
-                                </div>
-                                <p class="bmi-info">A healthy BMI range is between 18.5 and 24.9.</p>
-                            </div>
-                        `;
-                    }
-                });
-            }
-        });
-    </script>
 
 
     <!-- TRAINERS -->
