@@ -210,9 +210,13 @@ app.get('/api/member-registrations', async (req, res) => {
     }
 });
 
-// Serve the admin registrations viewer
-app.get('/admin-registrations', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'admin_registrations.html'));
+app.get('/register-form', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register_form.html'));
+});
+
+// Simple test route
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'Server is working!', time: new Date() });
 });
 
 app.listen(PORT, () => {
