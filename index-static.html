@@ -18,7 +18,7 @@
 
     <!-- NAVBAR -->
     <nav id="navbar">
-        <a href="#" class="logo">FIT<span>24</span></a>
+        <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 70px; width: auto; margin-left: -60px;"></a>
         <ul class="nav-links">
             <li><a href="#about">About</a></li>
             <li><a href="#classes">Classes</a></li>
@@ -497,7 +497,8 @@
             <div class="section-header reveal">
                 <span class="section-label">Fitness Tools</span>
                 <h2 class="section-title">BMI <span class="text-stroke">CALCULATOR</span></h2>
-                <p class="section-sub">Quickly calculate your Body Mass Index to see where you stand in your fitness journey.</p>
+                <p class="section-sub">Quickly calculate your Body Mass Index to see where you stand in your fitness
+                    journey.</p>
             </div>
 
             <div class="bmi-grid reveal">
@@ -526,16 +527,16 @@
     </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const bmiForm = document.getElementById('bmiForm');
             if (bmiForm) {
-                bmiForm.addEventListener('submit', function(e) {
+                bmiForm.addEventListener('submit', function (e) {
                     e.preventDefault();
                     const hVal = document.getElementById('bmiHeight').value;
                     const wVal = document.getElementById('bmiWeight').value;
                     const height = hVal / 100;
                     const weight = wVal;
-                    
+
                     if (height && weight) {
                         const bmi = (weight / (height * height)).toFixed(1);
                         let category = '';
@@ -809,7 +810,7 @@
             setTimeout(() => {
                 let response = "I can definitely help with that. Could you provide a bit more detail?";
                 const lower = text.toLowerCase();
-                
+
                 if (lower.includes('price') || lower.includes('cost')) {
                     response = "Our plans start at ₹1,499/month. You can find more details in the Pricing section!";
                 } else if (lower.includes('class') || lower.includes('schedule')) {
@@ -817,7 +818,7 @@
                 } else if (lower.includes('time') || lower.includes('open')) {
                     response = "We are available anytime! You can train without limits, whenever you want.";
                 }
-                
+
                 addMessage(response, 'bot');
             }, 1000);
         });

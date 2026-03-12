@@ -41,7 +41,7 @@ const Footer = () => {
             </div>
             <div className="footer-bottom">
                 <span>© 2026 FIT24. All rights reserved.</span>
-                <span>Bengaluru · Mumbai · Delhi · Hyderabad</span>
+                <img src="/img/logo.png" alt="FIT24 Logo" style={{ height: '70px', width: 'auto', marginLeft: '-60px' }} />              <span>Bengaluru · Mumbai · Delhi · Hyderabad</span>
             </div>
         </footer>
     );
