@@ -132,7 +132,7 @@ const Admin = () => {
                     </div>
                 </div>
                 
-                <nav className="admin-nav">
+                <nav className="admin-nav-sidebar">
                     <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')}>
                         <Activity size={20} /> <span>Dashboard</span>
                     </button>
@@ -452,26 +452,29 @@ const Admin = () => {
                 .admin-container {
                     display: flex;
                     min-height: 100vh;
-                    background: var(--admin-bg);
-                    color: var(--admin-text);
-                    font-family: 'Outfit', sans-serif;
+                    background: var(--admin-bg) !important;
+                    color: var(--admin-text) !important;
+                    font-family: 'Outfit', sans-serif !important;
                     width: 100vw;
                     margin: 0;
                     padding: 0;
+                    position: relative;
                 }
 
-                /* SIDEBAR - Fixed Width and Visible */
+                /* SIDEBAR - Isolated from global nav */
                 .admin-sidebar {
                     width: 250px;
-                    background: var(--admin-nav);
+                    background: var(--admin-nav) !important;
                     border-right: 1px solid rgba(255,255,255,0.05);
                     display: flex;
                     flex-direction: column;
                     height: 100vh;
-                    position: fixed;
+                    position: fixed !important;
                     left: 0;
                     top: 0;
-                    z-index: 1000;
+                    z-index: 2000;
+                    padding: 0 !important;
+                    margin: 0 !important;
                 }
 
                 .sidebar-top {
@@ -484,6 +487,7 @@ const Admin = () => {
                     font-weight: 800;
                     margin-bottom: 25px;
                     text-align: center;
+                    font-family: 'Outfit', sans-serif !important;
                 }
                 .logo-accent { color: var(--admin-red); }
                 .logo-tag { font-size: 0.6rem; background: var(--admin-red); color: #000; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 4px; }
@@ -515,22 +519,26 @@ const Admin = () => {
                 .p-name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
                 .p-role { font-size: 0.6rem; color: var(--admin-red); font-weight: 700; text-transform: uppercase; }
 
-                .admin-nav {
+                .admin-nav-sidebar {
                     padding: 20px 0;
                     display: flex;
                     flex-direction: column;
                     gap: 4px;
                     flex: 1;
+                    /* Reset global nav interference */
+                    position: static !important;
+                    background: transparent !important;
+                    width: 100% !important;
                 }
 
-                .admin-nav button {
+                .admin-nav-sidebar button {
                     display: flex;
                     align-items: center;
                     gap: 12px;
                     padding: 14px 25px;
                     border: none;
-                    background: transparent;
-                    color: var(--admin-muted);
+                    background: transparent !important;
+                    color: var(--admin-muted) !important;
                     font-size: 0.9rem;
                     font-weight: 500;
                     cursor: pointer;
@@ -540,17 +548,17 @@ const Admin = () => {
                     position: relative;
                 }
 
-                .admin-nav button:hover {
-                    color: var(--admin-text);
-                    background: rgba(255,255,255,0.02);
+                .admin-nav-sidebar button:hover {
+                    color: var(--admin-text) !important;
+                    background: rgba(255,255,255,0.02) !important;
                 }
 
-                .admin-nav button.active {
-                    color: var(--admin-yellow);
-                    background: rgba(253,224,71,0.03);
+                .admin-nav-sidebar button.active {
+                    color: var(--admin-yellow) !important;
+                    background: rgba(253,224,71,0.03) !important;
                 }
 
-                .admin-nav button.active::before {
+                .admin-nav-sidebar button.active::before {
                     content: '';
                     position: absolute;
                     left: 0;
@@ -571,27 +579,43 @@ const Admin = () => {
                     display: flex;
                     align-items: center;
                     gap: 10px;
-                    color: var(--admin-muted);
-                    text-decoration: none;
+                    color: var(--admin-muted) !important;
+                    text-decoration: none !important;
                     font-size: 0.9rem;
                     font-weight: 600;
                     transition: 0.3s;
                 }
-                .back-link:hover { color: var(--admin-red); }
+                .back-link:hover { color: var(--admin-red) !important; }
 
                 /* MAIN AREA */
                 .admin-main {
                     flex: 1;
-                    margin-left: 250px;
+                    margin-left: 250px !important;
                     padding: 40px 50px;
-                    background: var(--admin-bg);
+                    background: var(--admin-bg) !important;
                     min-height: 100vh;
+                    position: relative;
                 }
 
-                .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-                .admin-header h1 { font-size: 2rem; font-weight: 700; }
-                .header-date { color: var(--admin-muted); font-size: 0.9rem; }
-                .refresh-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.75rem; }
+                .admin-header { 
+                    display: flex; 
+                    justify-content: space-between; 
+                    align-items: center; 
+                    margin-bottom: 40px;
+                    padding: 0 !important;
+                    background: transparent !important;
+                }
+                .admin-header h1 { font-size: 2rem; font-weight: 700; color: #fff; margin: 0; }
+                .header-date { color: var(--admin-muted); font-size: 0.9rem; margin-top: 5px; }
+                .refresh-btn { 
+                    background: rgba(255,255,255,0.05) !important; 
+                    border: 1px solid rgba(255,255,255,0.1) !important; 
+                    color: #fff !important; 
+                    padding: 10px 18px !important; 
+                    border-radius: 8px !important; 
+                    cursor: pointer; 
+                    font-size: 0.75rem; 
+                }
 
                 .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
                 .metric-box { background: var(--admin-card); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.03); display: flex; gap: 20px; align-items: center; }
@@ -600,7 +624,7 @@ const Admin = () => {
                 .m-icon.r { background: rgba(253,224,71,0.1); color: var(--admin-yellow); }
                 .m-icon.s { background: rgba(232,37,26,0.1); color: var(--admin-red); }
                 .m-data label { font-size: 0.7rem; color: var(--admin-muted); text-transform: uppercase; }
-                .m-value { font-size: 1.5rem; font-weight: 700; }
+                .m-value { font-size: 1.5rem; font-weight: 700; color: #fff; }
 
                 .activity-feed-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
                 .admin-card { background: var(--admin-card); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.03); }
@@ -609,7 +633,7 @@ const Admin = () => {
                 
                 .feed-item { display: flex; align-items: center; gap: 15px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.02); }
                 .feed-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.02); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--admin-muted); }
-                .feed-content p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin: 0; }
+                .feed-content p { font-size: 0.85rem; color: rgba(255,255,255,0.6) !important; margin: 0; }
                 .feed-price { margin-left: auto; color: #4CAF50; font-weight: 700; }
 
                 .side-panels { display: flex; flex-direction: column; gap: 20px; }
@@ -621,16 +645,16 @@ const Admin = () => {
                 /* TABLES */
                 .table-section { padding: 40px; }
                 .table-header-v2 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-                .search-input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 12px 20px; border-radius: 12px; color: #fff; width: 280px; outline: none; transition: 0.3s; }
-                .search-input:focus { border-color: var(--admin-yellow); background: rgba(255,255,255,0.05); }
+                .search-input { background: rgba(255,255,255,0.03) !important; border: 1px solid rgba(255,255,255,0.1) !important; padding: 12px 20px !important; border-radius: 12px !important; color: #fff !important; width: 280px !important; outline: none; transition: 0.3s; }
+                .search-input:focus { border-color: var(--admin-yellow) !important; background: rgba(255,255,255,0.05) !important; }
                 .pro-table { width: 100%; border-collapse: collapse; }
-                .pro-table th { text-align: left; padding: 15px; font-size: 0.7rem; color: rgba(255,255,255,0.3); text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; }
-                .pro-table td { padding: 20px 15px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.9rem; }
+                .pro-table th { text-align: left; padding: 15px; font-size: 0.7rem; color: rgba(255,255,255,0.3) !important; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; }
+                .pro-table td { padding: 20px 15px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.9rem; color: #eee; }
                 
                 /* Specialized Member Forms Styles */
-                .table-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: -20px; margin-bottom: 20px; }
+                .table-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.3) !important; margin-top: -20px; margin-bottom: 20px; }
                 .date-cell { display: flex; flex-direction: column; gap: 4px; }
-                .d-date { font-weight: 600; }
+                .d-date { font-weight: 600; color: #fff; }
                 .d-time { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
                 .contact-info { display: flex; flex-direction: column; gap: 2px; }
                 .sub-text { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
