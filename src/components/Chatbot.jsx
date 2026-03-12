@@ -13,12 +13,24 @@ const Chatbot = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Save to database
+        // Clean phone number - remove spaces, dashes, +, and ensure country code
+        const cleanPhone = formData.phone.replace(/[\s\-\+]/g, '');
+        const phoneWithCode = cleanPhone.startsWith('91') && cleanPhone.length === 12
+            ? cleanPhone
+            : '91' + cleanPhone.slice(-10);
+
+        const msgText = `Hello, my name is ${formData.name}. I hope you are doing well. I would like to kindly enquire about the fitness programs available at FIT24.\n\nCould you please share more details regarding the available programs, membership options, and any other relevant information?\n\nThank you, and I look forward to your response.`;
+
+        // Save to database (name, email, phone, plan, message all stored)
         try {
             await fetch('http://localhost:5000/api/chatbot-lead', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({ 
+                    name: formData.name,
+                    email: formData.email,
+                    phone: phoneWithCode
+                })
             });
         } catch (err) {
             console.error("Failed to save lead:", err);
@@ -26,9 +38,8 @@ const Chatbot = () => {
 
         setIsSubmitted(true);
 
-        // WhatsApp redirect
-        const whatsappMsg = encodeURIComponent(`Hi, I'm ${formData.name}. I'd like to enquire about FIT24 fitness programs.`);
-        const whatsappUrl = `https://wa.me/917892330756?text=${whatsappMsg}`;
+        const whatsappMsg = encodeURIComponent(msgText);
+        const whatsappUrl = `https://wa.me/919743777871?text=${whatsappMsg}`;
         
         setTimeout(() => {
             window.open(whatsappUrl, '_blank');

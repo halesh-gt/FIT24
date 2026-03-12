@@ -9,6 +9,7 @@ const Admin = () => {
     const [trainers, setTrainers] = useState([]);
     const [editingPlan, setEditingPlan] = useState(null);
     const [memberRegistrations, setMemberRegistrations] = useState([]);
+    const [chatbotLeads, setChatbotLeads] = useState([]);
     const [newTrainer, setNewTrainer] = useState({
         name: '',
         specialization: '',
@@ -29,6 +30,7 @@ const Admin = () => {
         fetchPlans();
         fetchTrainers();
         fetchMemberRegistrations();
+        fetchChatbotLeads();
     };
 
     const fetchUsers = async () => {
@@ -76,6 +78,14 @@ const Admin = () => {
             const res = await fetch(`http://localhost:5000/api/member-registrations`);
             const data = await res.json();
             setMemberRegistrations(data);
+        } catch (err) { console.error(err); }
+    };
+    
+    const fetchChatbotLeads = async () => {
+        try {
+            const res = await fetch(`http://localhost:5000/api/chatbot-leads`);
+            const data = await res.json();
+            setChatbotLeads(data);
         } catch (err) { console.error(err); }
     };
 
@@ -138,6 +148,18 @@ const Admin = () => {
                     </button>
                     <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
                         <Users size={20} /> <span>Registered Users</span>
+                    </button>
+                    <button className={activeTab === 'whatsappLeads' ? 'active' : ''} onClick={() => setActiveTab('whatsappLeads')}>
+                        <Activity size={20} style={{ color: '#25D366' }} /> <span>WhatsApp Leads</span>
+                    </button>
+                    <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => setActiveTab('payments')}>
+                        <CreditCard size={20} /> <span>Memberships</span>
+                    </button>
+                    <button className={activeTab === 'plans' ? 'active' : ''} onClick={() => setActiveTab('plans')}>
+                        <Layout size={20} /> <span>Gym Plans</span>
+                    </button>
+                    <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
+                        <UserPlus size={20} /> <span>Trainers</span>
                     </button>
                     <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => setActiveTab('memberForms')}>
                         <ClipboardList size={20} /> <span>Member Forms</span>
@@ -417,6 +439,48 @@ const Admin = () => {
                                         <tr>
                                             <td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.2)' }}>
                                                 No membership registrations found.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                    {activeTab === 'whatsappLeads' && (
+                        <div className="admin-card table-section">
+                            <div className="table-header-v2">
+                                <h3 style={{ color: '#25D366' }}>WhatsApp Enquiries</h3>
+                                <p className="table-subtitle">Leads captured via the floating WhatsApp button</p>
+                            </div>
+                            <table className="pro-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {chatbotLeads.map(lead => (
+                                        <tr key={lead.id}>
+                                            <td className="date-cell">
+                                                <span className="d-date">{new Date(lead.created_at).toLocaleDateString()}</span>
+                                                <span className="d-time">{new Date(lead.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                                            </td>
+                                            <td><strong>{lead.name}</strong></td>
+                                            <td>{lead.email}</td>
+                                            <td>{lead.phone}</td>
+                                            <td>
+                                                <span style={{ fontSize: '0.7rem', background: 'rgba(37, 211, 102, 0.1)', color: '#25D366', padding: '4px 10px', borderRadius: '4px', fontWeight: '800' }}>SENT</span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {chatbotLeads.length === 0 && (
+                                        <tr>
+                                            <td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.2)' }}>
+                                                No WhatsApp enquiries found.
                                             </td>
                                         </tr>
                                     )}
