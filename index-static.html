@@ -798,7 +798,10 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        chatForm.addEventListener('submit', (e) => {
+        let currentStep = 'greet'; // greet, askName, askEmail, askPhone, chat
+        let leadInfo = { name: '', email: '', phone: '' };
+
+        chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = chatInput.value.trim();
             if (!text) return;
@@ -806,7 +809,57 @@
             addMessage(text, 'user');
             chatInput.value = '';
 
-            // Bot Response logic
+            // Handle collection steps
+            if (currentStep === 'greet' || currentStep === 'chat') {
+                if (text.toLowerCase().includes('enquire') || text.toLowerCase().includes('hi') || text.toLowerCase().includes('hello')) {
+                    currentStep = 'askName';
+                    setTimeout(() => {
+                        addMessage("Great! To help you better, could you please tell me your full name?", 'bot');
+                    }, 600);
+                    return;
+                }
+            }
+
+            if (currentStep === 'askName') {
+                leadInfo.name = text;
+                currentStep = 'askEmail';
+                setTimeout(() => {
+                    addMessage(`Nice to meet you, ${text}! What is your email address?`, 'bot');
+                }, 600);
+                return;
+            }
+
+            if (currentStep === 'askEmail') {
+                leadInfo.email = text;
+                currentStep = 'askPhone';
+                setTimeout(() => {
+                    addMessage("Got it. And finally, what's your contact number?", 'bot');
+                }, 600);
+                return;
+            }
+
+            if (currentStep === 'askPhone') {
+                leadInfo.phone = text;
+                currentStep = 'chat';
+
+                // Save to database
+                try {
+                    await fetch('/api/chatbot-lead', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(leadInfo)
+                    });
+                } catch (err) {
+                    console.error("Failed to save lead:", err);
+                }
+
+                setTimeout(() => {
+                    addMessage("Thank you! I've recorded your inquiry. Now, feel free to ask me anything about our fitness programs!", 'bot');
+                }, 800);
+                return;
+            }
+
+            // Standard Q&A logic
             setTimeout(() => {
                 let response = "I can definitely help with that. Could you provide a bit more detail?";
                 const lowerInput = text.toLowerCase();
@@ -853,7 +906,7 @@
                 }
 
                 addMessage(response, 'bot');
-            }, 1000);
+            }, 800);
 
         });
 

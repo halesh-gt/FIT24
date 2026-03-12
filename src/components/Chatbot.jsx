@@ -8,19 +8,76 @@ const Chatbot = () => {
     ]);
     const [input, setInput] = useState("");
 
-    const handleSend = (e) => {
+    const [step, setStep] = useState('greet'); // greet, askName, askEmail, askPhone, chat
+    const [leadInfo, setLeadInfo] = useState({ name: '', email: '', phone: '' });
+
+    const handleSend = async (e) => {
         e.preventDefault();
-        if (!input.trim()) return;
+        const userMsg = input.trim();
+        if (!userMsg) return;
 
         // Add user message
-        const userMsg = input;
         setMessages(prev => [...prev, { text: userMsg, sender: 'user' }]);
         setInput("");
 
-        // Simulate bot response
+        // Handle collection steps
+        if (step === 'greet' || step === 'chat') {
+            if (userMsg.toLowerCase().includes('enquire') || userMsg.toLowerCase().includes('hi') || userMsg.toLowerCase().includes('hello')) {
+                setStep('askName');
+                setTimeout(() => {
+                    setMessages(prev => [...prev, { text: "Great! To help you better, could you please tell me your full name?", sender: 'bot' }]);
+                }, 600);
+                return;
+            }
+        }
+
+        if (step === 'askName') {
+            setLeadInfo(prev => ({ ...prev, name: userMsg }));
+            setStep('askEmail');
+            setTimeout(() => {
+                setMessages(prev => [...prev, { text: `Nice to meet you, ${userMsg}! What is your email address?`, sender: 'bot' }]);
+            }, 600);
+            return;
+        }
+
+        if (step === 'askEmail') {
+            setLeadInfo(prev => ({ ...prev, email: userMsg }));
+            setStep('askPhone');
+            setTimeout(() => {
+                setMessages(prev => [...prev, { text: "Got it. And finally, what's your contact number?", sender: 'bot' }]);
+            }, 600);
+            return;
+        }
+
+        if (step === 'askPhone') {
+            const finalPhone = userMsg;
+            const finalLead = { ...leadInfo, phone: finalPhone };
+            setLeadInfo(finalLead);
+            setStep('chat');
+
+            // Save to database
+            try {
+                await fetch('http://localhost:5000/api/chatbot-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(finalLead)
+                });
+            } catch (err) {
+                console.error("Failed to save lead:", err);
+            }
+
+            setTimeout(() => {
+                setMessages(prev => [...prev, { 
+                    text: "Thank you! I've recorded your inquiry. Now, feel free to ask me anything about our fitness programs!", 
+                    sender: 'bot' 
+                }]);
+            }, 800);
+            return;
+        }
+
+        // Standard Q&A logic if in 'chat' mode
         setTimeout(() => {
             let botResponse = "I can definitely help with that. Could you provide a bit more detail?";
-
             const lowerInput = userMsg.toLowerCase();
             
             const qaPairs = [
@@ -63,7 +120,8 @@ const Chatbot = () => {
             }
 
             setMessages(prev => [...prev, { text: botResponse, sender: 'bot' }]);
-        }, 1000);
+        }, 800);
+
 
     };
 

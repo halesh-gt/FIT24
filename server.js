@@ -80,6 +80,17 @@ async function initDB() {
       )
     `);
 
+        // Create chatbot_leads table
+        await connection.query(`
+      CREATE TABLE IF NOT EXISTS chatbot_leads (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        phone VARCHAR(20) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
         connection.release();
         console.log('Database tables verified/created successfully.');
     } catch (error) {
@@ -169,6 +180,7 @@ app.post('/api/payment', async (req, res) => {
 });
 
 // Member Registration API
+// Member Registration API
 app.post('/api/member-register', async (req, res) => {
     try {
         const { name, address, primaryPhone, secondaryPhone, email, dob, signature } = req.body;
@@ -186,6 +198,27 @@ app.post('/api/member-register', async (req, res) => {
     } catch (error) {
         console.error('Member Register error:', error);
         res.status(500).json({ message: 'Server error during member registration.' });
+    }
+});
+
+// Chatbot Lead API
+app.post('/api/chatbot-lead', async (req, res) => {
+    try {
+        const { name, email, phone } = req.body;
+
+        if (!name || !email || !phone) {
+            return res.status(400).json({ message: 'Name, email, and phone are required.' });
+        }
+
+        const [result] = await pool.query(
+            'INSERT INTO chatbot_leads (name, email, phone) VALUES (?, ?, ?)',
+            [name, email, phone]
+        );
+
+        res.status(201).json({ message: 'Inquiry received successfully!', leadId: result.insertId });
+    } catch (error) {
+        console.error('Chatbot Lead error:', error);
+        res.status(500).json({ message: 'Server error during saving inquiry.' });
     }
 });
 
