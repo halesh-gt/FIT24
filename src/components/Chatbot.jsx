@@ -8,7 +8,7 @@ const Chatbot = () => {
     ]);
     const [input, setInput] = useState("");
 
-    const [step, setStep] = useState('greet'); // greet, askName, askEmail, askPhone, chat
+    const [step, setStep] = useState('greet'); // greet, askName, askEmail, askPhone, redirecting
     const [leadInfo, setLeadInfo] = useState({ name: '', email: '', phone: '' });
 
     const handleSend = async (e) => {
@@ -21,14 +21,12 @@ const Chatbot = () => {
         setInput("");
 
         // Handle collection steps
-        if (step === 'greet' || step === 'chat') {
-            if (userMsg.toLowerCase().includes('enquire') || userMsg.toLowerCase().includes('hi') || userMsg.toLowerCase().includes('hello')) {
-                setStep('askName');
-                setTimeout(() => {
-                    setMessages(prev => [...prev, { text: "Great! To help you better, could you please tell me your full name?", sender: 'bot' }]);
-                }, 600);
-                return;
-            }
+        if (step === 'greet') {
+            setStep('askName');
+            setTimeout(() => {
+                setMessages(prev => [...prev, { text: "Great! To help you better, please share your full name before we connect you to WhatsApp.", sender: 'bot' }]);
+            }, 600);
+            return;
         }
 
         if (step === 'askName') {
@@ -53,7 +51,7 @@ const Chatbot = () => {
             const finalPhone = userMsg;
             const finalLead = { ...leadInfo, phone: finalPhone };
             setLeadInfo(finalLead);
-            setStep('chat');
+            setStep('redirecting');
 
             // Save to database
             try {
@@ -68,61 +66,17 @@ const Chatbot = () => {
 
             setTimeout(() => {
                 setMessages(prev => [...prev, { 
-                    text: "Thank you! I've recorded your inquiry. Now, feel free to ask me anything about our fitness programs!", 
+                    text: "Thank you! I've recorded your details. Redirecting you to our WhatsApp support now...", 
                     sender: 'bot' 
                 }]);
+                
+                // WhatsApp redirect
+                const whatsappMsg = encodeURIComponent(`Hi, I'm ${finalLead.name}. I'd like to enquire about FIT24 fitness programs.`);
+                const whatsappUrl = `https://wa.me/917892330756?text=${whatsappMsg}`;
+                window.open(whatsappUrl, '_blank');
             }, 800);
             return;
         }
-
-        // Standard Q&A logic if in 'chat' mode
-        setTimeout(() => {
-            let botResponse = "I can definitely help with that. Could you provide a bit more detail?";
-            const lowerInput = userMsg.toLowerCase();
-            
-            const qaPairs = [
-                { keys: ['mindset', 'mentality'], response: "Transforming mindset means focusing on discipline, consistency, and commitment before expecting physical results. A strong mindset is the real starting point of long-term fitness success." },
-                { keys: ['workout working', 'actually working', 'results'], response: "You can know your workout is working by tracking progress such as strength improvements, endurance, body composition changes, and consistency in workouts." },
-                { keys: ['injury', 'safe', 'safety'], response: "Smart training focuses on proper technique, progressive overload, structured routines, and proper recovery to reduce the risk of injuries." },
-                { keys: ['quality fitness environment', 'investing'], response: "A quality fitness environment improves motivation, consistency, and workout experience, helping people achieve sustainable fitness results." },
-                { keys: ['psychology', 'well-designed space'], response: "Training in a well-designed space improves focus, confidence, and motivation, which leads to better workout performance." },
-                { keys: ['recovery', 'rest', 'sleep'], response: "Recovery allows muscles to repair and grow stronger. Proper sleep, rest days, and nutrition are essential for effective fitness progress." },
-                { keys: ['cardio myths', 'cardio myths'], response: "Many believe cardio alone leads to fat loss, but combining cardio with strength training and proper nutrition produces better results." },
-                { keys: ['plateau', 'break'], response: "Fitness plateaus can be broken by adjusting workout intensity, adding progressive overload, changing exercises, and improving recovery." },
-                { keys: ['habit', 'sustainable'], response: "Sustainable habits are built through structured routines, realistic goals, and consistent progress tracking." },
-                { keys: ['technology', 'accountability'], response: "Technology helps track workouts, monitor progress, and maintain accountability through fitness apps and wearable devices." },
-                { keys: ['structured', 'random'], response: "Structured workouts follow a clear plan that improves strength, endurance, and fitness results more effectively than random exercises." },
-                { keys: ['premium', 'gym premium'], response: "A premium gym offers modern equipment, professional trainers, spacious layouts, and personalized workout programs." },
-                { keys: ['professional', 'busy'], response: "Busy professionals can stay fit by following efficient, structured workouts that deliver results without spending long hours in the gym." },
-                { keys: ['personalized routine', 'generic'], response: "A personalized routine is better because it considers individual goals, fitness levels, and health conditions." },
-                { keys: ['equipment', 'modern equipment'], response: "Modern equipment improves safety, efficiency, and muscle engagement during workouts." },
-                { keys: ['smart fitness', 'what is smart'], response: "Smart fitness focuses on structured training, clear goals, and progress tracking to achieve sustainable fitness results." },
-                { keys: ['mental benefits', 'clarity'], response: "Working out improves mental clarity, reduces stress, boosts mood, and enhances overall well-being." },
-                { keys: ['progressive overload'], response: "Progressive overload gradually increases workout intensity to help muscles adapt and grow stronger." },
-                { keys: ['strength training'], response: "Strength training improves metabolism, mobility, muscle strength, posture, and long-term health." },
-                { keys: ['12 weeks', 'consistency'], response: "Consistency can be maintained through structured workouts, realistic goals, progress tracking, and proper recovery." },
-                { keys: ['mental barrier'], response: "Mental barriers such as fear, lack of confidence, and self-doubt often stop people from pushing their physical limits." },
-                { keys: ['ambience'], response: "A motivating environment improves focus, consistency, and overall workout performance." },
-                { keys: ['fat loss', 'weight loss'], response: "Weight loss includes losing fat, muscle, and water, while fat loss specifically focuses on reducing body fat." },
-                { keys: ['5 km', 'discipline'], response: "Running daily teaches consistency, structured habits, and the importance of discipline in fitness." },
-                { keys: ['discipline', 'motivation'], response: "Motivation can fluctuate, but discipline ensures consistent actions and long-term results." },
-                { keys: ['fail'], response: "Most transformations fail due to unrealistic expectations, lack of structure, and inconsistent habits." },
-                { keys: ['willpower'], response: "Willpower fades over time, while structured routines and accountability help maintain consistency." },
-                { keys: ['trial and error'], response: "Trying random workout plans without structure leads to slow progress and frustration." },
-                { keys: ['progress tracking', 'tracking'], response: "Tracking progress makes improvements visible, which encourages people to stay consistent." },
-                { keys: ['premium fitness environment'], response: "Premium environments provide better equipment, guidance, and motivation, which leads to consistent progress." },
-                { keys: ['price', 'cost'], response: "Our premium plans start at ₹1,499/month. You can find more details in the Pricing section!" }
-            ];
-
-            const found = qaPairs.find(qa => qa.keys.some(key => lowerInput.includes(key)));
-            if (found) {
-                botResponse = found.response;
-            }
-
-            setMessages(prev => [...prev, { text: botResponse, sender: 'bot' }]);
-        }, 800);
-
-
     };
 
     return (
