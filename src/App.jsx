@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import './index.css';
 import Home from './components/Home';
 import Admin from './components/Admin';
 import Chatbot from './components/Chatbot';
+import RegisterPage from './components/RegisterPage';
 
 function App() {
+    const location = useLocation();
+    const isAdminPage = location.pathname.startsWith('/admin');
+
     useEffect(() => {
         // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
@@ -81,7 +85,7 @@ function App() {
                 <Route path="/admin" element={<Admin />} />
             </Routes>
 
-            <Chatbot />
+            {!isAdminPage && <Chatbot />}
         </>
     );
 }

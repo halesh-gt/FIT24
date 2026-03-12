@@ -119,8 +119,8 @@ const Admin = () => {
         <div className="admin-container">
             <aside className="admin-sidebar">
                 <div className="sidebar-top">
-                    <div className="admin-logo">
-                        <span className="logo-accent">FIT</span>24 <span className="logo-tag">PRO</span>
+                    <div className="admin-logo-brand">
+                        <img src="/img/logo.png" alt="FIT24" className="admin-side-logo" />
                     </div>
 
                     <div className="admin-profile-card">
@@ -138,15 +138,6 @@ const Admin = () => {
                     </button>
                     <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
                         <Users size={20} /> <span>Registered Users</span>
-                    </button>
-                    <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => setActiveTab('payments')}>
-                        <CreditCard size={20} /> <span>Memberships</span>
-                    </button>
-                    <button className={activeTab === 'plans' ? 'active' : ''} onClick={() => setActiveTab('plans')}>
-                        <Layout size={20} /> <span>Gym Plans</span>
-                    </button>
-                    <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
-                        <UserPlus size={20} /> <span>Trainers</span>
                     </button>
                     <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => setActiveTab('memberForms')}>
                         <ClipboardList size={20} /> <span>Member Forms</span>
@@ -482,15 +473,17 @@ const Admin = () => {
                     border-bottom: 1px solid rgba(255,255,255,0.02);
                 }
 
-                .admin-logo {
-                    font-size: 1.5rem;
-                    font-weight: 800;
-                    margin-bottom: 25px;
-                    text-align: center;
-                    font-family: 'Outfit', sans-serif !important;
+                .admin-logo-brand {
+                    margin-bottom: 30px;
+                    text-align: left;
                 }
-                .logo-accent { color: var(--admin-red); }
-                .logo-tag { font-size: 0.6rem; background: var(--admin-red); color: #000; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 4px; }
+
+                .admin-side-logo {
+                    width: 100%;
+                    max-width: 180px;
+                    height: auto;
+                    display: block;
+                }
 
                 .admin-profile-card {
                     display: flex;
@@ -520,9 +513,10 @@ const Admin = () => {
                 .p-role { font-size: 0.6rem; color: var(--admin-red); font-weight: 700; text-transform: uppercase; }
 
                 .admin-nav-sidebar {
-                    padding: 20px 0;
+                    padding: 10px 0;
                     display: flex;
                     flex-direction: column;
+                    justify-content: flex-start !important;
                     gap: 4px;
                     flex: 1;
                     /* Reset global nav interference */
@@ -535,7 +529,7 @@ const Admin = () => {
                     display: flex;
                     align-items: center;
                     gap: 12px;
-                    padding: 14px 25px;
+                    padding: 12px 25px;
                     border: none;
                     background: transparent !important;
                     color: var(--admin-muted) !important;
