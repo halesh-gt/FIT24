@@ -25,10 +25,11 @@
             <li><a href="#schedule">Schedule</a></li>
             <li><a href="#trainers">Trainers</a></li>
             <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#bmi">BMI Calculator</a></li>
+            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+            <li><a href="#contact">Contact Us</a></li>
         </ul>
         <div id="authActions" class="nav-actions">
-            <a href="#contact" class="nav-cta ghost" style="text-decoration: none; padding: 10px 20px;">Contact Us</a>
+            <!-- Auth actions will be injected here -->
         </div>
         <div id="userProfile">
             <span id="userNameDisplay">John Doe</span>
@@ -693,41 +694,48 @@
                 <span style="display:inline-block; width:30px; height:2px; background:var(--red);"></span>
                 Get In Touch
             </span>
-            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5rem); letter-spacing: 2px; color: var(--white); line-height: 1;">CONTACT <span style="-webkit-text-stroke: 2px var(--white); color: transparent;">US</span></h2>
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5rem); letter-spacing: 2px; color: var(--white); line-height: 1;">CONTACT US</h2>
             <p style="color: var(--muted); margin-top: 16px; font-size: 1rem;">We're here for you — anytime, any day.</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto;">
 
-            <!-- Phone Card -->
-            <div style="background: #111; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;" onmouseover="this.style.borderColor='var(--red)'; this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'; this.style.transform='translateY(0)'">
-                <div style="width: 64px; height: 64px; background: rgba(253,224,71,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                    <i class="fa-solid fa-phone" style="font-size: 1.5rem; color: var(--red);"></i>
+            <!-- Contact Card (Phone & Email) -->
+            <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">GET IN TOUCH</h3>
+                <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-phone" style="font-size: 1rem; color: #000;"></i>
+                        </div>
+                        <a href="tel:+919743777871" style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">+91 97437 77871</a>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-envelope" style="font-size: 1rem; color: #000;"></i>
+                        </div>
+                        <a href="mailto:fit24india@gmail.com" style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">fit24india@gmail.com</a>
+                    </div>
                 </div>
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: var(--white); margin-bottom: 16px;">PHONE</h3>
-                <a href="tel:+919743777871" style="color: var(--muted); text-decoration: none; font-size: 1.05rem; transition: color 0.2s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">+91 97437 77871</a>
-            </div>
-
-            <!-- Email Card -->
-            <div style="background: #111; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;" onmouseover="this.style.borderColor='var(--red)'; this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'; this.style.transform='translateY(0)'">
-                <div style="width: 64px; height: 64px; background: rgba(253,224,71,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                    <i class="fa-solid fa-envelope" style="font-size: 1.5rem; color: var(--red);"></i>
-                </div>
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: var(--white); margin-bottom: 16px;">EMAIL</h3>
-                <a href="mailto:fit24india@gmail.com" style="color: var(--muted); text-decoration: none; font-size: 1.05rem; transition: color 0.2s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">fit24india@gmail.com</a>
             </div>
 
             <!-- Address Card (clickable -> Google Maps) -->
             <a href="https://www.google.com/maps/place/Fit24+India+-+Best+gym+in+JP+Nagar/@12.9109078,77.5783034,849m/data=!3m1!1e3!4m10!1m2!2m1!1sVishnu+Tower+3rd+Floor+Above+Girias+1st+Phase+JP+Nagar+Bengaluru+Karnataka+560078!3m6!1s0x3bae1553d90b1605:0x241f0a3c847cb555!8m2!3d12.9109107!4d77.5809062!15sClFWaXNobnUgVG93ZXIgM3JkIEZsb29yIEFib3ZlIEdpcmlhcyAxc3QgUGhhc2UgSlAgTmFnYXIgQmVuZ2FsdXJ1IEthcm5hdGFrYSA1NjAwNzgiA4gBAVpTIlF2aXNobnUgdG93ZXIgM3JkIGZsb29yIGFib3ZlIGdpcmlhcyAxc3QgcGhhc2UganAgbmFnYXIgYmVuZ2FsdXJ1IGthcm5hdGFrYSA1NjAwNziSAQNneW3gAQA!16s%2Fg%2F11h4_d_v3r?entry=ttu&g_ep=EgoyMDI2MDMxMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none; display: block;">
-            <div style="background: #111; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; cursor: pointer; height: 100%;" onmouseover="this.style.borderColor='var(--red)'; this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'; this.style.transform='translateY(0)'">
-                <div style="width: 64px; height: 64px; background: rgba(253,224,71,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                    <i class="fa-solid fa-location-dot" style="font-size: 1.5rem; color: var(--red);"></i>
+            <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; cursor: pointer; height: 100%;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">OUR LOCATION</h3>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; text-align: left;">
+                    <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fa-solid fa-location-dot" style="font-size: 1.1rem; color: #000;"></i>
+                    </div>
+                    <p style="color: #000; font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 500;">9th Cross, Indra Gandhi Circle,<br>20 Vishnu Tower, 3rd Floor,<br>Above Girias, 1st Phase,<br>J.P. Nagar, Bengaluru</p>
                 </div>
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: var(--white); margin-bottom: 16px;">ADDRESS</h3>
-                <p style="color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin: 0 0 16px;">9th Cross, Indra Gandhi Circle,<br>20 Vishnu Tower, 3rd Floor,<br>Above Girias, 1st Phase,<br>J.P. Nagar, Bengaluru,<br>Karnataka 560078</p>
-                <span style="color: var(--red); font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;"><i class="fa-solid fa-map-pin" style="margin-right: 6px;"></i>Open in Maps ↗</span>
+                <div style="margin-top: 24px;">
+                    <span style="color: #000; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;"><i class="fa-solid fa-map-pin" style="margin-right: 6px;"></i>Open in Maps ↗</span>
+                </div>
             </div>
             </a>
+
+        </div>
     </section>
 
     <!-- FOOTER -->
