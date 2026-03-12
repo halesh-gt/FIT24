@@ -13,6 +13,10 @@ const __dirname = path.dirname(__filename);
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 5000;
@@ -213,6 +217,12 @@ app.get('/api/member-registrations', async (req, res) => {
 // Serve the admin registrations viewer
 app.get('/admin-registrations', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin_registrations.html'));
+});
+
+// Final 404 Handler
+app.use((req, res) => {
+    console.log(`404 - Not Found: ${req.method} ${req.url}`);
+    res.status(404).send(`Cannot ${req.method} ${req.url} - FIT24 Backend Diagnostics`);
 });
 
 app.listen(PORT, () => {
