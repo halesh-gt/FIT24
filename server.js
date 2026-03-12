@@ -196,8 +196,9 @@ app.post('/api/member-register', async (req, res) => {
 
         res.status(201).json({ message: 'Member registration successful!', registrationId: result.insertId });
     } catch (error) {
-        console.error('Member Register error:', error);
-        res.status(500).json({ message: 'Server error during member registration.' });
+        console.error('Member Register error Details:', error);
+        console.log('Received data:', req.body);
+        res.status(500).json({ message: 'Server error during member registration.', error: error.message });
     }
 });
 
