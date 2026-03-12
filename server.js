@@ -2,67 +2,53 @@ import express from 'express';
 import mysql from 'mysql2/promise';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 5000;
 
 // Database Connection Setup
 let pool;
-
-async function setupDatabase() {
-    try {
-        // First, connect without specifying a database to ensure the database exists
-        const connection = await mysql.createConnection({
-            host: process.env.DB_HOST || 'localhost',
-            user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || 'Rohan@23'
-        });
-
-        const dbName = process.env.DB_NAME || 'fit24db';
-        await connection.query(`CREATE DATABASE IF NOT EXISTS ${dbName}`);
-        await connection.end();
-
-        // Now create the pool with the database specified
-        pool = mysql.createPool({
-            host: process.env.DB_HOST || 'localhost',
-            user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || 'Rohan@23',
-            database: dbName,
-            waitForConnections: true,
-            connectionLimit: 10,
-            queueLimit: 0
-        });
-
-        console.log(`MySQL connection pool created for database: ${dbName}`);
-
-        // Initialize tables after pool is ready
-        initDB();
-    } catch (error) {
-        console.error('Failed to setup database:', error);
-    }
+try {
+    pool = mysql.createPool({
+        host: process.env.DB_HOST || 'localhost',
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || 'Root',
+        database: process.env.DB_NAME || 'fit24db',
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0
+    });
+    console.log('MySQL connection pool created.');
+} catch (error) {
+    console.error('Failed to create MySQL pool:', error);
 }
-
-setupDatabase();
 
 // Ensure tables exist on startup
 async function initDB() {
     try {
         const connection = await pool.getConnection();
 
-        // Create users table (don't drop it if it exists, to preserve data)
+        await connection.query('DROP TABLE IF EXISTS users');
+
+        // Create users table
         await connection.query(`
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         phone VARCHAR(20) NOT NULL,
         password VARCHAR(255) NOT NULL,
-        role VARCHAR(50) DEFAULT 'user',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -79,51 +65,20 @@ async function initDB() {
       )
     `);
 
-        // Create plans table
+        // Create member_registrations table
         await connection.query(`
-      CREATE TABLE IF NOT EXISTS plans (
+      CREATE TABLE IF NOT EXISTS member_registrations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        price INT NOT NULL,
-        period VARCHAR(255) NOT NULL,
-        features TEXT NOT NULL,
-        is_featured BOOLEAN DEFAULT FALSE
+        address TEXT NOT NULL,
+        primary_phone VARCHAR(20) NOT NULL,
+        secondary_phone VARCHAR(20),
+        email VARCHAR(255) NOT NULL,
+        dob DATE NOT NULL,
+        signature LONGTEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-
-        // Create trainers table
-        await connection.query(`
-      CREATE TABLE IF NOT EXISTS trainers (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        specialization VARCHAR(255) NOT NULL,
-        experience VARCHAR(255) NOT NULL,
-        certifications TEXT NOT NULL,
-        image_url VARCHAR(255) DEFAULT '../public/img/trainer_1.png'
-      )
-    `);
-
-        // Seed initial data if tables are empty
-        const [plans] = await connection.query('SELECT COUNT(*) as count FROM plans');
-        if (plans[0].count === 0) {
-            await connection.query(`
-                INSERT INTO plans (name, price, period, features, is_featured) VALUES 
-                ('1 Month', 4999, 'Monthly Package', 'Gym Floor Access,Locker Room & Showers,FIT24 App Access,24/7 Gym Entry', FALSE),
-                ('3 Months', 12000, 'Quarterly Package', 'Gym Floor Access,Locker Room & Showers,2 Group Classes/Month,FIT24 App Access,24/7 Gym Entry', FALSE),
-                ('6 Months', 22999, 'Semi-Annual Package', 'Unlimited Group Classes,1 PT Session/Month,Nutrition Consultation,Guest Pass (2/month),Priority Class Booking', TRUE),
-                ('1 Year', 39999, 'Annual Package', '4 PT Sessions/Month,Custom Training Plan,Body Composition Analysis,Recovery Suite Access,Unlimited Guest Passes', FALSE)
-            `);
-        }
-
-        const [trainers] = await connection.query('SELECT COUNT(*) as count FROM trainers');
-        if (trainers[0].count === 0) {
-            await connection.query(`
-                INSERT INTO trainers (name, specialization, experience, certifications, image_url) VALUES 
-                ('Rahul Sharma', 'Bodybuilding & Weight Loss', '10+ YEARS EXP', 'ACE Certified Personal Trainer,Precision Nutrition Level 1,Strength & Conditioning Specialist', '../public/img/trainer_1.png'),
-                ('Priya Desai', 'Yoga & Functional Mobility', '7 YEARS EXP', 'RYT 500 Certified Yoga Instructor,FMS Certified Level 2,Holistic Wellness Coach', '../public/img/trainer_2.png'),
-                ('Vikram Singh', 'CrossFit & Powerlifting', '12 YEARS EXP', 'CrossFit Level 3 Coach,USAW Sports Performance Coach,Advanced First Aid / CPR', '../public/img/trainer_3.png')
-            `);
-        }
 
         connection.release();
         console.log('Database tables verified/created successfully.');
@@ -132,6 +87,8 @@ async function initDB() {
     }
 }
 
+initDB();
+
 // API Routes
 
 // Register
@@ -139,6 +96,7 @@ app.post('/api/register', async (req, res) => {
     try {
         const { username, email, phone, password } = req.body;
 
+        // Basic validation
         if (!username || !email || !phone || !password) {
             return res.status(400).json({ message: 'All fields are required.' });
         }
@@ -148,15 +106,12 @@ app.post('/api/register', async (req, res) => {
             return res.status(400).json({ message: 'Email is already registered.' });
         }
 
-        const [userCount] = await pool.query('SELECT COUNT(*) as count FROM users');
-        const role = userCount[0].count === 0 ? 'admin' : 'user';
-
         const [result] = await pool.query(
-            'INSERT INTO users (username, email, phone, password, role) VALUES (?, ?, ?, ?, ?)',
-            [username, email, phone, password, role]
+            'INSERT INTO users (username, email, phone, password) VALUES (?, ?, ?, ?)',
+            [username, email, phone, password]
         );
 
-        res.status(201).json({ message: 'Registration successful!', userId: result.insertId, isAdmin: role === 'admin' });
+        res.status(201).json({ message: 'Registration successful!', userId: result.insertId });
     } catch (error) {
         console.error('Register error:', error);
         res.status(500).json({ message: 'Server error during registration.' });
@@ -180,11 +135,12 @@ app.post('/api/login', async (req, res) => {
 
         const user = users[0];
 
+        // Note: In a real app, you should hash logic (e.g. bcrypt) for password comparison
         if (user.password !== password) {
             return res.status(401).json({ message: 'Invalid email or password.' });
         }
 
-        res.status(200).json({ message: 'Login successful!', user: { id: user.id, username: user.username, email: user.email, role: user.role } });
+        res.status(200).json({ message: 'Login successful!', user: { id: user.id, username: user.username, email: user.email } });
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ message: 'Server error during login.' });
@@ -212,83 +168,51 @@ app.post('/api/payment', async (req, res) => {
     }
 });
 
-// Admin API Endpoints
-
-// Get all users
-app.get('/api/admin/users', async (req, res) => {
+// Member Registration API
+app.post('/api/member-register', async (req, res) => {
     try {
-        const [users] = await pool.query('SELECT id, username, email, phone, role, created_at FROM users');
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching users' });
-    }
-});
+        const { name, address, primaryPhone, secondaryPhone, email, dob, signature } = req.body;
 
-// Get all payments
-app.get('/api/admin/payments', async (req, res) => {
-    try {
-        const [payments] = await pool.query('SELECT * FROM payments ORDER BY created_at DESC');
-        res.json(payments);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching payments' });
-    }
-});
+        if (!name || !address || !primaryPhone || !email || !dob) {
+            return res.status(400).json({ message: 'Required fields are missing.' });
+        }
 
-// Plans Management
-app.get('/api/plans', async (req, res) => {
-    try {
-        const [plans] = await pool.query('SELECT * FROM plans');
-        res.json(plans);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching plans' });
-    }
-});
-
-app.put('/api/admin/plans/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { price, features, name, period } = req.body;
-        await pool.query(
-            'UPDATE plans SET price = ?, features = ?, name = ?, period = ? WHERE id = ?',
-            [price, features, name, period, id]
+        const [result] = await pool.query(
+            'INSERT INTO member_registrations (name, address, primary_phone, secondary_phone, email, dob, signature) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [name, address, primaryPhone, secondaryPhone, email, dob, signature]
         );
-        res.json({ message: 'Plan updated' });
+
+        res.status(201).json({ message: 'Member registration successful!', registrationId: result.insertId });
     } catch (error) {
-        res.status(500).json({ message: 'Error updating plan' });
+        console.error('Member Register error:', error);
+        res.status(500).json({ message: 'Server error during member registration.' });
     }
 });
 
-// Trainers Management
-app.get('/api/trainers', async (req, res) => {
+// Serve the registration form at a specific URL
+app.get('/register-form', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register_form.html'));
+});
+
+// Simple test route
+app.get('/api/test', (req, res) => {
+    res.json({ message: 'Server is working!', time: new Date() });
+});
+
+// Admin API to fetch all registrations
+app.get('/api/member-registrations', async (req, res) => {
     try {
-        const [trainers] = await pool.query('SELECT * FROM trainers');
-        res.json(trainers);
+        const [rows] = await pool.query('SELECT * FROM member_registrations ORDER BY created_at DESC');
+        res.status(200).json(rows);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching trainers' });
+        console.error('Fetch Registrations error:', error);
+        res.status(500).json({ message: 'Server error during fetching registrations.' });
     }
 });
 
-app.post('/api/admin/trainers', async (req, res) => {
-    try {
-        const { name, specialization, experience, certifications, image_url } = req.body;
-        await pool.query(
-            'INSERT INTO trainers (name, specialization, experience, certifications, image_url) VALUES (?, ?, ?, ?, ?)',
-            [name, specialization, experience, certifications, image_url]
-        );
-        res.status(201).json({ message: 'Trainer added' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error adding trainer' });
-    }
-});
-
-app.delete('/api/admin/trainers/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        await pool.query('DELETE FROM trainers WHERE id = ?', [id]);
-        res.json({ message: 'Trainer deleted' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error deleting trainer' });
-    }
+// Serve the admin registrations viewer
+app.get('/admin-registrations', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'admin_registrations.html'));
 });
 
 app.listen(PORT, () => {
