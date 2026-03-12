@@ -246,7 +246,7 @@
                         <li>Recovery Suite Access</li>
                         <li>24/7 Gym Entry</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Inquiry sent for 1 Month plan')">Get Started</button>
+                    <button class="btn-plan" onclick="openChatWithPlan('1 Month')">Get Started</button>
                     <div class="recommend-badge">RECOMMENDED</div>
                 </div>
                 <div class="plan-card" id="package-3">
@@ -258,7 +258,7 @@
                         <li>FIT24 App Access</li>
                         <li>24/7 Gym Entry</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Inquiry sent for 3 Months plan')">Get Started</button>
+                    <button class="btn-plan" onclick="openChatWithPlan('3 Months')">Get Started</button>
                     <div class="recommend-badge">RECOMMENDED</div>
                 </div>
                 <div class="plan-card featured" id="package-6">
@@ -270,7 +270,7 @@
                         <li>Guest Pass (2/month)</li>
                         <li>Priority Class Booking</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Inquiry sent for 6 Months plan')">Get Started</button>
+                    <button class="btn-plan" onclick="openChatWithPlan('6 Months')">Get Started</button>
                     <div class="recommend-badge">RECOMMENDED</div>
                 </div>
                 <div class="plan-card" id="package-12">
@@ -282,7 +282,7 @@
                         <li>Recovery Suite Access</li>
                         <li>Unlimited Guest Passes</li>
                     </ul>
-                    <button class="btn-plan" onclick="alert('Inquiry sent for 1 Year plan')">Get Started</button>
+                    <button class="btn-plan" onclick="openChatWithPlan('1 Year')">Get Started</button>
                     <div class="recommend-badge">RECOMMENDED</div>
                 </div>
             </div>
@@ -334,8 +334,143 @@
         </div>
     </footer>
 
+    <!-- WhatsApp Form Window -->
+    <div id="chatWindow" style="position: fixed; bottom: 100px; right: 30px; width: 360px; background-color: #ffffff; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 9999; border: 1px solid #eee; height: auto; padding: 25px; flex-direction: column; gap: 10px; color: #333; opacity: 0; pointer-events: none; display: flex; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform: translateY(20px);">
+        <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; color: #25D366; font-family: 'Barlow', sans-serif;">WhatsApp Enquiry</h3>
+        <p style="margin: 0 0 20px 0; font-size: 0.9rem; color: #666; font-family: 'Barlow', sans-serif;">Please fill in your details to connect with us on WhatsApp.</p>
+        
+        <div id="enquirySuccess" style="display: none; text-align: center; padding: 20px 0;">
+            <p style="color: #25D366; font-weight: bold;">Thank you!</p>
+            <p>Redirecting to WhatsApp...</p>
+        </div>
+
+        <form id="whatsappForm" style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Full Name</label>
+                <input type="text" id="waName" required placeholder="Enter your name" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Email Address</label>
+                <input type="email" id="waEmail" required placeholder="Enter your email" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Contact Number</label>
+                <input type="tel" id="waPhone" required placeholder="Enter contact number" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
+            </div>
+            <button type="submit" 
+                style="background-color: #25D366; color: #fff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
+                Submit & Chat
+            </button>
+        </form>
+    </div>
+
+    <!-- Chatbot Button -->
+    <button id="chatToggle" onclick="toggleChat()" aria-label="Toggle WhatsApp Chat"
+        style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: #25D366; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 9999; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <i class="fa-brands fa-whatsapp" style="font-size: 32px;" id="chatIcon"></i>
+    </button>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        // WhatsApp Form functionality
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const chatIcon = document.getElementById('chatIcon');
+            const isOpen = chatWindow.style.opacity === '1';
+
+            if (!isOpen) {
+                chatWindow.style.opacity = '1';
+                chatWindow.style.pointerEvents = 'auto';
+                chatWindow.style.transform = 'translateY(0)';
+                chatIcon.className = 'fa-solid fa-xmark';
+                chatIcon.style.fontSize = '24px';
+            } else {
+                chatWindow.style.opacity = '0';
+                chatWindow.style.pointerEvents = 'none';
+                chatWindow.style.transform = 'translateY(20px)';
+                chatIcon.className = 'fa-brands fa-whatsapp';
+                chatIcon.style.fontSize = '32px';
+            }
+        }
+
+        let selectedPlan = '';
+        function openChatWithPlan(plan) {
+            selectedPlan = plan;
+            const chatWindow = document.getElementById('chatWindow');
+            if (chatWindow.style.opacity !== '1') {
+                toggleChat();
+            }
+            chatWindow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        const whatsappForm = document.getElementById('whatsappForm');
+        const enquirySuccess = document.getElementById('enquirySuccess');
+
+        whatsappForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('waName').value.trim();
+            const email = document.getElementById('waEmail').value.trim();
+            const phone = document.getElementById('waPhone').value.trim();
+
+            // Clean phone number - remove spaces, dashes, +, and ensure country code
+            const cleanPhone = phone.replace(/[\s\-\+]/g, '');
+            const phoneWithCode = cleanPhone.startsWith('91') && cleanPhone.length === 12 
+                ? cleanPhone 
+                : '91' + cleanPhone.slice(-10);
+
+            const msgText = selectedPlan 
+                ? `Hello, my name is ${name}. I hope you are doing well. I would like to kindly enquire about the *${selectedPlan}* plan available at FIT24.\n\nCould you please share more details regarding the program, membership options, and any other relevant information?\n\nThank you, and I look forward to your response.`
+                : `Hello, my name is ${name}. I hope you are doing well. I would like to kindly enquire about the fitness programs available at FIT24.\n\nCould you please share more details regarding the available programs, membership options, and any other relevant information?\n\nThank you, and I look forward to your response.`;
+
+            const leadData = { 
+                name, 
+                email, 
+                phone: phoneWithCode
+            };
+
+            // Save to database
+            try {
+                await fetch('http://localhost:5000/api/chatbot-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(leadData)
+                });
+            } catch (err) {
+                console.error("Failed to save lead:", err);
+            }
+
+            // Show success message
+            whatsappForm.style.display = 'none';
+            enquirySuccess.style.display = 'flex';
+            enquirySuccess.style.flexDirection = 'column';
+
+            const whatsappMsg = encodeURIComponent(msgText);
+            const whatsappUrl = `https://wa.me/919743777871?text=${whatsappMsg}`;
+
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+                // Close the chat window
+                const chatWindow = document.getElementById('chatWindow');
+                const chatIcon = document.getElementById('chatIcon');
+                chatWindow.style.opacity = '0';
+                chatWindow.style.pointerEvents = 'none';
+                chatWindow.style.transform = 'translateY(20px)';
+                chatIcon.className = 'fa-brands fa-whatsapp';
+                chatIcon.style.fontSize = '32px';
+                // Reset form
+                setTimeout(() => {
+                    whatsappForm.reset();
+                    whatsappForm.style.display = 'flex';
+                    enquirySuccess.style.display = 'none';
+                    selectedPlan = '';
+                }, 400);
+            }, 1500);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
             let currentUnit = 'imperial';
             let currentGender = 'male';
 

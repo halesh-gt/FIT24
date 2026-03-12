@@ -9,6 +9,7 @@ const Admin = () => {
     const [trainers, setTrainers] = useState([]);
     const [editingPlan, setEditingPlan] = useState(null);
     const [memberRegistrations, setMemberRegistrations] = useState([]);
+    const [chatbotLeads, setChatbotLeads] = useState([]);
     const [newTrainer, setNewTrainer] = useState({
         name: '',
         specialization: '',
@@ -29,6 +30,7 @@ const Admin = () => {
         fetchPlans();
         fetchTrainers();
         fetchMemberRegistrations();
+        fetchChatbotLeads();
     };
 
     const fetchUsers = async () => {
@@ -78,6 +80,14 @@ const Admin = () => {
             setMemberRegistrations(data);
         } catch (err) { console.error(err); }
     };
+    
+    const fetchChatbotLeads = async () => {
+        try {
+            const res = await fetch(`http://localhost:5000/api/chatbot-leads`);
+            const data = await res.json();
+            setChatbotLeads(data);
+        } catch (err) { console.error(err); }
+    };
 
     const handleUpdatePlan = async (e) => {
         e.preventDefault();
@@ -119,8 +129,8 @@ const Admin = () => {
         <div className="admin-container">
             <aside className="admin-sidebar">
                 <div className="sidebar-top">
-                    <div className="admin-logo">
-                        <span className="logo-accent">FIT</span>24 <span className="logo-tag">PRO</span>
+                    <div className="admin-logo-brand">
+                        <img src="/img/logo.png" alt="FIT24" className="admin-side-logo" />
                     </div>
 
                     <div className="admin-profile-card">
@@ -138,6 +148,9 @@ const Admin = () => {
                     </button>
                     <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
                         <Users size={20} /> <span>Registered Users</span>
+                    </button>
+                    <button className={activeTab === 'whatsappLeads' ? 'active' : ''} onClick={() => setActiveTab('whatsappLeads')}>
+                        <Activity size={20} style={{ color: '#25D366' }} /> <span>WhatsApp Leads</span>
                     </button>
                     <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => setActiveTab('payments')}>
                         <CreditCard size={20} /> <span>Memberships</span>
@@ -433,6 +446,48 @@ const Admin = () => {
                             </table>
                         </div>
                     )}
+                    {activeTab === 'whatsappLeads' && (
+                        <div className="admin-card table-section">
+                            <div className="table-header-v2">
+                                <h3 style={{ color: '#25D366' }}>WhatsApp Enquiries</h3>
+                                <p className="table-subtitle">Leads captured via the floating WhatsApp button</p>
+                            </div>
+                            <table className="pro-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {chatbotLeads.map(lead => (
+                                        <tr key={lead.id}>
+                                            <td className="date-cell">
+                                                <span className="d-date">{new Date(lead.created_at).toLocaleDateString()}</span>
+                                                <span className="d-time">{new Date(lead.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                                            </td>
+                                            <td><strong>{lead.name}</strong></td>
+                                            <td>{lead.email}</td>
+                                            <td>{lead.phone}</td>
+                                            <td>
+                                                <span style={{ fontSize: '0.7rem', background: 'rgba(37, 211, 102, 0.1)', color: '#25D366', padding: '4px 10px', borderRadius: '4px', fontWeight: '800' }}>SENT</span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {chatbotLeads.length === 0 && (
+                                        <tr>
+                                            <td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.2)' }}>
+                                                No WhatsApp enquiries found.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
             </main>
 
@@ -482,15 +537,17 @@ const Admin = () => {
                     border-bottom: 1px solid rgba(255,255,255,0.02);
                 }
 
-                .admin-logo {
-                    font-size: 1.5rem;
-                    font-weight: 800;
-                    margin-bottom: 25px;
-                    text-align: center;
-                    font-family: 'Outfit', sans-serif !important;
+                .admin-logo-brand {
+                    margin-bottom: 30px;
+                    text-align: left;
                 }
-                .logo-accent { color: var(--admin-red); }
-                .logo-tag { font-size: 0.6rem; background: var(--admin-red); color: #000; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 4px; }
+
+                .admin-side-logo {
+                    width: 100%;
+                    max-width: 180px;
+                    height: auto;
+                    display: block;
+                }
 
                 .admin-profile-card {
                     display: flex;
@@ -520,9 +577,10 @@ const Admin = () => {
                 .p-role { font-size: 0.6rem; color: var(--admin-red); font-weight: 700; text-transform: uppercase; }
 
                 .admin-nav-sidebar {
-                    padding: 20px 0;
+                    padding: 10px 0;
                     display: flex;
                     flex-direction: column;
+                    justify-content: flex-start !important;
                     gap: 4px;
                     flex: 1;
                     /* Reset global nav interference */
@@ -535,7 +593,7 @@ const Admin = () => {
                     display: flex;
                     align-items: center;
                     gap: 12px;
-                    padding: 14px 25px;
+                    padding: 12px 25px;
                     border: none;
                     background: transparent !important;
                     color: var(--admin-muted) !important;

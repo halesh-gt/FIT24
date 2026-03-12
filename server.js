@@ -23,7 +23,7 @@ try {
     pool = mysql.createPool({
         host: process.env.DB_HOST || 'localhost',
         user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || 'root',
+        password: process.env.DB_PASSWORD || 'Rohan@23',
         database: process.env.DB_NAME || 'fit24db',
         waitForConnections: true,
         connectionLimit: 10,
@@ -39,16 +39,15 @@ async function initDB() {
     try {
         const connection = await pool.getConnection();
 
-        await connection.query('DROP TABLE IF EXISTS users');
-
         // Create users table
         await connection.query(`
-      CREATE TABLE users (
+      CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
         email VARCHAR(255) UNIQUE NOT NULL,
         phone VARCHAR(20) NOT NULL,
         password VARCHAR(255) NOT NULL,
+        role VARCHAR(50) DEFAULT 'member',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
@@ -91,10 +90,11 @@ async function initDB() {
       )
     `);
 
+
         connection.release();
-        console.log('Database tables verified/created successfully.');
+        console.log('✅ Database tables verified/created successfully.');
     } catch (error) {
-        console.error('Database initialization error:', error);
+        console.error('❌ Database initialization error:', error);
     }
 }
 
@@ -196,8 +196,9 @@ app.post('/api/member-register', async (req, res) => {
 
         res.status(201).json({ message: 'Member registration successful!', registrationId: result.insertId });
     } catch (error) {
-        console.error('Member Register error:', error);
-        res.status(500).json({ message: 'Server error during member registration.' });
+        console.error('Member Register error Details:', error);
+        console.log('Received data:', req.body);
+        res.status(500).json({ message: 'Server error during member registration.', error: error.message });
     }
 });
 
@@ -240,6 +241,17 @@ app.get('/api/member-registrations', async (req, res) => {
     } catch (error) {
         console.error('Fetch Registrations error:', error);
         res.status(500).json({ message: 'Server error during fetching registrations.' });
+    }
+});
+
+// Admin API to fetch chatbot leads
+app.get('/api/chatbot-leads', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT * FROM chatbot_leads ORDER BY created_at DESC');
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Fetch Chatbot Leads error:', error);
+        res.status(500).json({ message: 'Server error during fetching leads.' });
     }
 });
 
