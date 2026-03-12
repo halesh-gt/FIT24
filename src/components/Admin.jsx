@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-<<<<<<< HEAD
 import { Users, CreditCard, Layout, UserPlus, Trash2, Edit2, Save, X, Activity, TrendingUp, DollarSign, LogOut, ClipboardList } from 'lucide-react';
-=======
-import { Users, CreditCard, Layout, UserPlus, Trash2, Edit2, LogOut, Activity, TrendingUp, DollarSign } from 'lucide-react';
->>>>>>> dd98fb8513765d3970314bc72a2419cff3f9fd3a
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('dashboard');
@@ -152,44 +148,16 @@ const Admin = () => {
                     <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
                         <UserPlus size={20} /> <span>Trainers</span>
                     </button>
+                    <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => setActiveTab('memberForms')}>
+                        <ClipboardList size={20} /> <span>Member Forms</span>
+                    </button>
                 </nav>
 
-<<<<<<< HEAD
-                <div className="sidebar-footer">
-                    <div className="footer-top">
-                        <a href="/" className="back-link">
-                            <LogOut size={16} />
-                            <span>Sign Out</span>
-                        </a>
-                    </div>
-                    
-                    <nav className="admin-nav">
-                        <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')}>
-                            <Activity size={18} /> <span>Dashboard</span>
-                        </button>
-                        <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
-                            <Users size={18} /> <span>Registered Users</span>
-                        </button>
-                        <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => setActiveTab('payments')}>
-                            <CreditCard size={18} /> <span>Memberships</span>
-                        </button>
-                        <button className={activeTab === 'plans' ? 'active' : ''} onClick={() => setActiveTab('plans')}>
-                            <Layout size={18} /> <span>Gym Plans</span>
-                        </button>
-                        <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
-                            <UserPlus size={18} /> <span>Trainers</span>
-                        </button>
-                        <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => setActiveTab('memberForms')}>
-                            <ClipboardList size={18} /> <span>Member Forms</span>
-                        </button>
-                    </nav>
-=======
                 <div className="sidebar-bottom">
                     <a href="/" className="back-link">
                         <LogOut size={18} />
                         <span>Sign Out</span>
                     </a>
->>>>>>> dd98fb8513765d3970314bc72a2419cff3f9fd3a
                 </div>
             </aside>
 
@@ -300,7 +268,6 @@ const Admin = () => {
                             </table>
                         </div>
                     )}
-<<<<<<< HEAD
 
                     {activeTab === 'payments' && (
                         <div className="admin-card table-section">
@@ -466,8 +433,6 @@ const Admin = () => {
                             </table>
                         </div>
                     )}
-=======
->>>>>>> dd98fb8513765d3970314bc72a2419cff3f9fd3a
                 </div>
             </main>
 
@@ -647,22 +612,17 @@ const Admin = () => {
                 .feed-content p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin: 0; }
                 .feed-price { margin-left: auto; color: #4CAF50; font-weight: 700; }
 
-<<<<<<< HEAD
                 .side-panels { display: flex; flex-direction: column; gap: 20px; }
                 .info-card h4 { font-size: 0.9rem; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 20px; font-weight: 600; letter-spacing: 0.5px; }
                 .mini-roster { display: flex; flex-wrap: wrap; gap: 10px; }
                 .m-trainer { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.02); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.03); }
-                .m-t-avatar { width: 20px; height: 20px; background: var(--red); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 900; }
-                .popular-plans { display: flex; flex-direction: column; gap: 15px; }
-                .p-item { display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; }
-                .p-bar { height: 4px; background: rgba(255,255,255,0.03); border-radius: 2px; }
-                .p-fill { height: 100%; background: var(--yellow); border-radius: 2px; opacity: 0.8; }
-
+                .m-t-avatar { width: 20px; height: 20px; background: var(--admin-red); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 900; }
+                
                 /* TABLES */
                 .table-section { padding: 40px; }
                 .table-header-v2 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
                 .search-input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 12px 20px; border-radius: 12px; color: #fff; width: 280px; outline: none; transition: 0.3s; }
-                .search-input:focus { border-color: var(--yellow); background: rgba(255,255,255,0.05); }
+                .search-input:focus { border-color: var(--admin-yellow); background: rgba(255,255,255,0.05); }
                 .pro-table { width: 100%; border-collapse: collapse; }
                 .pro-table th { text-align: left; padding: 15px; font-size: 0.7rem; color: rgba(255,255,255,0.3); text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; }
                 .pro-table td { padding: 20px 15px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.9rem; }
@@ -677,9 +637,7 @@ const Admin = () => {
                 .address-cell { max-width: 200px; white-space: normal; line-height: 1.4; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
                 .signature-preview { width: 100px; height: 50px; background: rgba(255,255,255,0.02); border-radius: 6px; padding: 4px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; cursor: zoom-in; }
                 .signature-preview img { width: 100%; height: 100%; object-fit: contain; filter: invert(1) brightness(2); }
-=======
                 .empty-msg { color: var(--admin-muted); font-size: 0.9rem; text-align: center; padding: 20px; }
->>>>>>> dd98fb8513765d3970314bc72a2419cff3f9fd3a
             `}</style>
         </div>
     );
