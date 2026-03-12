@@ -12,7 +12,8 @@ const Navbar = () => {
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#bmi">BMI Calculator</a></li>
             </ul>
-            <div id="authActions" style={{ display: 'none' }}>
+            <div id="authActions" className="nav-actions">
+                <a href="#footer" className="nav-cta ghost" style={{ textDecoration: 'none', padding: '10px 20px' }}>Contact Us</a>
             </div>
             <div id="userProfile">
                 <span id="userNameDisplay">John Doe</span>
