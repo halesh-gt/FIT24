@@ -163,11 +163,7 @@ function App() {
             </section>
 
             <Footer />
-
-            <div className="open-badge">
-                <div className="open-dot"></div>
-                <div className="open-text">We are open 24/7</div>
-            </div>
+            <Chatbot />
         </>
     );
 }
