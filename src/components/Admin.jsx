@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, CreditCard, Layout, UserPlus, Trash2, Edit2, Save, X, Activity, TrendingUp, DollarSign, LogOut } from 'lucide-react';
+import { Users, CreditCard, Layout, UserPlus, Trash2, Edit2, Save, X, Activity, TrendingUp, DollarSign, LogOut, ClipboardList } from 'lucide-react';
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('dashboard');
@@ -8,6 +8,7 @@ const Admin = () => {
     const [plans, setPlans] = useState([]);
     const [trainers, setTrainers] = useState([]);
     const [editingPlan, setEditingPlan] = useState(null);
+    const [memberRegistrations, setMemberRegistrations] = useState([]);
     const [newTrainer, setNewTrainer] = useState({
         name: '',
         specialization: '',
@@ -27,6 +28,7 @@ const Admin = () => {
         fetchPayments();
         fetchPlans();
         fetchTrainers();
+        fetchMemberRegistrations();
     };
 
     const fetchUsers = async () => {
@@ -58,6 +60,14 @@ const Admin = () => {
             const res = await fetch(`${API_URL}/trainers`);
             const data = await res.json();
             setTrainers(data);
+        } catch (err) { console.error(err); }
+    };
+
+    const fetchMemberRegistrations = async () => {
+        try {
+            const res = await fetch(`http://localhost:5000/api/member-registrations`);
+            const data = await res.json();
+            setMemberRegistrations(data);
         } catch (err) { console.error(err); }
     };
 
@@ -139,6 +149,9 @@ const Admin = () => {
                         </button>
                         <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
                             <UserPlus size={18} /> <span>Trainers</span>
+                        </button>
+                        <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => setActiveTab('memberForms')}>
+                            <ClipboardList size={18} /> <span>Member Forms</span>
                         </button>
                     </nav>
                 </div>
@@ -372,6 +385,59 @@ const Admin = () => {
                             </div>
                         </div>
                     )}
+                    {activeTab === 'memberForms' && (
+                        <div className="admin-card table-section">
+                            <div className="table-header-v2">
+                                <h3>Membership Registration Forms</h3>
+                                <p className="table-subtitle">Recent signups with digital signatures</p>
+                            </div>
+                            <table className="pro-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Name</th>
+                                        <th>Email / Phone</th>
+                                        <th>DOB</th>
+                                        <th>Address</th>
+                                        <th>Signature</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {memberRegistrations.map(reg => (
+                                        <tr key={reg.id}>
+                                            <td className="date-cell">
+                                                <span className="d-date">{new Date(reg.created_at).toLocaleDateString()}</span>
+                                                <span className="d-time">{new Date(reg.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                                            </td>
+                                            <td><strong>{reg.name}</strong></td>
+                                            <td>
+                                                <div className="contact-info">
+                                                    <span>{reg.email}</span>
+                                                    <span className="sub-text">{reg.primary_phone}</span>
+                                                </div>
+                                            </td>
+                                            <td>{new Date(reg.dob).toLocaleDateString()}</td>
+                                            <td className="address-cell">{reg.address}</td>
+                                            <td>
+                                                {reg.signature && (
+                                                    <div className="signature-preview">
+                                                        <img src={reg.signature} alt="Signature" onClick={() => window.open(reg.signature, '_blank')} />
+                                                    </div>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {memberRegistrations.length === 0 && (
+                                        <tr>
+                                            <td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.2)' }}>
+                                                No membership registrations found.
+                                            </td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
             </main>
 
@@ -580,6 +646,17 @@ const Admin = () => {
                 .pro-table { width: 100%; border-collapse: collapse; }
                 .pro-table th { text-align: left; padding: 15px; font-size: 0.7rem; color: rgba(255,255,255,0.3); text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; }
                 .pro-table td { padding: 20px 15px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.9rem; }
+                
+                /* Specialized Member Forms Styles */
+                .table-subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: -20px; margin-bottom: 20px; }
+                .date-cell { display: flex; flex-direction: column; gap: 4px; }
+                .d-date { font-weight: 600; }
+                .d-time { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+                .contact-info { display: flex; flex-direction: column; gap: 2px; }
+                .sub-text { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+                .address-cell { max-width: 200px; white-space: normal; line-height: 1.4; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+                .signature-preview { width: 100px; height: 50px; background: rgba(255,255,255,0.02); border-radius: 6px; padding: 4px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; cursor: zoom-in; }
+                .signature-preview img { width: 100%; height: 100%; object-fit: contain; filter: invert(1) brightness(2); }
             `}</style>
         </div>
     );
