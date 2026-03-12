@@ -114,29 +114,33 @@ const Admin = () => {
                     </div>
                 </div>
                 
-                <nav className="admin-nav">
-                    <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')}>
-                        <Activity size={18} /> <span>Dashboard</span>
-                    </button>
-                    <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
-                        <Users size={18} /> <span>Registered Users</span>
-                    </button>
-                    <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => setActiveTab('payments')}>
-                        <CreditCard size={18} /> <span>Memberships</span>
-                    </button>
-                    <button className={activeTab === 'plans' ? 'active' : ''} onClick={() => setActiveTab('plans')}>
-                        <Layout size={18} /> <span>Gym Plans</span>
-                    </button>
-                    <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
-                        <UserPlus size={18} /> <span>Trainers</span>
-                    </button>
-                </nav>
+                <div className="sidebar-middle-spacer"></div>
 
                 <div className="sidebar-footer">
-                    <a href="/" className="back-link">
-                        <LogOut size={16} />
-                        <span>Sign Out</span>
-                    </a>
+                    <div className="footer-top">
+                        <a href="/" className="back-link">
+                            <LogOut size={16} />
+                            <span>Sign Out</span>
+                        </a>
+                    </div>
+                    
+                    <nav className="admin-nav">
+                        <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')}>
+                            <Activity size={18} /> <span>Dashboard</span>
+                        </button>
+                        <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
+                            <Users size={18} /> <span>Registered Users</span>
+                        </button>
+                        <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => setActiveTab('payments')}>
+                            <CreditCard size={18} /> <span>Memberships</span>
+                        </button>
+                        <button className={activeTab === 'plans' ? 'active' : ''} onClick={() => setActiveTab('plans')}>
+                            <Layout size={18} /> <span>Gym Plans</span>
+                        </button>
+                        <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
+                            <UserPlus size={18} /> <span>Trainers</span>
+                        </button>
+                    </nav>
                 </div>
             </aside>
 
@@ -382,14 +386,14 @@ const Admin = () => {
                     font-family: 'Outfit', sans-serif;
                 }
 
-                /* CLEAN SIDEBAR FIX */
+                /* RESTRUCTURED SIDEBAR */
                 .admin-sidebar {
                     width: 250px;
                     background: #080808;
                     border-right: 1px solid rgba(255,255,255,0.05);
                     display: flex;
                     flex-direction: column;
-                    padding-bottom: 20px;
+                    padding: 0;
                     position: fixed;
                     left: 0;
                     top: 0;
@@ -398,8 +402,9 @@ const Admin = () => {
                 }
 
                 .sidebar-header {
-                    padding: 30px 20px;
+                    padding: 40px 20px;
                     border-bottom: 1px solid rgba(255,255,255,0.02);
+                    background: #000;
                 }
 
                 .admin-logo {
@@ -407,6 +412,7 @@ const Admin = () => {
                     font-weight: 800;
                     margin-bottom: 30px;
                     text-align: center;
+                    display: block;
                 }
                 .logo-accent { color: var(--red); }
                 .logo-tag { font-size: 0.6rem; background: var(--red); color: #000; padding: 2px 6px; border-radius: 4px; vertical-align: middle; margin-left: 4px; }
@@ -443,13 +449,39 @@ const Admin = () => {
                 .p-name { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
                 .p-role { font-size: 0.65rem; color: var(--red); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
 
-                .admin-nav {
+                .sidebar-middle-spacer {
+                    flex: 1;
+                }
+
+                .sidebar-footer {
                     padding: 20px 0;
+                    border-top: 1px solid rgba(255,255,255,0.02);
+                    background: #080808;
+                }
+
+                .footer-top {
+                    padding: 0 25px 20px 25px;
+                    border-bottom: 1px solid rgba(255,255,255,0.02);
+                    margin-bottom: 15px;
+                }
+
+                .back-link {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    color: rgba(255,255,255,0.4);
+                    text-decoration: none;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    transition: 0.3s;
+                }
+                .back-link:hover { color: var(--red); }
+
+                .admin-nav {
                     display: flex;
                     flex-direction: column;
-                    gap: 8px;
-                    flex: 1;
-                    overflow-y: auto;
+                    gap: 5px;
+                    padding: 0;
                 }
 
                 .admin-nav button {
@@ -459,18 +491,14 @@ const Admin = () => {
                     padding: 14px 25px;
                     border: none;
                     background: transparent;
-                    color: rgba(255,255,255,0.4);
-                    font-size: 0.9rem;
+                    color: rgba(255,255,255,0.5);
+                    font-size: 0.95rem;
                     font-weight: 500;
                     cursor: pointer;
                     transition: all 0.2s;
                     text-align: left;
                     width: 100%;
                     position: relative;
-                }
-
-                .admin-nav button span {
-                    margin-left: 4px;
                 }
 
                 .admin-nav button:hover {
@@ -480,38 +508,21 @@ const Admin = () => {
 
                 .admin-nav button.active {
                     color: var(--yellow);
+                    background: rgba(253,224,71,0.03);
                 }
 
                 .admin-nav button.active::before {
                     content: '';
                     position: absolute;
                     left: 0;
-                    top: 15%;
-                    height: 70%;
+                    top: 10%;
+                    height: 80%;
                     width: 4px;
                     background: var(--yellow);
                     border-top-right-radius: 4px;
                     border-bottom-right-radius: 4px;
-                    box-shadow: 2px 0 10px rgba(253,224,71,0.2);
+                    box-shadow: 2px 0 10px rgba(253,224,71,0.3);
                 }
-
-                .sidebar-footer {
-                    padding: 20px 25px;
-                    border-top: 1px solid rgba(255,255,255,0.02);
-                }
-
-                .back-link {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    color: rgba(255,255,255,0.4);
-                    text-decoration: none;
-                    font-size: 0.9rem;
-                    font-weight: 500;
-                    transition: 0.3s;
-                }
-
-                .back-link:hover { color: var(--red); }
 
                 /* MAIN AREA */
                 .admin-main {
@@ -528,6 +539,7 @@ const Admin = () => {
                 .header-date { color: rgba(255,255,255,0.3); font-size: 0.9rem; margin-top: 4px; }
                 .refresh-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: 0.8rem; }
 
+                /* DASHBOARD CARDS */
                 .metrics-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
                 .metric-box { background: #111; padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.03); display: flex; gap: 20px; align-items: center; }
                 .m-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
@@ -568,47 +580,6 @@ const Admin = () => {
                 .pro-table { width: 100%; border-collapse: collapse; }
                 .pro-table th { text-align: left; padding: 15px; font-size: 0.7rem; color: rgba(255,255,255,0.3); text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); letter-spacing: 0.5px; }
                 .pro-table td { padding: 20px 15px; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.9rem; }
-                .id-tag { font-family: monospace; color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.03); padding: 2px 6px; border-radius: 4px; }
-                .role-tag.admin { color: var(--red); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.4px; }
-                .role-tag.user { color: var(--yellow); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.4px; }
-                .price-bold { font-weight: 700; color: #fff; }
-
-                /* FORMS & GRIDS */
-                .plans-grid-v2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-                .plan-card-v2 { background: #111; padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
-                .plan-badge { font-size: 0.7rem; background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 20px; color: rgba(255,255,255,0.4); }
-                .p-edit-btn { background: none; border: none; color: rgba(255,255,255,0.1); cursor: pointer; transition: 0.2s; }
-                .p-edit-btn:hover { color: var(--red); }
-                .p-price { font-size: 2.2rem; font-weight: 800; color: var(--yellow); margin-bottom: 20px; }
-                .p-features { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-                .p-features li { padding-left: 20px; position: relative; font-size: 0.9rem; color: rgba(255,255,255,0.5); }
-                .p-features li::before { content: '✓'; position: absolute; left: 0; color: var(--red); font-weight: 900; }
-
-                .trainers-grid-v2 { display: grid; grid-template-columns: 350px 1fr; gap: 30px; }
-                .form-panel { padding: 35px; }
-                .pro-form { display: flex; flex-direction: column; gap: 18px; margin-top: 25px; }
-                .field label { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 8px; display: block; letter-spacing: 0.5px; }
-                .field input, .field textarea { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 15px; border-radius: 12px; color: #fff; outline: none; width: 100%; transition: 0.3s; }
-                .field input:focus, .field textarea:focus { border-color: var(--red); background: rgba(255,255,255,0.04); }
-                .pro-submit-btn { background: var(--red); color: #000; border: none; padding: 16px; border-radius: 12px; font-weight: 800; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-                .pro-submit-btn:hover { background: #ff4d40; transform: translateY(-2px); }
-
-                .trainer-item-pro { background: #111; padding: 15px 25px; border-radius: 20px; display: flex; align-items: center; gap: 20px; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
-                .trainer-item-pro:hover { border-color: rgba(255,255,255,0.08); transform: scale(1.01); }
-                .t-avatar-pro { width: 44px; height: 44px; background: rgba(255,255,255,0.02); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--red); border: 1px solid rgba(232,37,26,0.1); }
-                .t-info-pro h5 { font-size: 1.05rem; margin: 0; color: #fff; }
-                .t-info-pro span { font-size: 0.85rem; color: rgba(255,255,255,0.4); }
-                .del-btn { background: none; border: none; color: rgba(255,255,255,0.1); cursor: pointer; margin-left: auto; transition: 0.2s; padding: 10px; border-radius: 8px; }
-                .del-btn:hover { color: var(--red); background: rgba(232,37,26,0.05); }
-
-                /* EDIT FORMS */
-                .plan-edit-form h3 { margin-bottom: 25px; color: var(--red); }
-                .input-group-v2 { margin-bottom: 20px; display: flex; flex-direction: column; gap: 8px; }
-                .input-group-v2 label { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-transform: uppercase; }
-                .input-group-v2 input, .input-group-v2 textarea { background: #000; border: 1px solid rgba(255,255,255,0.15); padding: 14px; border-radius: 12px; color: #fff; outline: none; }
-                .form-actions { display: flex; gap: 12px; margin-top: 20px; }
-                .save-btn-v2 { background: #fff; color: #000; border: none; padding: 14px 25px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-                .cancel-btn-v2 { background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 14px 25px; border-radius: 10px; cursor: pointer; }
             `}</style>
         </div>
     );
