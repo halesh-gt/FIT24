@@ -729,28 +729,37 @@
         </div>
     </footer>
 
-    <!-- Chatbot Window -->
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <div class="chat-header-avatar">AI</div>
-            <div class="chat-header-info">
-                <h3>FIT24 Assistant</h3>
-                <p>Online</p>
+    <!-- WhatsApp Form Window -->
+    <div class="chat-window" id="chatWindow" style="height: auto; padding: 25px; display: none; flex-direction: column; gap: 10px;">
+        <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; color: #25D366; font-family: 'Barlow', sans-serif;">WhatsApp Enquiry</h3>
+        <p style="margin: 0 0 20px 0; font-size: 0.9rem; color: #666; font-family: 'Barlow', sans-serif;">Please fill in your details to connect with us on WhatsApp.</p>
+        
+        <div id="enquirySuccess" style="display: none; text-align: center; padding: 20px 0;">
+            <p style="color: #25D366; font-weight: bold;">Thank you!</p>
+            <p>Redirecting to WhatsApp...</p>
+        </div>
+
+        <form id="whatsappForm" style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Full Name</label>
+                <input type="text" id="waName" required placeholder="Enter your name" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
             </div>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="message bot-message">
-                Hi there! Welcome to FIT24. How can I help you regarding your fitness goals today?
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Email Address</label>
+                <input type="email" id="waEmail" required placeholder="Enter your email" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
             </div>
-        </div>
-        <div class="chat-input-area">
-            <form class="chat-form" id="chatForm">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." required>
-                <button type="submit" class="chat-send" id="chatSendBtn">
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </form>
-        </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Contact Number</label>
+                <input type="tel" id="waPhone" required placeholder="Enter contact number" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
+            </div>
+            <button type="submit" 
+                style="background-color: #25D366; color: #fff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
+                Submit & Chat
+            </button>
+        </form>
     </div>
 
     <!-- Chatbot Button -->
@@ -771,96 +780,59 @@
             if (el) el.classList.add('active');
         }
 
-        // Chatbot functionality
+        // WhatsApp Form functionality
         const chatWindow = document.getElementById('chatWindow');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatForm = document.getElementById('chatForm');
-        const chatInput = document.getElementById('chatInput');
         const chatIcon = document.getElementById('chatIcon');
+        const whatsappForm = document.getElementById('whatsappForm');
+        const enquirySuccess = document.getElementById('enquirySuccess');
 
         function toggleChat() {
-            chatWindow.classList.toggle('active');
-            if (chatWindow.classList.contains('active')) {
+            if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+                chatWindow.style.display = 'flex';
                 chatIcon.className = 'fa-solid fa-xmark';
                 chatIcon.style.fontSize = '24px';
-                chatInput.focus();
             } else {
+                chatWindow.style.display = 'none';
                 chatIcon.className = 'fa-brands fa-whatsapp';
                 chatIcon.style.fontSize = '32px';
             }
         }
 
-        function addMessage(text, sender) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message ${sender}-message`;
-            msgDiv.textContent = text;
-            chatMessages.appendChild(msgDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        let currentStep = 'greet'; // greet, askName, askEmail, askPhone, redirecting
-        let leadInfo = { name: '', email: '', phone: '' };
-
-        chatForm.addEventListener('submit', async (e) => {
+        whatsappForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const text = chatInput.value.trim();
-            if (!text) return;
+            
+            const name = document.getElementById('waName').value;
+            const email = document.getElementById('waEmail').value;
+            const phone = document.getElementById('waPhone').value;
 
-            addMessage(text, 'user');
-            chatInput.value = '';
+            const leadData = { name, email, phone };
 
-            // Handle collection steps
-            if (currentStep === 'greet') {
-                currentStep = 'askName';
-                setTimeout(() => {
-                    addMessage("Great! To help you better, please share your full name before we connect you to WhatsApp.", 'bot');
-                }, 600);
-                return;
+            // Save to database
+            try {
+                await fetch('/api/chatbot-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(leadData)
+                });
+            } catch (err) {
+                console.error("Failed to save lead:", err);
             }
 
-            if (currentStep === 'askName') {
-                leadInfo.name = text;
-                currentStep = 'askEmail';
-                setTimeout(() => {
-                    addMessage(`Nice to meet you, ${text}! What is your email address?`, 'bot');
-                }, 600);
-                return;
-            }
+            // Show success and redirect
+            whatsappForm.style.display = 'none';
+            enquirySuccess.style.display = 'block';
 
-            if (currentStep === 'askEmail') {
-                leadInfo.email = text;
-                currentStep = 'askPhone';
-                setTimeout(() => {
-                    addMessage("Got it. And finally, what's your contact number?", 'bot');
-                }, 600);
-                return;
-            }
+            const whatsappMsg = encodeURIComponent(`Hi, I'm ${name}. I'd like to enquire about FIT24 fitness programs.`);
+            const whatsappUrl = `https://wa.me/917892330756?text=${whatsappMsg}`;
 
-            if (currentStep === 'askPhone') {
-                leadInfo.phone = text;
-                currentStep = 'redirecting';
-
-                // Save to database
-                try {
-                    await fetch('/api/chatbot-lead', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(leadInfo)
-                    });
-                } catch (err) {
-                    console.error("Failed to save lead:", err);
-                }
-
-                setTimeout(() => {
-                    addMessage("Thank you! I've recorded your details. Redirecting you to our WhatsApp support now...", 'bot');
-                    
-                    // WhatsApp redirect
-                    const whatsappMsg = encodeURIComponent(`Hi, I'm ${leadInfo.name}. I'd like to enquire about FIT24 fitness programs.`);
-                    const whatsappUrl = `https://wa.me/917892330756?text=${whatsappMsg}`;
-                    window.open(whatsappUrl, '_blank');
-                }, 800);
-                return;
-            }
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+                toggleChat();
+                // Reset form
+                whatsappForm.reset();
+                whatsappForm.style.display = 'flex';
+                enquirySuccess.style.display = 'none';
+            }, 1500);
         });
 
         // Custom Cursor functionality

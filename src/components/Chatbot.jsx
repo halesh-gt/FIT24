@@ -3,80 +3,39 @@ import { Send, X } from 'lucide-react';
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState([
-        { text: "Hi there! Welcome to FIT24. How can I help you regarding your fitness goals today?", sender: 'bot' }
-    ]);
-    const [input, setInput] = useState("");
+    const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const [step, setStep] = useState('greet'); // greet, askName, askEmail, askPhone, redirecting
-    const [leadInfo, setLeadInfo] = useState({ name: '', email: '', phone: '' });
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    const handleSend = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const userMsg = input.trim();
-        if (!userMsg) return;
-
-        // Add user message
-        setMessages(prev => [...prev, { text: userMsg, sender: 'user' }]);
-        setInput("");
-
-        // Handle collection steps
-        if (step === 'greet') {
-            setStep('askName');
-            setTimeout(() => {
-                setMessages(prev => [...prev, { text: "Great! To help you better, please share your full name before we connect you to WhatsApp.", sender: 'bot' }]);
-            }, 600);
-            return;
+        
+        // Save to database
+        try {
+            await fetch('http://localhost:5000/api/chatbot-lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+        } catch (err) {
+            console.error("Failed to save lead:", err);
         }
 
-        if (step === 'askName') {
-            setLeadInfo(prev => ({ ...prev, name: userMsg }));
-            setStep('askEmail');
-            setTimeout(() => {
-                setMessages(prev => [...prev, { text: `Nice to meet you, ${userMsg}! What is your email address?`, sender: 'bot' }]);
-            }, 600);
-            return;
-        }
+        setIsSubmitted(true);
 
-        if (step === 'askEmail') {
-            setLeadInfo(prev => ({ ...prev, email: userMsg }));
-            setStep('askPhone');
-            setTimeout(() => {
-                setMessages(prev => [...prev, { text: "Got it. And finally, what's your contact number?", sender: 'bot' }]);
-            }, 600);
-            return;
-        }
-
-        if (step === 'askPhone') {
-            const finalPhone = userMsg;
-            const finalLead = { ...leadInfo, phone: finalPhone };
-            setLeadInfo(finalLead);
-            setStep('redirecting');
-
-            // Save to database
-            try {
-                await fetch('http://localhost:5000/api/chatbot-lead', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(finalLead)
-                });
-            } catch (err) {
-                console.error("Failed to save lead:", err);
-            }
-
-            setTimeout(() => {
-                setMessages(prev => [...prev, { 
-                    text: "Thank you! I've recorded your details. Redirecting you to our WhatsApp support now...", 
-                    sender: 'bot' 
-                }]);
-                
-                // WhatsApp redirect
-                const whatsappMsg = encodeURIComponent(`Hi, I'm ${finalLead.name}. I'd like to enquire about FIT24 fitness programs.`);
-                const whatsappUrl = `https://wa.me/917892330756?text=${whatsappMsg}`;
-                window.open(whatsappUrl, '_blank');
-            }, 800);
-            return;
-        }
+        // WhatsApp redirect
+        const whatsappMsg = encodeURIComponent(`Hi, I'm ${formData.name}. I'd like to enquire about FIT24 fitness programs.`);
+        const whatsappUrl = `https://wa.me/917892330756?text=${whatsappMsg}`;
+        
+        setTimeout(() => {
+            window.open(whatsappUrl, '_blank');
+            setIsOpen(false);
+            setIsSubmitted(false);
+            setFormData({ name: '', email: '', phone: '' });
+        }, 1500);
     };
 
     return (
@@ -120,16 +79,14 @@ const Chatbot = () => {
                 )}
             </button>
 
-            {/* Chat Window */}
+            {/* Form Window */}
             {isOpen && (
                 <div
-                    className="chat-window active"
                     style={{
                         position: 'fixed',
                         bottom: '100px',
                         right: '30px',
                         width: '350px',
-                        height: '500px',
                         backgroundColor: '#ffffff',
                         borderRadius: '20px',
                         boxShadow: '0 10px 40px rgba(0,0,0,0.2)',
@@ -137,111 +94,74 @@ const Chatbot = () => {
                         flexDirection: 'column',
                         zIndex: 1000,
                         border: '1px solid #eee',
-                        overflow: 'hidden'
+                        padding: '25px',
+                        color: '#333'
                     }}
                 >
-                    {/* Header */}
-                    <div style={{
-                        padding: '20px',
-                        backgroundColor: '#ffffff',
-                        borderBottom: '1px solid #eee',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '15px'
-                    }}>
-                        <div style={{
-                            width: '40px',
-                            height: '40px',
-                            borderRadius: '50%',
-                            backgroundColor: '#25D366',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: '#fff',
-                            fontWeight: 'bold'
-                        }}>
-                            AI
+                    <h3 style={{ margin: '0 0 10px 0', fontSize: '1.2rem', color: '#25D366' }}>WhatsApp Enquiry</h3>
+                    <p style={{ margin: '0 0 20px 0', fontSize: '0.9rem', color: '#666' }}>Please fill in your details to connect with us.</p>
+                    
+                    {isSubmitted ? (
+                        <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                            <p style={{ color: '#25D366', fontWeight: 'bold' }}>Thank you!</p>
+                            <p>Redirecting to WhatsApp...</p>
                         </div>
-                        <div>
-                            <h3 style={{ margin: 0, color: '#333', fontSize: '1.1rem' }}>FIT24 Assistant</h3>
-                            <p style={{ margin: 0, color: '#25D366', fontSize: '0.8rem' }}>Online</p>
-                        </div>
-                    </div>
-
-                    {/* Messages Area */}
-                    <div style={{
-                        flex: 1,
-                        padding: '20px',
-                        overflowY: 'auto',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '12px',
-                        backgroundColor: '#f7f7f7'
-                    }}>
-                        {messages.map((msg, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                                    maxWidth: '80%',
-                                    padding: '12px 16px',
-                                    borderRadius: msg.sender === 'user' ? '15px 15px 0 15px' : '15px 15px 15px 0',
-                                    backgroundColor: msg.sender === 'user' ? '#25D366' : '#ffffff',
-                                    color: msg.sender === 'user' ? '#ffffff' : '#333',
-                                    fontSize: '0.9rem',
-                                    lineHeight: '1.4',
-                                    boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
-                                }}
-                            >
-                                {msg.text}
+                    ) : (
+                        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                <label style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Full Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    required
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    placeholder="Enter your name"
+                                    style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ddd', outline: 'none' }}
+                                />
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Input Area */}
-                    <div style={{
-                        padding: '15px',
-                        backgroundColor: '#ffffff',
-                        borderTop: '1px solid #eee'
-                    }}>
-                        <form onSubmit={handleSend} style={{ display: 'flex', gap: '10px' }}>
-                            <input
-                                type="text"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                placeholder="Type your message..."
-                                style={{
-                                    flex: 1,
-                                    padding: '12px 18px',
-                                    borderRadius: '25px',
-                                    border: '1px solid #eee',
-                                    backgroundColor: '#fdfdfd',
-                                    color: '#333',
-                                    outline: 'none',
-                                    fontSize: '0.9rem'
-                                }}
-                            />
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                <label style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Email Address</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="Enter your email"
+                                    style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ddd', outline: 'none' }}
+                                />
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                <label style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Contact Number</label>
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    required
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    placeholder="Enter contact number"
+                                    style={{ padding: '10px', borderRadius: '8px', border: '1px solid #ddd', outline: 'none' }}
+                                />
+                            </div>
                             <button
                                 type="submit"
                                 style={{
-                                    width: '45px',
-                                    height: '45px',
-                                    borderRadius: '50%',
                                     backgroundColor: '#25D366',
-                                    border: 'none',
                                     color: '#fff',
+                                    border: 'none',
+                                    padding: '12px',
+                                    borderRadius: '8px',
                                     cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    opacity: input.trim() ? 1 : 0.5
+                                    fontWeight: 'bold',
+                                    marginTop: '10px',
+                                    boxShadow: '0 4px 10px rgba(37, 211, 102, 0.3)'
                                 }}
-                                disabled={!input.trim()}
                             >
-                                <Send size={18} />
+                                Submit & Chat
                             </button>
                         </form>
-                    </div>
+                    )}
                 </div>
             )}
         </>
