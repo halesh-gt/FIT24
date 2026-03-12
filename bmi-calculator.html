@@ -17,13 +17,16 @@
             background: linear-gradient(to bottom, #111, var(--black));
             text-align: center;
         }
+
         .bmi-section {
             padding-top: 40px !important;
             padding-bottom: 20px !important;
         }
+
         .pricing-header-compact {
             padding: 40px 60px 0 !important;
         }
+
         .footer-compact {
             padding-top: 20px !important;
         }
@@ -34,9 +37,59 @@
     <div class="cursor" id="cursor"></div>
     <div class="cursor-ring" id="cursorRing"></div>
 
+    <!-- MODALS -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">ACCESS PORTAL</div>
+            <div id="loginError" class="error-msg" style="display: none; color: #ff4d4d; margin-bottom: 20px; text-align: center; font-size: 0.8rem;">Invalid email or password</div>
+            <form id="loginForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password" />
+                </div>
+                <button type="submit" class="modal-btn" style="width: 100%; padding: 18px; background: var(--red); border: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; cursor: pointer; color: var(--black);">Sign In</button>
+            </form>
+            <div class="modal-switch" style="margin-top: 24px; text-align: center; font-size: 0.8rem; color: var(--muted);">
+                New to FIT24? <button type="button" onclick="switchModal('registerModal')" style="background: none; border: none; color: var(--white); cursor: pointer; text-decoration: underline;">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">JOIN THE ELITE</div>
+            <div id="registerError" class="error-msg" style="display: none; color: #ff4d4d; margin-bottom: 20px; text-align: center; font-size: 0.8rem;">Email already registered</div>
+            <form id="registerForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" required placeholder="Enter your full name" />
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" required placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required placeholder="Create a password" />
+                </div>
+                <button type="submit" class="modal-btn" style="width: 100%; padding: 18px; background: var(--red); border: none; font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; cursor: pointer; color: var(--black);">Register</button>
+            </form>
+            <div class="modal-switch" style="margin-top: 24px; text-align: center; font-size: 0.8rem; color: var(--muted);">
+                Already a member? <button type="button" onclick="switchModal('loginModal')" style="background: none; border: none; color: var(--white); cursor: pointer; text-decoration: underline;">Sign In</button>
+            </div>
+        </div>
+    </div>
+
     <!-- NAVBAR -->
     <nav id="navbar" class="scrolled">
-        <a href="index-static.html" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 70px; width: auto; margin-left: -60px;"></a>
+        <a href="index-static.html" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo"
+                style="height: 70px; width: auto; margin-left: -60px;"></a>
         <ul class="nav-links">
             <li><a href="index-static.html#about">About</a></li>
             <li><a href="index-static.html#classes">Classes</a></li>
@@ -54,7 +107,8 @@
     <section class="bmi-page-hero">
         <div class="section-label reveal">Fitness Tools</div>
         <h2 class="section-title reveal">TRACK YOUR<br /><span style="color: var(--red);">PROGRESS</span></h2>
-        <p class="reveal" style="max-width: 600px; margin: 24px auto; color: var(--muted);">Use our advanced BMI calculator to understand your body composition and get personalized fitness package recommendations.</p>
+        <p class="reveal" style="max-width: 600px; margin: 24px auto; color: var(--muted);">Use our advanced BMI
+            calculator to understand your body composition and get personalized fitness package recommendations.</p>
     </section>
 
     <!-- BMI CALCULATOR SECTION -->
@@ -175,7 +229,8 @@
     </section>
 
     <!-- PRICING SECTION (For Recommendations) -->
-    <section id="pricing" class="pricing" style="background: var(--black); border-top: 1px solid rgba(255,255,255,0.05);">
+    <section id="pricing" class="pricing"
+        style="background: var(--black); border-top: 1px solid rgba(255,255,255,0.05);">
         <div class="pricing-header-compact">
             <div class="section-label reveal">Recommended Memberships</div>
             <h2 class="section-title reveal">SELECT YOUR<br /><span style="color: var(--red);">PLAN</span></h2>
@@ -237,7 +292,8 @@
     <footer class="footer-compact">
         <div class="footer-grid">
             <div class="footer-brand">
-                <a href="index-static.html" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 70px; width: auto; margin-left: -60px;"></a>
+                <a href="index-static.html" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo"
+                        style="height: 70px; width: auto; margin-left: -60px;"></a>
                 <p>Elite fitness for everyone. Open 24 hours a day, 7 days a week. No limits, no excuses.</p>
             </div>
             <div class="footer-col">
@@ -278,7 +334,7 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             let currentUnit = 'imperial';
             let currentGender = 'male';
 
@@ -301,7 +357,7 @@
                 if (unit === currentUnit) return;
                 const oldUnit = currentUnit;
                 currentUnit = unit;
-                
+
                 unitImperial.classList.toggle('active', unit === 'imperial');
                 unitMetric.classList.toggle('active', unit === 'metric');
                 pillSlider.className = `pill-slider ${unit}`;
@@ -335,9 +391,9 @@
             unitMetric.addEventListener('click', () => updateUnitUI('metric'));
 
             const bmiForm = document.getElementById('bmiFormStatic');
-            bmiForm.addEventListener('submit', function(e) {
+            bmiForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 let hMeters, wKgs;
 
                 if (currentUnit === 'metric') {
@@ -355,7 +411,7 @@
                 if (hMeters > 0 && wKgs > 0) {
                     const bmi = (wKgs / (hMeters * hMeters)).toFixed(1);
                     const ponderal = (wKgs / Math.pow(hMeters, 3)).toFixed(2);
-                    
+
                     let category = '';
                     if (bmi < 18.5) category = 'Underweight';
                     else if (bmi < 25) category = 'Healthy weight';
@@ -364,7 +420,7 @@
 
                     const minHealthyW = (18.5 * hMeters * hMeters).toFixed(1);
                     const maxHealthyW = (25 * hMeters * hMeters).toFixed(1);
-                    
+
                     const weightConv = currentUnit === 'metric' ? 1 : 2.20462;
                     const suffix = currentUnit === 'metric' ? 'kg' : 'lbs';
 
@@ -390,14 +446,14 @@
 
                     // Clear previous highlights
                     document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('recommended-plan'));
-                    
+
                     // Highlight recommended package
                     if (recPackage) {
                         const recCard = document.getElementById(recPackage);
                         if (recCard) {
                             recCard.classList.add('recommended-plan');
                             setTimeout(() => {
-                               recCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                recCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }, 500);
                         }
                     }
@@ -416,6 +472,17 @@
                 }
             });
         });
+
+        // Modal functionality
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+        }
+
+        function switchModal(modalId) {
+            closeModals();
+            const el = document.getElementById(modalId);
+            if (el) el.classList.add('active');
+        }
 
         // Common functionality
         const cursor = document.getElementById('cursor');

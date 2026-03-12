@@ -1162,9 +1162,9 @@ section {
 }
 
 .plan-card.featured .btn-plan:hover {
-  background: transparent;
-  color: var(--black);
-  border-color: var(--black);
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
 }
 
 /* TRAINERS */
