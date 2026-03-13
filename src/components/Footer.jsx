@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="footer-grid">
                 <div className="footer-brand">
                     <a href="#" className="logo">FIT<span>24</span></a>
-                    <p>Elite fitness for everyone. Open 24 hours a day, 7 days a week. No limits, no excuses.</p>
+                    <p>Elite fitness for everyone. No limits, no excuses.</p>
                 </div>
                 <div className="footer-col">
                     <h4>Programs</h4>

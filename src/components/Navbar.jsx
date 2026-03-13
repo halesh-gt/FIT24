@@ -7,7 +7,6 @@ const Navbar = () => {
             <ul className="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#classes">Classes</a></li>
-                <li><a href="#schedule">Schedule</a></li>
                 <li><a href="#trainers">Trainers</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#bmi">BMI Calculator</a></li>

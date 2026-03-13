@@ -66,7 +66,6 @@ const Home = () => {
 
             <About />
             <Classes />
-            <Schedule />
             <Pricing />
             <BMICalculator />
             <Trainers />
