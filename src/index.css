@@ -29,36 +29,6 @@ body {
   font-family: 'Barlow', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
-  cursor: none;
-}
-
-/* CUSTOM CURSOR */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  background: var(--red);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
-}
-
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(255, 221, 0, 0.5);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s ease, opacity 0.3s ease;
 }
 
 /* MODALS */
@@ -458,7 +428,7 @@ nav.scrolled {
   letter-spacing: 3px;
   text-transform: uppercase;
   border: none;
-  cursor: none;
+  cursor: auto;
   clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
   transition: all 0.25s;
   text-decoration: none;
@@ -760,7 +730,7 @@ section {
   aspect-ratio: 3/4;
   overflow: hidden;
   background: var(--gray2);
-  cursor: none;
+  cursor: auto;
 }
 
 .class-card-bg {
@@ -894,7 +864,7 @@ section {
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--muted);
-  cursor: none;
+  cursor: auto;
   transition: all 0.2s;
 }
 
@@ -1148,7 +1118,7 @@ section {
   border: 2px solid var(--red);
   background: transparent;
   color: var(--red);
-  cursor: none;
+  cursor: auto;
   transition: all 0.25s;
   clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
 }
@@ -1386,7 +1356,7 @@ section {
   letter-spacing: 3px;
   text-transform: uppercase;
   border: none;
-  cursor: none;
+  cursor: auto;
   clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
   transition: all 0.25s;
   text-decoration: none;
