@@ -6,7 +6,6 @@ const Hero = () => {
             <div className="hero-bg"></div>
             <div className="ticker">FIT24</div>
             <div className="hero-content">
-                <div className="hero-eyebrow">Open 24 Hours · 7 Days a Week</div>
                 <h1 className="hero-title">
                     TRAIN<br />
                     <span className="outline">WITHOUT</span><br />
@@ -28,7 +27,7 @@ const Hero = () => {
                     <div className="stat-label">Classes/Week</div>
                 </div>
                 <div className="stat">
-                    <div className="stat-num">24<span>/7</span></div>
+                    <div className="stat-num">FULL</div>
                     <div className="stat-label">Access</div>
                 </div>
             </div>

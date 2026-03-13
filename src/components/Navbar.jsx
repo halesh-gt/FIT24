@@ -3,7 +3,7 @@ import React from 'react';
 const Navbar = () => {
     return (
         <nav id="navbar">
-            <a href="#" className="logo"><img src="/img/logo.png" alt="FIT24 Logo" style={{ height: '70px', width: 'auto', marginLeft: '-60px' }} /></a>
+            <a href="#" className="logo"><img src="/img/logo.png" alt="FIT24 Logo" style={{ height: '70px', width: 'auto' }} /></a>
             <ul className="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#classes">Classes</a></li>

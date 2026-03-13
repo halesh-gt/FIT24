@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="footer-grid">
                 <div className="footer-brand">
                     <a href="#" className="logo">FIT<span>24</span></a>
-                    <p>Elite fitness for everyone. Open 24 hours a day, 7 days a week. No limits, no excuses.</p>
+                    <p>Elite fitness for everyone. No limits, no excuses.</p>
                 </div>
                 <div className="footer-col">
                     <h4>Programs</h4>
@@ -41,7 +41,7 @@ const Footer = () => {
             </div>
             <div className="footer-bottom">
                 <span>© 2026 FIT24. All rights reserved.</span>
-                <img src="/img/logo.png" alt="FIT24 Logo" style={{ height: '70px', width: 'auto', marginLeft: '-60px' }} />              <span>Bengaluru · Mumbai · Delhi · Hyderabad</span>
+                <img src="/img/logo.png" alt="FIT24 Logo" style={{ height: '70px', width: 'auto' }} />              <span>Bengaluru · Mumbai · Delhi · Hyderabad</span>
             </div>
         </footer>
     );

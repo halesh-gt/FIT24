@@ -6,7 +6,7 @@
   --gray: #1a1a1a;
   --gray2: #2c2c2c;
   --gray-accent: #333333;
-  --muted: #888;
+  --muted: #e0e0e0;
   --red: var(--yellow);
   --red-dark: var(--yellow-dark);
 }
@@ -27,7 +27,7 @@ body {
   background: var(--black);
   color: var(--white);
   font-family: 'Barlow', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   overflow-x: hidden;
   cursor: none;
 }
@@ -431,9 +431,9 @@ nav.scrolled {
 
 .hero-sub {
   font-size: 1.1rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
-  color: var(--muted);
+  color: #ffffff;
   max-width: 440px;
   margin-bottom: 48px;
   opacity: 0;
@@ -617,8 +617,8 @@ section {
 }
 
 .section-label {
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--red);
@@ -700,9 +700,9 @@ section {
 }
 
 .about-text p {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   line-height: 1.8;
-  color: var(--muted);
+  color: #ffffff;
   margin-bottom: 24px;
 }
 
@@ -843,8 +843,9 @@ section {
 }
 
 .class-desc {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+  color: #ffffff;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -1095,8 +1096,9 @@ section {
 }
 
 .plan-period {
-  font-size: 0.8rem;
-  color: var(--muted);
+  font-size: 0.85rem;
+  color: #ffffff;
+  font-weight: 400;
   margin-bottom: 40px;
 }
 
@@ -1110,13 +1112,14 @@ section {
 }
 
 .plan-features li {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--muted);
+  color: #ffffff;
+  font-weight: 400;
 }
 
 .plan-card.featured .plan-features li {
@@ -1239,8 +1242,9 @@ section {
 }
 
 .trainer-certs li {
-  font-size: 0.85rem;
-  color: var(--muted);
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 450;
   padding: 4px 0;
   display: flex;
   align-items: center;
@@ -1278,10 +1282,11 @@ section {
 }
 
 .testi-quote {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
   font-style: italic;
+  font-weight: 400;
   margin-bottom: 32px;
 }
 
@@ -1324,7 +1329,8 @@ section {
 }
 
 .testi-meta {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--muted);
 }
 
@@ -1412,8 +1418,9 @@ footer {
 }
 
 .footer-brand p {
-  font-size: 0.85rem;
-  color: var(--muted);
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 400;
   line-height: 1.7;
   max-width: 260px;
 }
@@ -1436,8 +1443,9 @@ footer {
 }
 
 .footer-col ul li a {
-  font-size: 0.85rem;
-  color: var(--muted);
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 400;
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -1452,8 +1460,8 @@ footer {
   align-items: center;
   padding-top: 40px;
   border-top: 1px solid var(--gray2);
-  font-size: 0.75rem;
-  color: var(--muted);
+  font-size: 0.8rem;
+  color: #ffffff;
 }
 
 /* OPEN BADGE */

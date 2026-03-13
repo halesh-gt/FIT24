@@ -29,16 +29,6 @@ const About = () => {
                             <div className="feature-name">Expert Coaches</div>
                             <div className="feature-desc">Certified personal trainers</div>
                         </div>
-                        <div className="feature-item">
-                            <div className="feature-icon"><i className="fa-solid fa-unlock-keyhole"></i></div>
-                            <div className="feature-name">24/7 Access</div>
-                            <div className="feature-desc">Train on your schedule</div>
-                        </div>
-                        <div className="feature-item">
-                            <div className="feature-icon"><i className="fa-solid fa-mobile-screen"></i></div>
-                            <div className="feature-name">FIT24 App</div>
-                            <div className="feature-desc">Track progress, book classes</div>
-                        </div>
                     </div>
                 </div>
             </div>

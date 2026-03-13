@@ -60,7 +60,7 @@ const Home = () => {
                     <span>CYCLING</span><span className="dot">✦</span>
                     <span>PILATES</span><span className="dot">✦</span>
                     <span>CROSSFIT</span><span className="dot">✦</span>
-                    <span>OPEN 24/7</span><span className="dot">✦</span>
+                    <span>FIT24 QUALITY</span><span className="dot">✦</span>
                 </div>
             </div>
 
@@ -87,7 +87,7 @@ const Home = () => {
 
             <div className="open-badge">
                 <div className="open-dot"></div>
-                <div className="open-text">We are open 24/7</div>
+                <div className="open-text">Experience Excellence</div>
             </div>
         </>
     );
