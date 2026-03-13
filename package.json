@@ -2,14 +2,15 @@
   "name": "fit24-(1)",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "server": "node server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "prod": "npm run build && npm run start"
   },
   "keywords": [],
   "author": "",

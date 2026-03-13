@@ -2,6 +2,7 @@ import express from 'express';
 import mysql from 'mysql2/promise';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -10,10 +11,12 @@ dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const publicPath = path.join(__dirname, 'public');
+const distPath = path.join(__dirname, 'dist');
+const distIndexPath = path.join(distPath, 'index.html');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
 const PORT = process.env.PORT || 5000;
 
@@ -180,7 +183,6 @@ app.post('/api/payment', async (req, res) => {
 });
 
 // Member Registration API
-// Member Registration API
 app.post('/api/member-register', async (req, res) => {
     try {
         const { name, address, primaryPhone, secondaryPhone, email, dob, signature } = req.body;
@@ -255,14 +257,18 @@ app.get('/api/chatbot-leads', async (req, res) => {
     }
 });
 
-app.get('/register-form', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'register_form.html'));
-});
+// Serve static assets for legacy/public pages.
+app.use(express.static(publicPath));
 
-// Simple test route
-app.get('/api/test', (req, res) => {
-    res.json({ message: 'Server is working!', time: new Date() });
-});
+// If a frontend build exists, serve the React app from dist.
+if (fs.existsSync(distIndexPath)) {
+    app.use(express.static(distPath));
+
+    // SPA fallback for all non-API GET routes.
+    app.get(/^\/(?!api).*/, (req, res) => {
+        res.sendFile(distIndexPath);
+    });
+}
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
