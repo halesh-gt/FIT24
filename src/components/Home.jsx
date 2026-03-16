@@ -10,6 +10,7 @@ import Testimonials from './Testimonials';
 import Footer from './Footer';
 import Modals from './Modals';
 import Navbar from './Navbar';
+import Facilities from './Facilities';
 
 const Home = () => {
     useEffect(() => {
@@ -65,6 +66,7 @@ const Home = () => {
             </div>
 
             <About />
+            <Facilities />
             <Classes />
             <Schedule />
             <Pricing />

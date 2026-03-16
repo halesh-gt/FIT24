@@ -23,22 +23,33 @@ const Trainers = () => {
                 <h2 className="section-title reveal">LEADERS IN<br /><span style={{ color: 'var(--red)' }}>FITNESS</span></h2>
 
                 <div className="trainers-grid reveal">
-                    {trainers.map((trainer) => (
-                        <div key={trainer.id} className="trainer-card">
-                            <div className="trainer-img" style={{ backgroundImage: `url('${trainer.image_url}')` }}>
-                                <div className="trainer-exp-badge">{trainer.experience}</div>
+                    {trainers.map((trainer, index) => {
+                        let imageUrl = trainer.image_url;
+                        if (trainer.name && trainer.name.toLowerCase() === 'priya desai') {
+                            imageUrl = '/img/trainer 1.jpg';
+                        } else if (index === 1) {
+                            imageUrl = '/img/trainer2.jpg';
+                        } else if (index === 2) {
+                            imageUrl = '/img/trainer3.jpg';
+                        }
+                        
+                        return (
+                            <div key={trainer.id} className="trainer-card">
+                                <div className="trainer-img" style={{ backgroundImage: `url('${imageUrl}')` }}>
+                                    <div className="trainer-exp-badge">{trainer.experience}</div>
+                                </div>
+                                <div className="trainer-info">
+                                    <h3 className="trainer-name">{trainer.name}</h3>
+                                    <span className="trainer-spec">{trainer.specialization}</span>
+                                    <ul className="trainer-certs">
+                                        {trainer.certifications && trainer.certifications.split(',').map((cert, i) => (
+                                            <li key={i}>{cert}</li>
+                                        ))}
+                                    </ul>
+                                </div>
                             </div>
-                            <div className="trainer-info">
-                                <h3 className="trainer-name">{trainer.name}</h3>
-                                <span className="trainer-spec">{trainer.specialization}</span>
-                                <ul className="trainer-certs">
-                                    {trainer.certifications.split(',').map((cert, index) => (
-                                        <li key={index}>{cert}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>
