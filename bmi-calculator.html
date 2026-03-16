@@ -34,8 +34,6 @@
 </head>
 
 <body>
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- MODALS -->
     <div class="modal-overlay" id="loginModal">
@@ -619,18 +617,6 @@
             if (el) el.classList.add('active');
         }
 
-        // Common functionality
-        const cursor = document.getElementById('cursor');
-        const cursorRing = document.getElementById('cursorRing');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            setTimeout(() => {
-                cursorRing.style.left = e.clientX + 'px';
-                cursorRing.style.top = e.clientY + 'px';
-            }, 50);
-        });
 
         // Reveal animations
         const reveals = document.querySelectorAll('.reveal');

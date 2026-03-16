@@ -315,7 +315,6 @@ nav.scrolled {
   position: absolute;
   inset: 0;
   background: url('../public/img/hero.png') center/cover no-repeat;
-  filter: hue-rotate(60deg) brightness(1.1);
 }
 
 .hero-bg::after {

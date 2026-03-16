@@ -13,8 +13,6 @@
 </head>
 
 <body>
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- NAVBARR -->
     <nav id="navbar">
@@ -706,45 +704,6 @@
             }, 1500);
         });
 
-        // Custom Cursor functionality
-        const cursor = document.getElementById('cursor');
-        const cursorRing = document.getElementById('cursorRing');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-
-            // delayed ring
-            setTimeout(() => {
-                cursorRing.style.left = e.clientX + 'px';
-                cursorRing.style.top = e.clientY + 'px';
-            }, 50);
-        });
-
-        document.addEventListener('mousedown', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
-            cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            cursorRing.style.borderColor = 'rgba(232,37,26,1)';
-        });
-
-        document.addEventListener('mouseup', () => {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursorRing.style.borderColor = 'rgba(232,37,26,0.5)';
-        });
-
-        // Hover effects for cursor on clickable elements
-        const clickables = document.querySelectorAll('a, button, input, select');
-        clickables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorRing.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursorRing.style.backgroundColor = 'rgba(253, 224, 71, 0.1)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorRing.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorRing.style.backgroundColor = 'transparent';
-            });
-        });
 
         // Reveal animations on scroll
         const reveals = document.querySelectorAll('.reveal');
