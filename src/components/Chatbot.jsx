@@ -23,7 +23,7 @@ const Chatbot = () => {
 
         // Save to database (name, email, phone, plan, message all stored)
         try {
-            await fetch('http://localhost:5000/api/chatbot-lead', {
+            await fetch(`http://${window.location.hostname}:5000/api/chatbot-lead`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

@@ -57,7 +57,7 @@ const Modals = () => {
         setLoginError('');
         setLoginSuccess('');
         try {
-            const res = await fetch('http://localhost:5000/api/login', {
+            const res = await fetch(`http://${window.location.hostname}:5000/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: loginEmail, password: loginPassword })
@@ -86,7 +86,7 @@ const Modals = () => {
         setRegError('');
         setRegSuccess('');
         try {
-            const res = await fetch('http://localhost:5000/api/register', {
+            const res = await fetch(`http://${window.location.hostname}:5000/api/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: regUsername, email: regEmail, phone: regPhone, password: regPassword })
@@ -122,7 +122,7 @@ const Modals = () => {
         }
 
         try {
-            const res = await fetch('http://localhost:5000/api/payment', {
+            const res = await fetch(`http://${window.location.hostname}:5000/api/payment`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

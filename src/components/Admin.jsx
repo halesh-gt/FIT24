@@ -18,7 +18,7 @@ const Admin = () => {
         image_url: '../public/img/trainer_1.png'
     });
 
-    const API_URL = 'http://localhost:5000/api';
+    const API_URL = `http://${window.location.hostname}:5000/api`;
 
     useEffect(() => {
         fetchAllData();
@@ -75,7 +75,7 @@ const Admin = () => {
 
     const fetchMemberRegistrations = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/member-registrations`);
+            const res = await fetch(`${API_URL}/member-registrations`);
             const data = await res.json();
             setMemberRegistrations(data);
         } catch (err) { console.error(err); }
@@ -83,7 +83,7 @@ const Admin = () => {
     
     const fetchChatbotLeads = async () => {
         try {
-            const res = await fetch(`http://localhost:5000/api/chatbot-leads`);
+            const res = await fetch(`${API_URL}/chatbot-leads`);
             const data = await res.json();
             setChatbotLeads(data);
         } catch (err) { console.error(err); }
