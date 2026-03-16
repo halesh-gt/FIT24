@@ -13,6 +13,8 @@
 </head>
 
 <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- NAVBARR -->
     <nav id="navbar">
@@ -797,6 +799,45 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // Custom cursor functionality
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursorRing');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorRing.style.left = e.clientX + 'px';
+            cursorRing.style.top = e.clientY + 'px';
+        });
+
+        // Cursor hover effects
+        const hoverElements = document.querySelectorAll('a, button, .btn-primary, .btn-ghost, .btn-white, .btn-plan, .modal-btn, .class-card, .trainer-card, .plan-card, .facility-card');
+
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '8px';
+                cursor.style.height = '8px';
+                cursorRing.style.width = '48px';
+                cursorRing.style.height = '48px';
+                cursorRing.style.borderColor = 'rgba(253, 224, 71, 0.8)';
+            });
+
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '12px';
+                cursor.style.height = '12px';
+                cursorRing.style.width = '36px';
+                cursorRing.style.height = '36px';
+                cursorRing.style.borderColor = 'rgba(253, 224, 71, 0.5)';
+            });
+        });
+
+        // Hide cursor on mobile
+        if (window.innerWidth <= 768) {
+            cursor.style.display = 'none';
+            cursorRing.style.display = 'none';
+            document.body.style.cursor = 'auto';
+        }
     </script>
 </body>
 
