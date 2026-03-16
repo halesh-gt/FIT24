@@ -16,24 +16,35 @@
 
     <!-- NAVBARR -->
     <nav id="navbar">
-        <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 70px; width: auto;"></a>
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#classes">Fitness</a></li>
-            <li><a href="#schedule">Schedule</a></li>
-            <li><a href="#trainers">Trainers</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-        </ul>
-        <div id="authActions" class="nav-actions">
-            <!-- Auth actions will be injected here -->
-        </div>
-        <div id="userProfile">
-            <span id="userNameDisplay">John Doe</span>
-            <button onclick="alert('Logout clicked')">Logout</button>
-        </div>
-    </nav>
+
+<a href="#" class="logo">
+<img src="public/img/logo.png" alt="FIT24 Logo" style="height:70px;">
+</a>
+
+<!-- HAMBURGER -->
+<button class="nav-menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</button>
+
+<ul class="nav-links" id="navLinks">
+<li><a href="#about">About</a></li>
+<li><a href="#classes">Fitness</a></li>
+<li><a href="#trainers">Trainers</a></li>
+<li><a href="#pricing">Pricing</a></li>
+<li><a href="bmi-calculator.html">BMI Calculator</a></li>
+<li><a href="#contact">Contact Us</a></li>
+</ul>
+
+<div id="authActions" class="nav-actions"></div>
+
+<div id="userProfile">
+<span id="userNameDisplay">John Doe</span>
+<button onclick="alert('Logout clicked')">Logout</button>
+</div>
+
+</nav>
 
     <!-- MODALS -->
     <div class="modal-overlay" id="loginModal">
@@ -554,7 +565,7 @@
         </div>
         <div class="footer-bottom">
             <span>© 2026 FIT24. All rights reserved.</span>
-            <span>Bengaluru &middot; Mumbai &middot; Delhi &middot; Hyderabad</span>
+            <span>Bengaluru &middot; JP Nagar</span>
         </div>
     </footer>
 

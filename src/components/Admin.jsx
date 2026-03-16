@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Users, CreditCard, Layout, UserPlus, Trash2, Edit2, Save, X, Activity, TrendingUp, DollarSign, LogOut, ClipboardList } from 'lucide-react';
+import { Users, CreditCard, Layout, UserPlus, Trash2, Edit2, Save, X, Activity, TrendingUp, DollarSign, LogOut, ClipboardList, Menu } from 'lucide-react';
 
 const Admin = () => {
     const [activeTab, setActiveTab] = useState('dashboard');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [payments, setPayments] = useState([]);
     const [plans, setPlans] = useState([]);
@@ -126,8 +127,11 @@ const Admin = () => {
     const totalRevenue = payments.reduce((sum, p) => sum + p.amount, 0);
 
     return (
-        <div className="admin-container">
-            <aside className="admin-sidebar">
+        <div className={`admin-container ${isSidebarOpen ? 'sidebar-active' : ''}`}>
+            {/* Mobile Overlay */}
+            {isSidebarOpen && <div className="admin-overlay" onClick={() => setIsSidebarOpen(false)}></div>}
+
+            <aside className={`admin-sidebar ${isSidebarOpen ? 'open' : ''}`}>
                 <div className="sidebar-top">
                     <div className="admin-logo-brand">
                         <img src="/img/logo.png" alt="FIT24" className="admin-side-logo" />
@@ -143,25 +147,17 @@ const Admin = () => {
                 </div>
                 
                 <nav className="admin-nav-sidebar">
-                    <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => setActiveTab('dashboard')}>
+                    <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => { setActiveTab('dashboard'); setIsSidebarOpen(false); }}>
                         <Activity size={20} /> <span>Dashboard</span>
                     </button>
-                    <button className={activeTab === 'users' ? 'active' : ''} onClick={() => setActiveTab('users')}>
-                        <Users size={20} /> <span>Registered Users</span>
-                    </button>
-                    <button className={activeTab === 'whatsappLeads' ? 'active' : ''} onClick={() => setActiveTab('whatsappLeads')}>
+                 
+                    <button className={activeTab === 'whatsappLeads' ? 'active' : ''} onClick={() => { setActiveTab('whatsappLeads'); setIsSidebarOpen(false); }}>
                         <Activity size={20} style={{ color: '#25D366' }} /> <span>WhatsApp Leads</span>
-                    </button>
-                    <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => setActiveTab('payments')}>
-                        <CreditCard size={20} /> <span>Memberships</span>
-                    </button>
-                    <button className={activeTab === 'plans' ? 'active' : ''} onClick={() => setActiveTab('plans')}>
-                        <Layout size={20} /> <span>Gym Plans</span>
-                    </button>
-                    <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => setActiveTab('trainers')}>
-                        <UserPlus size={20} /> <span>Trainers</span>
-                    </button>
-                    <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => setActiveTab('memberForms')}>
+                    </button> 
+                   
+                    
+                    
+                    <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => { setActiveTab('memberForms'); setIsSidebarOpen(false); }}>
                         <ClipboardList size={20} /> <span>Member Forms</span>
                     </button>
                 </nav>
@@ -177,8 +173,13 @@ const Admin = () => {
             <main className="admin-main">
                 <header className="admin-header">
                     <div className="header-left">
-                        <h1>{activeTab === 'dashboard' ? 'Overview' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace('-', ' ')}</h1>
-                        <p className="header-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        <button className="mobile-toggle" onClick={() => setIsSidebarOpen(true)}>
+                            <Menu size={24} />
+                        </button>
+                        <div>
+                            <h1>{activeTab === 'dashboard' ? 'Overview' : activeTab.charAt(0).toUpperCase() + activeTab.slice(1).replace('-', ' ')}</h1>
+                            <p className="header-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                        </div>
                     </div>
                     <div className="header-right">
                         <button className="refresh-btn" onClick={fetchAllData}>Refresh Dashboard</button>
@@ -663,6 +664,30 @@ const Admin = () => {
                     padding: 0 !important;
                     background: transparent !important;
                 }
+                .header-left { 
+                    display: flex; 
+                    align-items: center; 
+                    gap: 15px; 
+                }
+
+                .mobile-toggle {
+                    display: none;
+                    background: rgba(255,255,255,0.05);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    color: #fff;
+                    padding: 8px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                }
+
+                .admin-overlay {
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(0,0,0,0.7);
+                    backdrop-filter: blur(4px);
+                    z-index: 1999;
+                }
+
                 .admin-header h1 { font-size: 2rem; font-weight: 700; color: #fff; margin: 0; }
                 .header-date { color: var(--admin-muted); font-size: 0.9rem; margin-top: 5px; }
                 .refresh-btn { 
@@ -720,9 +745,106 @@ const Admin = () => {
                 .signature-preview { width: 100px; height: 50px; background: rgba(255,255,255,0.02); border-radius: 6px; padding: 4px; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; cursor: zoom-in; }
                 .signature-preview img { width: 100%; height: 100%; object-fit: contain; filter: invert(1) brightness(2); }
                 .empty-msg { color: var(--admin-muted); font-size: 0.9rem; text-align: center; padding: 20px; }
-            `}</style>
+            /* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+/* Tablets & Small Laptops */
+@media (max-width: 1024px) {
+
+    .admin-main {
+        padding: 30px 25px;
+    }
+
+    .metrics-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .activity-feed-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .search-input {
+        width: 200px !important;
+    }
+
+}
+
+
+/* Mobile Devices */
+@media (max-width: 992px) {
+
+    .mobile-toggle {
+        display: flex;
+    }
+
+    .admin-sidebar {
+        position: fixed !important;
+        left: -250px !important;
+        width: 250px !important;
+        transition: left 0.3s ease !important;
+        box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+    }
+
+    .admin-sidebar.open {
+        left: 0 !important;
+    }
+
+    .admin-main {
+        margin-left: 0 !important;
+        padding: 30px 20px;
+    }
+
+    .metrics-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-header h1 {
+        font-size: 1.4rem;
+    }
+
+}
+
+
+/* Small Phones */
+@media (max-width: 600px) {
+
+    .metrics-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .header-right, .refresh-btn {
+        width: 100%;
+    }
+
+    .admin-main {
+        padding: 20px 15px;
+    }
+
+}
+
+
+/* Tables Scroll on Mobile */
+@media (max-width: 768px) {
+
+    .pro-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+}`}
+            </style>
         </div>
     );
 };
+
 
 export default Admin;
