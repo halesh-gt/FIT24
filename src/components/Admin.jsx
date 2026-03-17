@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Users, CreditCard, Layout, UserPlus, Trash2, Edit2, Save, X, Activity, TrendingUp, DollarSign, LogOut, ClipboardList, Menu } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const Admin = () => {
-    const [activeTab, setActiveTab] = useState('dashboard');
+const Admin = ({ initialTab = 'dashboard' }) => {
+    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState(initialTab);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    useEffect(() => {
+        setActiveTab(initialTab);
+    }, [initialTab]);
+
     const [users, setUsers] = useState([]);
     const [payments, setPayments] = useState([]);
     const [plans, setPlans] = useState([]);
@@ -147,17 +154,25 @@ const Admin = () => {
                 </div>
                 
                 <nav className="admin-nav-sidebar">
-                    <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => { setActiveTab('dashboard'); setIsSidebarOpen(false); }}>
+                    <button className={activeTab === 'dashboard' ? 'active' : ''} onClick={() => { navigate('/admin'); setIsSidebarOpen(false); }}>
                         <Activity size={20} /> <span>Dashboard</span>
                     </button>
-                 
-                    <button className={activeTab === 'whatsappLeads' ? 'active' : ''} onClick={() => { setActiveTab('whatsappLeads'); setIsSidebarOpen(false); }}>
+                    <button className={activeTab === 'users' ? 'active' : ''} onClick={() => { navigate('/admin/users'); setIsSidebarOpen(false); }}>
+                        <Users size={20} /> <span>Members</span>
+                    </button>
+                    <button className={activeTab === 'payments' ? 'active' : ''} onClick={() => { navigate('/admin/payments'); setIsSidebarOpen(false); }}>
+                        <CreditCard size={20} /> <span>Transactions</span>
+                    </button>
+                    <button className={activeTab === 'plans' ? 'active' : ''} onClick={() => { navigate('/admin/plans'); setIsSidebarOpen(false); }}>
+                        <Layout size={20} /> <span>Plans</span>
+                    </button>
+                    <button className={activeTab === 'trainers' ? 'active' : ''} onClick={() => { navigate('/admin/trainers'); setIsSidebarOpen(false); }}>
+                        <UserPlus size={20} /> <span>Trainers</span>
+                    </button>
+                    <button className={activeTab === 'whatsappLeads' ? 'active' : ''} onClick={() => { navigate('/admin/whatsapp-leads'); setIsSidebarOpen(false); }}>
                         <Activity size={20} style={{ color: '#25D366' }} /> <span>WhatsApp Leads</span>
-                    </button> 
-                   
-                    
-                    
-                    <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => { setActiveTab('memberForms'); setIsSidebarOpen(false); }}>
+                    </button>
+                    <button className={activeTab === 'memberForms' ? 'active' : ''} onClick={() => { navigate('/admin/member-forms'); setIsSidebarOpen(false); }}>
                         <ClipboardList size={20} /> <span>Member Forms</span>
                     </button>
                 </nav>
