@@ -349,6 +349,59 @@ nav.scrolled {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* ── Mobile nav behaviour ── */
+@media (max-width: 900px) {
+  nav {
+    padding: 18px 20px;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 72px;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+    max-width: 320px;
+    background: rgba(5,5,5,0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 24px 40px;
+    gap: 20px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    z-index: 150;
+  }
+
+  nav.open .nav-links {
+    transform: translateX(0);
+  }
+
+  .nav-links li a {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+
+  .nav-links-mobile-cta {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .nav-links-mobile-cta .nav-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-actions {
+    display: none;
+  }
+
+  .nav-menu-toggle {
+    display: flex;
+  }
+}
+
 /* HERO */
 .hero {
   position: relative;
