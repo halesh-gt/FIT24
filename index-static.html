@@ -16,7 +16,10 @@
 
     <!-- NAVBARR -->
     <nav id="navbar">
-        <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 70px; width: auto;"></a>
+        <div class="nav-left">
+            <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 60px; width: auto;"></a>
+            <div class="nav-extra">24 HOURS &nbsp;&middot;&nbsp; 7 DAYS A WEEK</div>
+        </div>
 
         <!-- HAMBURGER -->
         <button class="nav-menu-toggle" id="menuToggle">
@@ -27,19 +30,15 @@
 
         <ul class="nav-links" id="navLinks">
             <li><a href="#about">About</a></li>
-            <li><a href="#classes">Fitness</a></li>
-            <li><a href="#facilities">Facilities</a></li>
+            <li><a href="#classes">Classes</a></li>
             <li><a href="#schedule">Schedule</a></li>
             <li><a href="#trainers">Trainers</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="bmi-calculator.html">BMI Calculator</a></li>
-            <li><a href="#contact">Contact Us</a></li>
         </ul>
 
-        <div id="authActions" class="nav-actions">
-            <!-- Auth actions will be injected here -->
-        </div>
-        <div id="userProfile">
+        <div id="authActions" class="nav-actions"></div>
+        <div id="userProfile" style="display: none;">
             <span id="userNameDisplay">John Doe</span>
             <button onclick="alert('Logout clicked')">Logout</button>
         </div>
@@ -147,10 +146,14 @@
                 <div class="stat-num">24<span>/7</span></div>
                 <div class="stat-label">Access</div>
             </div>
+            <div class="open-status">
+                <span class="dot"></span>
+                WE ARE OPEN
+            </div>
         </div>
         <div class="scroll-hint">
             <div class="scroll-line"></div>
-            Scroll
+            SCROLL
         </div>
     </section>
 
@@ -165,7 +168,7 @@
             <span>PILATES</span><span class="dot">✦</span>
             <span>CROSSFIT</span><span class="dot">✦</span>
             <span>EXPERIENCE EXCELLENCE</span><span class="dot">✦</span>
-            <span>EXPERIENCE EXCELLENCE</span><span class="dot">✦</span>
+         
         </div>
     </div>
 
@@ -314,7 +317,7 @@
                     <button class="btn-plan" onclick="openChatWithPlan('3 Months')">Get Started</button>
                     <div class="recommend-badge">RECOMMENDED</div>
                 </div>
-                <div class="plan-card featured" id="package-6">
+                <div class="plan-card" id="package-6">
                     <div class="plan-label">6 Months</div>
                     <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Semi-Annual Package</div>
                     <ul class="plan-features">
