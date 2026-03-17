@@ -8,7 +8,7 @@ const Classes = () => {
                 <h2 className="section-title reveal">FIND YOUR<br /><span style={{ color: 'var(--red)' }}>DISCIPLINE</span></h2>
             </div>
             <div className="classes-grid reveal">
-                <div className="class-card">
+                <div id="hiit-blast" className="class-card">
                     <div className="class-card-bg"></div>
                     <div className="class-card-pattern"></div>
                     <div className="class-card-content">
@@ -19,7 +19,7 @@ const Classes = () => {
                     </div>
                     <div className="class-hover">BOOK NOW →</div>
                 </div>
-                <div className="class-card">
+                <div id="boxing" className="class-card">
                     <div className="class-card-bg"></div>
                     <div className="class-card-pattern"></div>
                     <div className="class-card-content">
@@ -30,7 +30,7 @@ const Classes = () => {
                     </div>
                     <div className="class-hover">BOOK NOW →</div>
                 </div>
-                <div className="class-card">
+                <div id="power-yoga" className="class-card">
                     <div className="class-card-bg"></div>
                     <div className="class-card-pattern"></div>
                     <div className="class-card-content">
@@ -41,18 +41,18 @@ const Classes = () => {
                     </div>
                     <div className="class-hover">BOOK NOW →</div>
                 </div>
-                <div className="class-card">
+                <div id="cycle-studio" className="class-card">
                     <div className="class-card-bg"></div>
                     <div className="class-card-pattern"></div>
                     <div className="class-card-content">
                         <div className="class-card-icon"><i className="fa-solid fa-bicycle"></i></div>
                         <div className="class-tag">Cardio</div>
-                        <div className="class-name">Spin Class</div>
+                        <div className="class-name">Cycle Studio</div>
                         <div className="class-desc">High-energy indoor cycling to burn calories and build endurance.</div>
                     </div>
                     <div className="class-hover">BOOK NOW →</div>
                 </div>
-                <div className="class-card">
+                <div id="powerlifting" className="class-card">
                     <div className="class-card-bg"></div>
                     <div className="class-card-pattern"></div>
                     <div className="class-card-content">
@@ -63,14 +63,14 @@ const Classes = () => {
                     </div>
                     <div className="class-hover">BOOK NOW →</div>
                 </div>
-                <div className="class-card">
+                <div id="crossfit" className="class-card">
                     <div className="class-card-bg"></div>
                     <div className="class-card-pattern"></div>
                     <div className="class-card-content">
                         <div className="class-card-icon"><i className="fa-solid fa-stopwatch"></i></div>
                         <div className="class-tag">Foundation</div>
-                        <div className="class-name">Mobility</div>
-                        <div className="class-desc">Improve range of motion, prevent injury, and feel better.</div>
+                        <div className="class-name">CrossFit</div>
+                        <div className="class-desc">Intense functional movements to improve overall fitness and power.</div>
                     </div>
                     <div className="class-hover">BOOK NOW →</div>
                 </div>

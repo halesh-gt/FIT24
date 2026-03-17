@@ -17,8 +17,9 @@
     <!-- NAVBARR -->
     <nav id="navbar">
         <div class="nav-left">
-            <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 60px; width: auto;"></a>
-            
+            <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo"
+                    style="height: 60px; width: auto;"></a>
+
         </div>
 
         <!-- HAMBURGER -->
@@ -32,7 +33,6 @@
             <li><a href="#about">About</a></li>
             <li><a href="#facilities">Facilities</a></li>
             <li><a href="#classes">Classes</a></li>
-            <li><a href="#schedule">Schedule</a></li>
             <li><a href="#trainers">Trainers</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="bmi-calculator.html">BMI Calculator</a></li>
@@ -161,15 +161,14 @@
     <!-- MARQUEE -->
     <div class="marquee-wrap">
         <div class="marquee-track">
-            <span>HIIT TRAINING</span><span class="dot">✦</span>
-            <span>POWERLIFTING</span><span class="dot">✦</span>
-            <span>YOGA & MOBILITY</span><span class="dot">✦</span>
+            <span>HIIT BLAST</span><span class="dot">✦</span>
             <span>BOXING</span><span class="dot">✦</span>
-            <span>CYCLING</span><span class="dot">✦</span>
-            <span>PILATES</span><span class="dot">✦</span>
+            <span>POWER YOGA</span><span class="dot">✦</span>
+            <span>CYCLE STUDIO</span><span class="dot">✦</span>
+            <span>POWERLIFTING</span><span class="dot">✦</span>
             <span>CROSSFIT</span><span class="dot">✦</span>
             <span>EXPERIENCE EXCELLENCE</span><span class="dot">✦</span>
-         
+
         </div>
     </div>
 
@@ -215,7 +214,7 @@
             <h2 class="section-title reveal">FIND YOUR<br /><span style="color: var(--red);">DISCIPLINE</span></h2>
         </div>
         <div class="classes-grid reveal">
-            <div class="class-card">
+            <div class="class-card" id="hiit-blast">
                 <div class="class-card-bg"></div>
                 <div class="class-card-pattern"></div>
                 <div class="class-card-content">
@@ -226,7 +225,7 @@
                 </div>
                 <div class="class-hover">BOOK NOW &rarr;</div>
             </div>
-            <div class="class-card">
+            <div class="class-card" id="boxing">
                 <div class="class-card-bg"></div>
                 <div class="class-card-pattern"></div>
                 <div class="class-card-content">
@@ -237,7 +236,7 @@
                 </div>
                 <div class="class-hover">BOOK NOW &rarr;</div>
             </div>
-            <div class="class-card">
+            <div class="class-card" id="power-yoga">
                 <div class="class-card-bg"></div>
                 <div class="class-card-pattern"></div>
                 <div class="class-card-content">
@@ -248,18 +247,18 @@
                 </div>
                 <div class="class-hover">BOOK NOW &rarr;</div>
             </div>
-            <div class="class-card">
+            <div class="class-card" id="cycle-studio">
                 <div class="class-card-bg"></div>
                 <div class="class-card-pattern"></div>
                 <div class="class-card-content">
                     <div class="class-card-icon"><i class="fa-solid fa-bicycle"></i></div>
                     <div class="class-tag">Cardio</div>
-                    <div class="class-name">Spin Class</div>
+                    <div class="class-name">Cycle Studio</div>
                     <div class="class-desc">High-energy indoor cycling to burn calories and build endurance.</div>
                 </div>
                 <div class="class-hover">BOOK NOW &rarr;</div>
             </div>
-            <div class="class-card">
+            <div class="class-card" id="powerlifting">
                 <div class="class-card-bg"></div>
                 <div class="class-card-pattern"></div>
                 <div class="class-card-content">
@@ -270,14 +269,14 @@
                 </div>
                 <div class="class-hover">BOOK NOW &rarr;</div>
             </div>
-            <div class="class-card">
+            <div class="class-card" id="crossfit">
                 <div class="class-card-bg"></div>
                 <div class="class-card-pattern"></div>
                 <div class="class-card-content">
                     <div class="class-card-icon"><i class="fa-solid fa-stopwatch"></i></div>
                     <div class="class-tag">Foundation</div>
-                    <div class="class-name">Mobility</div>
-                    <div class="class-desc">Improve range of motion, prevent injury, and feel better.</div>
+                    <div class="class-name">CrossFit</div>
+                    <div class="class-desc">Intense functional movements to improve overall fitness and power.</div>
                 </div>
                 <div class="class-hover">BOOK NOW &rarr;</div>
             </div>
@@ -294,7 +293,9 @@
             <div class="pricing-grid reveal">
                 <div class="plan-card" id="package-1">
                     <div class="plan-label">1 Month</div>
-                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Monthly Package</div>
+                    <div class="plan-period"
+                        style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">
+                        Monthly Package</div>
                     <ul class="plan-features">
                         <li>Gym Floor Access</li>
                         <li>Locker Room &amp; Showers</li>
@@ -307,7 +308,9 @@
                 </div>
                 <div class="plan-card" id="package-3">
                     <div class="plan-label">3 Months</div>
-                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Quarterly Package</div>
+                    <div class="plan-period"
+                        style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">
+                        Quarterly Package</div>
                     <ul class="plan-features">
                         <li>Gym Floor Access</li>
                         <li>Locker Room &amp; Showers</li>
@@ -320,7 +323,9 @@
                 </div>
                 <div class="plan-card" id="package-6">
                     <div class="plan-label">6 Months</div>
-                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Semi-Annual Package</div>
+                    <div class="plan-period"
+                        style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">
+                        Semi-Annual Package</div>
                     <ul class="plan-features">
                         <li>Unlimited Group Classes</li>
                         <li>1 PT Session/Month</li>
@@ -333,7 +338,9 @@
                 </div>
                 <div class="plan-card" id="package-12">
                     <div class="plan-label">12 Months</div>
-                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Annual Package</div>
+                    <div class="plan-period"
+                        style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">
+                        Annual Package</div>
                     <ul class="plan-features">
                         <li>4 PT Sessions/Month</li>
                         <li>Custom Training Plan</li>
@@ -357,8 +364,10 @@
                 <span>BMI TOOL</span>
             </div>
             <h2 class="section-title">CHECK YOUR<br /><span style="color: var(--red);">BODY METRICS</span></h2>
-            <p style="max-width: 600px; margin: 24px auto; color: var(--muted);">Track your progress with our advanced BMI calculator and get expert recommendations on which fitness program fits your goals.</p>
-            <a href="bmi-calculator.html" class="btn-primary" style="margin-top: 24px; display: inline-block;">Open BMI Calculator</a>
+            <p style="max-width: 600px; margin: 24px auto; color: var(--muted);">Track your progress with our advanced
+                BMI calculator and get expert recommendations on which fitness program fits your goals.</p>
+            <a href="bmi-calculator.html" class="btn-primary" style="margin-top: 24px; display: inline-block;">Open BMI
+                Calculator</a>
         </div>
     </section>
 
@@ -424,7 +433,7 @@
         <div class="facilities-container">
             <div class="section-label reveal">Our Environment</div>
             <h2 class="section-title reveal">WORLD CLASS<br /><span style="color: var(--red);">FACILITIES</span></h2>
-            
+
             <div class="facilities-grid reveal">
                 <div class="facility-card">
                     <div class="facility-img-wrapper">
@@ -535,56 +544,83 @@
         <p class="cta-sub reveal">Join the elite. Start your fitness journey today and experience the difference.</p>
         <div class="cta-actions reveal">
             <a href="#pricing" class="btn-white">View Memberships</a>
-           
+
         </div>
     </section>
 
     <!-- CONTACT SECTION -->
     <section id="contact" style="padding: 100px 60px; background: #0a0a0a;">
         <div style="text-align: center; margin-bottom: 60px;">
-            <span style="font-size: 0.7rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--red); display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px;">
+            <span
+                style="font-size: 0.7rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--red); display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px;">
                 <span style="display:inline-block; width:30px; height:2px; background:var(--red);"></span>
                 Get In Touch
             </span>
-            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5rem); letter-spacing: 2px; color: var(--white); line-height: 1;">CONTACT US</h2>
-            <p style="color: var(--muted); margin-top: 16px; font-size: 1rem;">We're here for you — anytime, any day.</p>
+            <h2
+                style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5rem); letter-spacing: 2px; color: var(--white); line-height: 1;">
+                CONTACT US</h2>
+            <p style="color: var(--muted); margin-top: 16px; font-size: 1rem;">We're here for you — anytime, any day.
+            </p>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto;">
 
             <!-- Contact Card (Phone & Email) -->
-            <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">GET IN TOUCH</h3>
+            <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;"
+                onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <h3
+                    style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">
+                    GET IN TOUCH</h3>
                 <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
                     <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <div
+                            style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                             <i class="fa-solid fa-phone" style="font-size: 1rem; color: #000;"></i>
                         </div>
-                        <a href="tel:+919743777871" style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">+91 97437 77871</a>
+                        <a href="tel:+919743777871"
+                            style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;"
+                            onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">+91 97437
+                            77871</a>
                     </div>
                     <div style="display: flex; align-items: center; gap: 15px;">
-                        <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <div
+                            style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                             <i class="fa-solid fa-envelope" style="font-size: 1rem; color: #000;"></i>
                         </div>
-                        <a href="mailto:fit24india@gmail.com" style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">fit24india@gmail.com</a>
+                        <a href="mailto:fit24india@gmail.com"
+                            style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;"
+                            onmouseover="this.style.opacity='0.7'"
+                            onmouseout="this.style.opacity='1'">fit24india@gmail.com</a>
                     </div>
                 </div>
             </div>
 
             <!-- Address Card (clickable -> Google Maps) -->
-            <a href="https://www.google.com/maps/place/Fit24+India+-+Best+gym+in+JP+Nagar/@12.9109078,77.5783034,849m/data=!3m1!1e3!4m10!1m2!2m1!1sVishnu+Tower+3rd+Floor+Above+Girias+1st+Phase+JP+Nagar+Bengaluru+Karnataka+560078!3m6!1s0x3bae1553d90b1605:0x241f0a3c847cb555!8m2!3d12.9109107!4d77.5809062!15sClFWaXNobnUgVG93ZXIgM3JkIEZsb29yIEFib3ZlIEdpcmlhcyAxc3QgUGhhc2UgSlAgTmFnYXIgQmVuZ2FsdXJ1IEthcm5hdGFrYSA1NjAwNzgiA4gBAVpTIlF2aXNobnUgdG93ZXIgM3JkIGZsb29yIGFib3ZlIGdpcmlhcyAxc3QgcGhhc2UganAgbmFnYXIgYmVuZ2FsdXJ1IGthcm5hdGFrYSA1NjAwNziSAQNneW3gAQA!16s%2Fg%2F11h4_d_v3r?entry=ttu&g_ep=EgoyMDI2MDMxMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none; display: block;">
-            <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; cursor: pointer; height: 100%;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">OUR LOCATION</h3>
-                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; text-align: left;">
-                    <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <i class="fa-solid fa-location-dot" style="font-size: 1.1rem; color: #000;"></i>
+            <a href="https://www.google.com/maps/place/Fit24+India+-+Best+gym+in+JP+Nagar/@12.9109078,77.5783034,849m/data=!3m1!1e3!4m10!1m2!2m1!1sVishnu+Tower+3rd+Floor+Above+Girias+1st+Phase+JP+Nagar+Bengaluru+Karnataka+560078!3m6!1s0x3bae1553d90b1605:0x241f0a3c847cb555!8m2!3d12.9109107!4d77.5809062!15sClFWaXNobnUgVG93ZXIgM3JkIEZsb29yIEFib3ZlIEdpcmlhcyAxc3QgUGhhc2UgSlAgTmFnYXIgQmVuZ2FsdXJ1IEthcm5hdGFrYSA1NjAwNzgiA4gBAVpTIlF2aXNobnUgdG93ZXIgM3JkIGZsb29yIGFib3ZlIGdpcmlhcyAxc3QgcGhhc2UganAgbmFnYXIgYmVuZ2FsdXJ1IGthcm5hdGFrYSA1NjAwNziSAQNneW3gAQA!16s%2Fg%2F11h4_d_v3r?entry=ttu&g_ep=EgoyMDI2MDMxMC4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank" style="text-decoration: none; display: block;">
+                <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; cursor: pointer; height: 100%;"
+                    onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    <h3
+                        style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">
+                        OUR LOCATION</h3>
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; gap: 20px; text-align: left;">
+                        <div
+                            style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i class="fa-solid fa-location-dot" style="font-size: 1.1rem; color: #000;"></i>
+                        </div>
+                        <p style="color: #000; font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 500;">9th
+                            Cross, Indra Gandhi Circle,<br>20 Vishnu Tower, 3rd Floor,<br>Above Girias, 1st
+                            Phase,<br>J.P. Nagar, Bengaluru</p>
                     </div>
-                    <p style="color: #000; font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 500;">9th Cross, Indra Gandhi Circle,<br>20 Vishnu Tower, 3rd Floor,<br>Above Girias, 1st Phase,<br>J.P. Nagar, Bengaluru</p>
+                    <div style="margin-top: 24px;">
+                        <span
+                            style="color: #000; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;"><i
+                                class="fa-solid fa-map-pin" style="margin-right: 6px;"></i>Open in Maps ↗</span>
+                    </div>
                 </div>
-                <div style="margin-top: 24px;">
-                    <span style="color: #000; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;"><i class="fa-solid fa-map-pin" style="margin-right: 6px;"></i>Open in Maps ↗</span>
-                </div>
-            </div>
             </a>
 
         </div>
@@ -594,18 +630,19 @@
     <footer id="footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 70px; width: auto;"></a>
+                <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo"
+                        style="height: 70px; width: auto;"></a>
                 <p>Elite fitness for everyone. No limits, no excuses.</p>
             </div>
             <div class="footer-col">
                 <h4>Programs</h4>
                 <ul>
-                    <li><a href="#classes">HIIT Blast</a></li>
-                    <li><a href="#classes">Boxing</a></li>
-                    <li><a href="#classes">Power Yoga</a></li>
-                    <li><a href="#classes">Cycle Studio</a></li>
-                    <li><a href="#classes">CrossFit</a></li>
-                    <li><a href="#classes">Powerlifting</a></li>
+                    <li><a href="#hiit-blast">HIIT Blast</a></li>
+                    <li><a href="#boxing">Boxing</a></li>
+                    <li><a href="#power-yoga">Power Yoga</a></li>
+                    <li><a href="#cycle-studio">Cycle Studio</a></li>
+                    <li><a href="#crossfit">CrossFit</a></li>
+                    <li><a href="#powerlifting">Powerlifting</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -613,6 +650,9 @@
                 <ul>
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#trainers">Our Coaches</a></li>
+                    <li><a href="#schedule">Schedule</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="bmi-calculator.html">BMI Calculator</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -629,10 +669,13 @@
     </footer>
 
     <!-- WhatsApp Form Window -->
-    <div class="chat-window" id="chatWindow" style="position: fixed; bottom: 100px; right: 30px; width: 360px; background-color: #ffffff; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 9999; border: 1px solid #eee; height: auto; padding: 25px; flex-direction: column; gap: 10px; color: #333; opacity: 0; pointer-events: none; display: flex; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform: translateY(20px);">
-        <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; color: #25D366; font-family: 'Barlow', sans-serif;">WhatsApp Enquiry</h3>
-        <p style="margin: 0 0 20px 0; font-size: 0.9rem; color: #666; font-family: 'Barlow', sans-serif;">Please fill in your details to connect with us on WhatsApp.</p>
-        
+    <div class="chat-window" id="chatWindow"
+        style="position: fixed; bottom: 100px; right: 30px; width: 360px; background-color: #ffffff; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 9999; border: 1px solid #eee; height: auto; padding: 25px; flex-direction: column; gap: 10px; color: #333; opacity: 0; pointer-events: none; display: flex; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform: translateY(20px);">
+        <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; color: #25D366; font-family: 'Barlow', sans-serif;">WhatsApp
+            Enquiry</h3>
+        <p style="margin: 0 0 20px 0; font-size: 0.9rem; color: #666; font-family: 'Barlow', sans-serif;">Please fill in
+            your details to connect with us on WhatsApp.</p>
+
         <div id="enquirySuccess" style="display: none; text-align: center; padding: 20px 0;">
             <p style="color: #25D366; font-weight: bold;">Thank you!</p>
             <p>Redirecting to WhatsApp...</p>
@@ -641,20 +684,20 @@
         <form id="whatsappForm" style="display: flex; flex-direction: column; gap: 15px;">
             <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
                 <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Full Name</label>
-                <input type="text" id="waName" required placeholder="Enter your name" 
+                <input type="text" id="waName" required placeholder="Enter your name"
                     style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
             </div>
             <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
                 <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Email Address</label>
-                <input type="email" id="waEmail" required placeholder="Enter your email" 
+                <input type="email" id="waEmail" required placeholder="Enter your email"
                     style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
             </div>
             <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
                 <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Contact Number</label>
-                <input type="tel" id="waPhone" required placeholder="Enter contact number" 
+                <input type="tel" id="waPhone" required placeholder="Enter contact number"
                     style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
             </div>
-            <button type="submit" 
+            <button type="submit"
                 style="background-color: #25D366; color: #fff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
                 Submit & Chat
             </button>
@@ -663,7 +706,7 @@
 
     <!-- Chatbot Button -->
     <button id="chatToggle" onclick="toggleChat()" aria-label="Toggle WhatsApp Chat"
-        style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: #25D366; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 9999; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        style="position: fixed; bottom: 90px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: #25D366; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 9999; transition: transform 0.3s ease, box-shadow 0.3s ease;">
         <i class="fa-brands fa-whatsapp" style="font-size: 32px;" id="chatIcon"></i>
     </button>
 
@@ -714,24 +757,24 @@
 
         whatsappForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const name = document.getElementById('waName').value.trim();
             const email = document.getElementById('waEmail').value.trim();
             const phone = document.getElementById('waPhone').value.trim();
 
             // Clean phone number - remove spaces, dashes, +, and ensure country code
             const cleanPhone = phone.replace(/[\s\-\+]/g, '');
-            const phoneWithCode = cleanPhone.startsWith('91') && cleanPhone.length === 12 
-                ? cleanPhone 
+            const phoneWithCode = cleanPhone.startsWith('91') && cleanPhone.length === 12
+                ? cleanPhone
                 : '91' + cleanPhone.slice(-10);
 
-            const msgText = selectedPlan 
+            const msgText = selectedPlan
                 ? `Hello, my name is ${name}. I hope you are doing well. I would like to kindly enquire about the *${selectedPlan}* plan available at FIT24.\n\nCould you please share more details regarding the program, membership options, and any other relevant information?\n\nThank you, and I look forward to your response.`
                 : `Hello, my name is ${name}. I hope you are doing well. I would like to kindly enquire about the fitness programs available at FIT24.\n\nCould you please share more details regarding the available programs, membership options, and any other relevant information?\n\nThank you, and I look forward to your response.`;
 
-            const leadData = { 
-                name, 
-                email, 
+            const leadData = {
+                name,
+                email,
                 phone: phoneWithCode
             };
 

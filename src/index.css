@@ -854,6 +854,11 @@ section {
   overflow: hidden;
   background: var(--gray2);
   cursor: pointer;
+  scroll-margin-top: 100px;
+}
+
+#hiit-blast, #boxing, #power-yoga, #cycle-studio, #powerlifting, #crossfit { 
+  scroll-margin-top: 140px; 
 }
 
 .class-card-bg {
@@ -866,34 +871,68 @@ section {
   transform: scale(1.08);
 }
 
-.class-card:nth-child(1) .class-card-bg {
-  background: url('../public/img/strength.png') center/cover no-repeat;
+#hiit-blast .class-card-bg {
+  background: url('../public/img/gym-img4.jpeg') center/cover no-repeat;
   filter: hue-rotate(60deg);
 }
 
-.class-card:nth-child(2) .class-card-bg {
+#boxing .class-card-bg {
   background: url('../public/img/boxing.png') center/cover no-repeat;
   filter: hue-rotate(60deg);
 }
 
-.class-card:nth-child(3) .class-card-bg {
+#power-yoga .class-card-bg {
   background: url('../public/img/yoga.png') center/cover no-repeat;
   filter: hue-rotate(60deg);
 }
 
-.class-card:nth-child(4) .class-card-bg {
+#cycle-studio .class-card-bg {
   background: url('../public/img/cycle.png') center/cover no-repeat;
   filter: hue-rotate(60deg);
 }
 
-.class-card:nth-child(5) .class-card-bg {
+#powerlifting .class-card-bg {
   background: url('../public/img/strength.png') center/cover no-repeat;
   filter: hue-rotate(60deg);
 }
 
-.class-card:nth-child(6) .class-card-bg {
-  background: url('../public/img/about.png') center/cover no-repeat;
+#crossfit .class-card-bg {
+  background: url('../public/img/gym-img6.jpeg') center/cover no-repeat;
   filter: hue-rotate(60deg);
+}
+
+.class-card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.class-card:target {
+  outline: 4px solid var(--red);
+  outline-offset: -4px;
+  transform: scale(1.05);
+  box-shadow: 0 0 50px rgba(253, 224, 71, 0.4);
+  z-index: 10;
+}
+
+.class-card:target::after {
+  content: 'FOCUS';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--red);
+  color: var(--black);
+  padding: 4px 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  z-index: 15;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }
 
 .class-card-pattern {
