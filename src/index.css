@@ -382,6 +382,9 @@ nav.scrolled {
 
   nav.open .nav-links {
     transform: translateX(0);
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important;
   }
 
   .nav-links li a {
