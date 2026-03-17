@@ -148,9 +148,9 @@
                                 <div id="heightInputArea">
                                     <div class="input-box combined">
                                         <input class="small-in" id="heightFt" value="5">
-                                        <span class="inner-unit">ft</span>
+                                        <span class="inner-unit toggle-unit" id="heightUnitSelect" data-value="imperial" style="cursor: pointer; user-select: none;">ft</span>
                                         <input class="small-in" id="heightIn" value="11.65">
-                                        <span class="inner-unit">in</span>
+                                        <span class="inner-unit" id="heightInLabel" style="display:inline;">in</span>
                                     </div>
                                 </div>
                             </div>
@@ -158,17 +158,12 @@
                                 <label class="field-label">Weight</label>
                                 <div class="input-box">
                                     <input id="bmiWeightStatic" value="176.4">
-                                    <span class="box-unit" id="weightUnitLabel">pounds</span>
+                                    <span class="box-unit toggle-unit" id="weightUnitSelect" data-value="imperial" style="cursor: pointer; user-select: none;">pounds</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bmi-form-footer">
-                            <div class="unit-toggle-pill">
-                                <div class="pill-slider imperial" id="pillSlider"></div>
-                                <button type="button" class="active" id="unitImperial">ft</button>
-                                <button type="button" id="unitMetric">m</button>
-                            </div>
+                        <div class="bmi-form-footer" style="justify-content: flex-end;">
                             <button type="submit" class="action-calculate">Calculate</button>
                         </div>
                     </form>
@@ -473,11 +468,9 @@
 
             const genderMale = document.getElementById('genderMale');
             const genderFemale = document.getElementById('genderFemale');
-            const unitImperial = document.getElementById('unitImperial');
-            const unitMetric = document.getElementById('unitMetric');
-            const pillSlider = document.getElementById('pillSlider');
+            const heightUnitSelect = document.getElementById('heightUnitSelect');
+            const weightUnitSelect = document.getElementById('weightUnitSelect');
             const heightInputArea = document.getElementById('heightInputArea');
-            const weightUnitLabel = document.getElementById('weightUnitLabel');
             const weightInput = document.getElementById('bmiWeightStatic');
 
             function updateGenderUI(gender) {
@@ -486,42 +479,70 @@
                 genderFemale.classList.toggle('active', gender === 'female');
             }
 
-            function updateUnitUI(unit) {
-                if (unit === currentUnit) return;
-                const oldUnit = currentUnit;
-                currentUnit = unit;
-
-                unitImperial.classList.toggle('active', unit === 'imperial');
-                unitMetric.classList.toggle('active', unit === 'metric');
-                pillSlider.className = `pill-slider ${unit}`;
-
+            function updateHeightUI() {
+                const unit = heightUnitSelect.getAttribute('data-value');
                 if (unit === 'metric') {
                     heightInputArea.innerHTML = `
-                        <div class="input-box">
-                            <input type="number" id="heightCm" value="175">
-                            <span class="box-unit">cm</span>
+                        <div class="input-box combined">
+                            <input class="small-in" id="heightCm" value="175" style="width: 100%;">
+                            <span class="inner-unit toggle-unit" id="heightUnitSelectReplaced" data-value="metric" style="cursor: pointer; user-select: none;">cm</span>
                         </div>
                     `;
-                    weightUnitLabel.innerText = 'kg';
-                    weightInput.value = (parseFloat(weightInput.value) * 0.453592).toFixed(1);
+                    document.getElementById('heightUnitSelectReplaced').addEventListener('click', function() {
+                        heightUnitSelect.setAttribute('data-value', 'imperial');
+                        heightUnitSelect.innerText = 'ft';
+                        updateHeightUI();
+                    });
                 } else {
                     heightInputArea.innerHTML = `
                         <div class="input-box combined">
                             <input class="small-in" id="heightFt" value="5">
-                            <span class="inner-unit">ft</span>
+                            <span class="inner-unit toggle-unit" id="heightUnitSelectReplaced" data-value="imperial" style="cursor: pointer; user-select: none;">ft</span>
                             <input class="small-in" id="heightIn" value="11.65">
-                            <span class="inner-unit">in</span>
+                            <span class="inner-unit" id="heightInLabel">in</span>
                         </div>
                     `;
-                    weightUnitLabel.innerText = 'pounds';
-                    weightInput.value = (parseFloat(weightInput.value) / 0.453592).toFixed(1);
+                    document.getElementById('heightUnitSelectReplaced').addEventListener('click', function() {
+                        heightUnitSelect.setAttribute('data-value', 'metric');
+                        heightUnitSelect.innerText = 'cm';
+                        updateHeightUI();
+                    });
                 }
             }
 
+            function updateWeightUI() {
+                const oldUnit = weightUnitSelect.getAttribute('data-prev') || 'imperial';
+                const newUnit = weightUnitSelect.getAttribute('data-value');
+                weightUnitSelect.setAttribute('data-prev', newUnit);
+                
+                if (oldUnit !== newUnit) {
+                    if (newUnit === 'metric') {
+                        weightInput.value = (parseFloat(weightInput.value) * 0.453592).toFixed(1);
+                        weightUnitSelect.innerText = 'kg';
+                    } else {
+                        weightInput.value = (parseFloat(weightInput.value) / 0.453592).toFixed(1);
+                        weightUnitSelect.innerText = 'pounds';
+                    }
+                }
+            }
+
+            heightUnitSelect.addEventListener('click', function() {
+                const current = this.getAttribute('data-value');
+                const next = current === 'imperial' ? 'metric' : 'imperial';
+                this.setAttribute('data-value', next);
+                this.innerText = next === 'imperial' ? 'ft' : 'cm';
+                updateHeightUI();
+            });
+            weightUnitSelect.addEventListener('click', function() {
+                const current = this.getAttribute('data-value');
+                const next = current === 'imperial' ? 'metric' : 'imperial';
+                this.setAttribute('data-value', next);
+                updateWeightUI();
+            });
+            weightUnitSelect.setAttribute('data-prev', 'imperial');
+
             genderMale.addEventListener('click', () => updateGenderUI('male'));
             genderFemale.addEventListener('click', () => updateGenderUI('female'));
-            unitImperial.addEventListener('click', () => updateUnitUI('imperial'));
-            unitMetric.addEventListener('click', () => updateUnitUI('metric'));
 
             const bmiForm = document.getElementById('bmiFormStatic');
             bmiForm.addEventListener('submit', function (e) {
@@ -529,15 +550,22 @@
 
                 let hMeters, wKgs;
 
-                if (currentUnit === 'metric') {
+                const currentHeightUnit = document.getElementById('heightUnitSelectReplaced') ? document.getElementById('heightUnitSelectReplaced').getAttribute('data-value') : heightUnitSelect.getAttribute('data-value');
+                const currentWeightUnit = weightUnitSelect.getAttribute('data-value');
+
+                if (currentHeightUnit === 'metric') {
                     const hCm = document.getElementById('heightCm').value;
                     hMeters = parseFloat(hCm) / 100;
-                    wKgs = parseFloat(weightInput.value);
                 } else {
                     const hFt = document.getElementById('heightFt').value;
                     const hIn = document.getElementById('heightIn').value;
                     const totalInches = (parseFloat(hFt) * 12) + parseFloat(hIn);
                     hMeters = totalInches * 0.0254;
+                }
+
+                if (currentWeightUnit === 'metric') {
+                    wKgs = parseFloat(weightInput.value);
+                } else {
                     wKgs = parseFloat(weightInput.value) * 0.453592;
                 }
 
@@ -554,8 +582,8 @@
                     const minHealthyW = (18.5 * hMeters * hMeters).toFixed(1);
                     const maxHealthyW = (25 * hMeters * hMeters).toFixed(1);
 
-                    const weightConv = currentUnit === 'metric' ? 1 : 2.20462;
-                    const suffix = currentUnit === 'metric' ? 'kg' : 'lbs';
+                    const weightConv = currentWeightUnit === 'metric' ? 1 : 2.20462;
+                    const suffix = currentWeightUnit === 'metric' ? 'kg' : 'lbs';
 
                     const dMin = (minHealthyW * weightConv).toFixed(1);
                     const dMax = (maxHealthyW * weightConv).toFixed(1);
@@ -575,6 +603,8 @@
                         else if (requiredMonths <= 3) recPackage = 'package-3';
                         else if (requiredMonths <= 6) recPackage = 'package-6';
                         else recPackage = 'package-12';
+                    } else if (bmi >= 18.5 && bmi <= 25) {
+                        recPackage = 'package-3'; // Recommend 3-month package for healthy weight
                     }
 
                     // Clear previous highlights

@@ -2689,3 +2689,22 @@ footer {
     gap: 20px;
   }
 }
+
+select.dropdown-unit {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding-right: 15px;
+  cursor: pointer;
+  font-size: 1rem;
+  outline: none;
+}
+select.dropdown-unit:focus {
+  color: var(--white);
+}
+select.dropdown-unit option {
+  background-color: var(--black) !important;
+  color: var(--white) !important;
+}

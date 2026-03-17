@@ -33,7 +33,7 @@ const Pricing = () => {
             <div style={{ padding: '0 60px 80px' }}>
                 <div className="pricing-grid reveal">
                     {plans.map((plan) => (
-                        <div key={plan.id} className={`plan-card ${plan.is_featured ? 'featured' : ''}`}>
+                        <div key={plan.id} id={`package-${parseInt(plan.period) || plan.period.split(' ')[0]}`} className={`plan-card ${plan.is_featured ? 'featured' : ''}`}>
                             <div className="plan-label">{plan.is_featured ? '⚡ ' : ''}{plan.name}</div>
                             <div className="plan-price" style={{ fontSize: '4rem' }}><sup>₹</sup>{plan.price.toLocaleString()}</div>
                             <div className="plan-period">{plan.period}</div>
