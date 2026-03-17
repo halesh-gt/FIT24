@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Bebas+Neue&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./src/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- NAVBARR -->
+    <nav id="navbar">
+        <div class="nav-left">
+            <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 60px; width: auto;"></a>
+            <div class="nav-extra">24 HOURS &nbsp;&middot;&nbsp; 7 DAYS A WEEK</div>
+        </div>
+
+        <!-- HAMBURGER -->
+        <button class="nav-menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about">About</a></li>
+            <li><a href="#classes">Classes</a></li>
+            <li><a href="#schedule">Schedule</a></li>
+            <li><a href="#trainers">Trainers</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+        </ul>
+
+        <div id="authActions" class="nav-actions"></div>
+        <div id="userProfile" style="display: none;">
+            <span id="userNameDisplay">John Doe</span>
+            <button onclick="alert('Logout clicked')">Logout</button>
+        </div>
+    </nav>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">ACCESS PORTAL</div>
+            <div id="loginError" class="error-msg">Invalid email or password</div>
+            <form id="loginForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password" />
+                </div>
+                <button type="submit" class="modal-btn">Sign In</button>
+            </form>
+            <div class="modal-switch">
+                New to FIT24? <button type="button" onclick="switchModal('registerModal')">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">JOIN THE ELITE</div>
+            <div id="registerError" class="error-msg">Email already registered</div>
+            <form id="registerForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="regName" required placeholder="Enter your full name" />
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="regEmail" required placeholder="Enter your email" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="regPassword" required placeholder="Create a password" />
+                </div>
+                <button type="submit" class="modal-btn">Register</button>
+            </form>
+            <div class="modal-switch">
+                Already a member? <button type="button" onclick="switchModal('loginModal')">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModals()">×</button>
+            <div class="modal-title">CHECKOUT</div>
+            <div id="paymentPlanDetails"
+                style="text-align: center; margin-bottom: 24px; color: var(--muted); font-size: 0.9rem; line-height: 1.6;">
+            </div>
+            <form id="paymentForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="paymentMethod" required
+                        style="width: 100%; padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--white); font-family: inherit; outline: none; margin-bottom: 16px; -webkit-appearance: none; appearance: none;">
+                        <option value="" disabled selected style="color: #000;">Select a payment method</option>
+                        <option value="Card" style="color: #000;">Credit / Debit Card</option>
+                        <option value="UPI" style="color: #000;">UPI</option>
+                        <option value="COD" style="color: #000;">Pay at Gym (COD)</option>
+                    </select>
+                </div>
+                <button type="submit" class="modal-btn" id="confirmPaymentBtn">Confirm Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="ticker">FIT24</div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                TRAIN<br />
+                <span class="outline">WITHOUT</span><br />
+                <span class="red">LIMITS</span>
+            </h1>
+            <p class="hero-sub">Elite fitness facility built for those who refuse to settle. World-class equipment,
+                expert coaching, zero excuses.</p>
+            <div class="hero-actions">
+                <a href="#pricing" class="btn-primary">Start Free Trial</a>
+                <a href="#classes" class="btn-ghost">Explore Classes &rarr;</a>
+            </div>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-num">12<span>K+</span></div>
+                <div class="stat-label">Members</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">48<span>+</span></div>
+                <div class="stat-label">Classes/Week</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">24<span>/7</span></div>
+                <div class="stat-label">Access</div>
+            </div>
+            <div class="open-status">
+                <span class="dot"></span>
+                WE ARE OPEN
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-line"></div>
+            SCROLL
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <span>HIIT TRAINING</span><span class="dot">✦</span>
+            <span>POWERLIFTING</span><span class="dot">✦</span>
+            <span>YOGA & MOBILITY</span><span class="dot">✦</span>
+            <span>BOXING</span><span class="dot">✦</span>
+            <span>CYCLING</span><span class="dot">✦</span>
+            <span>PILATES</span><span class="dot">✦</span>
+            <span>CROSSFIT</span><span class="dot">✦</span>
+            <span>EXPERIENCE EXCELLENCE</span><span class="dot">✦</span>
+         
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" style="padding: 120px 60px;">
+        <div class="about reveal">
+            <div class="about-visual">
+                <div class="about-visual-inner">
+                    <div class="about-visual-text">FIT</div>
+                </div>
+                <div class="about-badge">
+                    <div class="about-badge-num">2019</div>
+                    <div class="about-badge-text">Est. in the city</div>
+                </div>
+            </div>
+            <div class="about-text">
+                <div class="section-label">About FIT24</div>
+                <h2 class="section-title">MORE THAN<br />A <span style="color: var(--red);">GYM</span></h2>
+                <p>FIT24 was built on a simple belief — that access to elite training shouldn't be a privilege. We
+                    created a space where beginners and professionals train side by side, fueled by the same fire.</p>
+                <p>From cutting-edge equipment to world-class coaches, every detail is engineered to unlock your best
+                    performance — day or night.</p>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                        <div class="feature-name">Elite Equipment</div>
+                        <div class="feature-desc">500+ machines from top brands</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-user-tie"></i></div>
+                        <div class="feature-name">Expert Coaches</div>
+                        <div class="feature-desc">Certified personal trainers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLASSES -->
+    <section id="classes" class="classes-section" style="padding: 0;">
+        <div style="padding: 80px 60px 48px;">
+            <div class="section-label reveal">Our Programs</div>
+            <h2 class="section-title reveal">FIND YOUR<br /><span style="color: var(--red);">DISCIPLINE</span></h2>
+        </div>
+        <div class="classes-grid reveal">
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="class-tag">High Intensity</div>
+                    <div class="class-name">HIIT Blast</div>
+                    <div class="class-desc">Maximum burn in minimum time. 45-min full-body circuits.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-hand-fist"></i></div>
+                    <div class="class-tag">Combat</div>
+                    <div class="class-name">Boxing</div>
+                    <div class="class-desc">Master technique and destroy stress. All skill levels welcome.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-person-praying"></i></div>
+                    <div class="class-tag">Mind &amp; Body</div>
+                    <div class="class-name">Power Yoga</div>
+                    <div class="class-desc">Strength through stillness. Flexibility meets focus.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-bicycle"></i></div>
+                    <div class="class-tag">Cardio</div>
+                    <div class="class-name">Spin Class</div>
+                    <div class="class-desc">High-energy indoor cycling to burn calories and build endurance.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                    <div class="class-tag">Strength</div>
+                    <div class="class-name">Powerlifting</div>
+                    <div class="class-desc">Master the big three lifts. Get stronger, build muscle.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+            <div class="class-card">
+                <div class="class-card-bg"></div>
+                <div class="class-card-pattern"></div>
+                <div class="class-card-content">
+                    <div class="class-card-icon"><i class="fa-solid fa-stopwatch"></i></div>
+                    <div class="class-tag">Foundation</div>
+                    <div class="class-name">Mobility</div>
+                    <div class="class-desc">Improve range of motion, prevent injury, and feel better.</div>
+                </div>
+                <div class="class-hover">BOOK NOW &rarr;</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="pricing">
+        <div style="padding: 80px 60px 0;">
+            <div class="section-label reveal">Membership Plans</div>
+            <h2 class="section-title reveal">INVEST IN<br /><span style="color: var(--red);">YOURSELF</span></h2>
+        </div>
+        <div style="padding: 0 60px 80px;">
+            <div class="pricing-grid reveal">
+                <div class="plan-card" id="package-1">
+                    <div class="plan-label">1 Month</div>
+                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Monthly Package</div>
+                    <ul class="plan-features">
+                        <li>Gym Floor Access</li>
+                        <li>Locker Room &amp; Showers</li>
+                        <li>FIT24 App Access</li>
+                        <li>Recovery Suite Access</li>
+                        <li>24/7 Gym Entry</li>
+                    </ul>
+                    <button class="btn-plan" onclick="openChatWithPlan('1 Month')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
+                </div>
+                <div class="plan-card" id="package-3">
+                    <div class="plan-label">3 Months</div>
+                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Quarterly Package</div>
+                    <ul class="plan-features">
+                        <li>Gym Floor Access</li>
+                        <li>Locker Room &amp; Showers</li>
+                        <li>2 Group Classes/Month</li>
+                        <li>FIT24 App Access</li>
+                        <li>24/7 Gym Entry</li>
+                    </ul>
+                    <button class="btn-plan" onclick="openChatWithPlan('3 Months')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
+                </div>
+                <div class="plan-card" id="package-6">
+                    <div class="plan-label">6 Months</div>
+                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Semi-Annual Package</div>
+                    <ul class="plan-features">
+                        <li>Unlimited Group Classes</li>
+                        <li>1 PT Session/Month</li>
+                        <li>Nutrition Consultation</li>
+                        <li>Guest Pass (2/month)</li>
+                        <li>Priority Class Booking</li>
+                    </ul>
+                    <button class="btn-plan" onclick="openChatWithPlan('6 Months')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
+                </div>
+                <div class="plan-card" id="package-12">
+                    <div class="plan-label">12 Months</div>
+                    <div class="plan-period" style="text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: -15px; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Annual Package</div>
+                    <ul class="plan-features">
+                        <li>4 PT Sessions/Month</li>
+                        <li>Custom Training Plan</li>
+                        <li>Body Composition Analysis</li>
+                        <li>Recovery Suite Access</li>
+                        <li>Unlimited Guest Passes</li>
+                    </ul>
+                    <button class="btn-plan" onclick="openChatWithPlan('1 Year')">Get Started</button>
+                    <div class="recommend-badge">RECOMMENDED</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- BMI CTA SECTION -->
+    <section id="bmi" class="bmi-cta" style="padding: 120px 60px; background: var(--black); text-align: center;">
+        <div class="container reveal">
+            <div class="bmi-icon-badge" style="margin: 0 auto 24px;">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>BMI TOOL</span>
+            </div>
+            <h2 class="section-title">CHECK YOUR<br /><span style="color: var(--red);">BODY METRICS</span></h2>
+            <p style="max-width: 600px; margin: 24px auto; color: var(--muted);">Track your progress with our advanced BMI calculator and get expert recommendations on which fitness program fits your goals.</p>
+            <a href="bmi-calculator.html" class="btn-primary" style="margin-top: 24px; display: inline-block;">Open BMI Calculator</a>
+        </div>
+    </section>
+
+
+
+    <!-- TRAINERS -->
+    <section id="trainers" class="trainers-section">
+        <div style="padding: 0 60px;">
+            <div class="section-label reveal">Our Experts</div>
+            <h2 class="section-title reveal">LEADERS IN<br /><span style="color: var(--red);">FITNESS</span></h2>
+
+            <div class="trainers-grid reveal">
+                <div class="trainer-card">
+                    <div class="trainer-img" style="background-image: url('./public/img/trainer2.jpg');">
+                        <div class="trainer-exp-badge">10+ YEARS EXP</div>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Rahul Sharma</h3>
+                        <span class="trainer-spec">Bodybuilding &amp; Weight Loss</span>
+                        <ul class="trainer-certs">
+                            <li>ACE Certified Personal Trainer</li>
+                            <li>Precision Nutrition Level 1</li>
+                            <li>Strength &amp; Conditioning Specialist</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="trainer-card">
+                    <div class="trainer-img" style="background-image: url('./public/img/trainer%201.jpg');">
+                        <div class="trainer-exp-badge">7 YEARS EXP</div>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Priya Desai</h3>
+                        <span class="trainer-spec">Yoga &amp; Functional Mobility</span>
+                        <ul class="trainer-certs">
+                            <li>RYT 500 Certified Yoga Instructor</li>
+                            <li>FMS Certified Level 2</li>
+                            <li>Holistic Wellness Coach</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="trainer-card">
+                    <div class="trainer-img" style="background-image: url('./public/img/trainer3.jpg');">
+                        <div class="trainer-exp-badge">12 YEARS EXP</div>
+                    </div>
+                    <div class="trainer-info">
+                        <h3 class="trainer-name">Vikram Singh</h3>
+                        <span class="trainer-spec">CrossFit &amp; Powerlifting</span>
+                        <ul class="trainer-certs">
+                            <li>CrossFit Level 3 Coach</li>
+                            <li>USAW Sports Performance Coach</li>
+                            <li>Advanced First Aid / CPR</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FACILITIES -->
+    <section id="facilities" class="facilities-section">
+        <div class="facilities-container">
+            <div class="section-label reveal">Our Environment</div>
+            <h2 class="section-title reveal">WORLD CLASS<br /><span style="color: var(--red);">FACILITIES</span></h2>
+            
+            <div class="facilities-grid reveal">
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img1.jpeg" alt="Facility 1" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img2.jpeg" alt="Facility 2" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img3.jpeg" alt="Facility 3" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img4.jpeg" alt="Facility 4" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img5.jpeg" alt="Facility 5" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img6.jpeg" alt="Facility 6" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img7.jpeg" alt="Facility 7" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img8.jpeg" alt="Facility 8" class="facility-img">
+                    </div>
+                </div>
+                <div class="facility-card">
+                    <div class="facility-img-wrapper">
+                        <img src="./public/img/gym-img9.jpeg" alt="Facility 9" class="facility-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section style="padding: 120px 60px;">
+        <div class="section-label reveal">Real Results</div>
+        <h2 class="section-title reveal">MEMBERS<br /><span style="color: var(--red);">SPEAK</span></h2>
+        <div class="testi-grid reveal">
+            <div class="testi-card">
+                <div class="testi-quote">FIT24 completely changed my relationship with fitness. The coaches push you
+                    just enough, the vibe is electric, and the access fits my crazy schedule perfectly.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">R</div>
+                    <div>
+                        <div class="testi-name">Rohan Mehta</div>
+                        <div class="testi-meta">Member since 2022 &middot; Lost 18kg</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-quote">I've been to gyms across the city. Nothing compares. The equipment is premium,
+                    the classes are genuinely challenging, and the community keeps you accountable.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">P</div>
+                    <div>
+                        <div class="testi-name">Priya Sharma</div>
+                        <div class="testi-meta">Member since 2021 &middot; Ran first marathon</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-quote">The boxing classes alone are worth it. Marcus is a world-class trainer and the
+                    midnight sessions when I finish late work are a lifesaver. 10/10 no questions.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">A</div>
+                    <div>
+                        <div class="testi-name">Arjun Nair</div>
+                        <div class="testi-meta">Member since 2023 &middot; Boxing champion</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card">
+                <div class="testi-quote">As a working mom, I needed flexibility. FIT24 gives me that and more — great
+                    childcare hours, fast classes, and results I never thought possible in my 40s.</div>
+                <div class="testi-author">
+                    <div class="testi-avatar">S</div>
+                    <div>
+                        <div class="testi-name">Sneha Kapoor</div>
+                        <div class="testi-meta">Member since 2022 &middot; Gained strength +40%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="section-label reveal">Take The First Step</div>
+        <h2 class="section-title reveal" style="margin-bottom: 24px; color: var(--black);">READY TO COMMIT?</h2>
+        <p class="cta-sub reveal">Join the elite. Start your fitness journey today and experience the difference.</p>
+        <div class="cta-actions reveal">
+            <a href="#pricing" class="btn-white">View Memberships</a>
+           
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" style="padding: 100px 60px; background: #0a0a0a;">
+        <div style="text-align: center; margin-bottom: 60px;">
+            <span style="font-size: 0.7rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--red); display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px;">
+                <span style="display:inline-block; width:30px; height:2px; background:var(--red);"></span>
+                Get In Touch
+            </span>
+            <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 5rem); letter-spacing: 2px; color: var(--white); line-height: 1;">CONTACT US</h2>
+            <p style="color: var(--muted); margin-top: 16px; font-size: 1rem;">We're here for you — anytime, any day.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 900px; margin: 0 auto;">
+
+            <!-- Contact Card (Phone & Email) -->
+            <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; position: relative; overflow: hidden;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">GET IN TOUCH</h3>
+                <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-phone" style="font-size: 1rem; color: #000;"></i>
+                        </div>
+                        <a href="tel:+919743777871" style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">+91 97437 77871</a>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-envelope" style="font-size: 1rem; color: #000;"></i>
+                        </div>
+                        <a href="mailto:fit24india@gmail.com" style="color: #000; text-decoration: none; font-size: 1.1rem; font-weight: 500; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">fit24india@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address Card (clickable -> Google Maps) -->
+            <a href="https://www.google.com/maps/place/Fit24+India+-+Best+gym+in+JP+Nagar/@12.9109078,77.5783034,849m/data=!3m1!1e3!4m10!1m2!2m1!1sVishnu+Tower+3rd+Floor+Above+Girias+1st+Phase+JP+Nagar+Bengaluru+Karnataka+560078!3m6!1s0x3bae1553d90b1605:0x241f0a3c847cb555!8m2!3d12.9109107!4d77.5809062!15sClFWaXNobnUgVG93ZXIgM3JkIEZsb29yIEFib3ZlIEdpcmlhcyAxc3QgUGhhc2UgSlAgTmFnYXIgQmVuZ2FsdXJ1IEthcm5hdGFrYSA1NjAwNzgiA4gBAVpTIlF2aXNobnUgdG93ZXIgM3JkIGZsb29yIGFib3ZlIGdpcmlhcyAxc3QgcGhhc2UganAgbmFnYXIgYmVuZ2FsdXJ1IGthcm5hdGFrYSA1NjAwNziSAQNneW3gAQA!16s%2Fg%2F11h4_d_v3r?entry=ttu&g_ep=EgoyMDI2MDMxMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: none; display: block;">
+            <div style="background: #fde047; border-radius: 16px; padding: 48px 36px; text-align: center; transition: all 0.3s; cursor: pointer; height: 100%;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 3px; color: #000; margin-bottom: 32px;">OUR LOCATION</h3>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; text-align: left;">
+                    <div style="width: 44px; height: 44px; background: rgba(0,0,0,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="fa-solid fa-location-dot" style="font-size: 1.1rem; color: #000;"></i>
+                    </div>
+                    <p style="color: #000; font-size: 0.95rem; line-height: 1.6; margin: 0; font-weight: 500;">9th Cross, Indra Gandhi Circle,<br>20 Vishnu Tower, 3rd Floor,<br>Above Girias, 1st Phase,<br>J.P. Nagar, Bengaluru</p>
+                </div>
+                <div style="margin-top: 24px;">
+                    <span style="color: #000; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;"><i class="fa-solid fa-map-pin" style="margin-right: 6px;"></i>Open in Maps ↗</span>
+                </div>
+            </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo"><img src="public/img/logo.png" alt="FIT24 Logo" style="height: 70px; width: auto;"></a>
+                <p>Elite fitness for everyone. No limits, no excuses.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Programs</h4>
+                <ul>
+                    <li><a href="#classes">HIIT Blast</a></li>
+                    <li><a href="#classes">Boxing</a></li>
+                    <li><a href="#classes">Power Yoga</a></li>
+                    <li><a href="#classes">Cycle Studio</a></li>
+                    <li><a href="#classes">CrossFit</a></li>
+                    <li><a href="#classes">Powerlifting</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#trainers">Our Coaches</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#" onclick="toggleChat(); return false;">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 FIT24. All rights reserved.</span>
+            <span>Bengaluru &middot; JP Nagar</span>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Form Window -->
+    <div class="chat-window" id="chatWindow" style="position: fixed; bottom: 100px; right: 30px; width: 360px; background-color: #ffffff; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 9999; border: 1px solid #eee; height: auto; padding: 25px; flex-direction: column; gap: 10px; color: #333; opacity: 0; pointer-events: none; display: flex; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform: translateY(20px);">
+        <h3 style="margin: 0 0 10px 0; font-size: 1.2rem; color: #25D366; font-family: 'Barlow', sans-serif;">WhatsApp Enquiry</h3>
+        <p style="margin: 0 0 20px 0; font-size: 0.9rem; color: #666; font-family: 'Barlow', sans-serif;">Please fill in your details to connect with us on WhatsApp.</p>
+        
+        <div id="enquirySuccess" style="display: none; text-align: center; padding: 20px 0;">
+            <p style="color: #25D366; font-weight: bold;">Thank you!</p>
+            <p>Redirecting to WhatsApp...</p>
+        </div>
+
+        <form id="whatsappForm" style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Full Name</label>
+                <input type="text" id="waName" required placeholder="Enter your name" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Email Address</label>
+                <input type="email" id="waEmail" required placeholder="Enter your email" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                <label style="font-size: 0.8rem; font-weight: bold; color: #333;">Contact Number</label>
+                <input type="tel" id="waPhone" required placeholder="Enter contact number" 
+                    style="padding: 12px; border-radius: 8px; border: 1px solid #ddd; outline: none; background: #fff; color: #333;">
+            </div>
+            <button type="submit" 
+                style="background-color: #25D366; color: #fff; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);">
+                Submit & Chat
+            </button>
+        </form>
+    </div>
+
+    <!-- Chatbot Button -->
+    <button id="chatToggle" onclick="toggleChat()" aria-label="Toggle WhatsApp Chat"
+        style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; border-radius: 50%; background-color: #25D366; color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 9999; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+        <i class="fa-brands fa-whatsapp" style="font-size: 32px;" id="chatIcon"></i>
+    </button>
+
+    <script>
+        // Modal functionality
+        function closeModals() {
+            document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+        }
+
+        function switchModal(modalId) {
+            closeModals();
+            const el = document.getElementById(modalId);
+            if (el) el.classList.add('active');
+        }
+
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            const chatIcon = document.getElementById('chatIcon');
+            const isOpen = chatWindow.style.opacity === '1';
+
+            if (!isOpen) {
+                chatWindow.style.opacity = '1';
+                chatWindow.style.pointerEvents = 'auto';
+                chatWindow.style.transform = 'translateY(0)';
+                chatIcon.className = 'fa-solid fa-xmark';
+                chatIcon.style.fontSize = '24px';
+            } else {
+                chatWindow.style.opacity = '0';
+                chatWindow.style.pointerEvents = 'none';
+                chatWindow.style.transform = 'translateY(20px)';
+                chatIcon.className = 'fa-brands fa-whatsapp';
+                chatIcon.style.fontSize = '32px';
+            }
+        }
+
+        let selectedPlan = '';
+        function openChatWithPlan(plan) {
+            selectedPlan = plan;
+            const chatWindow = document.getElementById('chatWindow');
+            if (chatWindow.style.opacity !== '1') {
+                toggleChat();
+            }
+            chatWindow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        const whatsappForm = document.getElementById('whatsappForm');
+        const enquirySuccess = document.getElementById('enquirySuccess');
+
+        whatsappForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('waName').value.trim();
+            const email = document.getElementById('waEmail').value.trim();
+            const phone = document.getElementById('waPhone').value.trim();
+
+            // Clean phone number - remove spaces, dashes, +, and ensure country code
+            const cleanPhone = phone.replace(/[\s\-\+]/g, '');
+            const phoneWithCode = cleanPhone.startsWith('91') && cleanPhone.length === 12 
+                ? cleanPhone 
+                : '91' + cleanPhone.slice(-10);
+
+            const msgText = selectedPlan 
+                ? `Hello, my name is ${name}. I hope you are doing well. I would like to kindly enquire about the *${selectedPlan}* plan available at FIT24.\n\nCould you please share more details regarding the program, membership options, and any other relevant information?\n\nThank you, and I look forward to your response.`
+                : `Hello, my name is ${name}. I hope you are doing well. I would like to kindly enquire about the fitness programs available at FIT24.\n\nCould you please share more details regarding the available programs, membership options, and any other relevant information?\n\nThank you, and I look forward to your response.`;
+
+            const leadData = { 
+                name, 
+                email, 
+                phone: phoneWithCode
+            };
+
+            // Save to database
+            try {
+                await fetch('http://localhost:5000/api/chatbot-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(leadData)
+                });
+            } catch (err) {
+                console.error("Failed to save lead:", err);
+            }
+
+            // Show success message
+            whatsappForm.style.display = 'none';
+            enquirySuccess.style.display = 'flex';
+            enquirySuccess.style.flexDirection = 'column';
+
+            const whatsappMsg = encodeURIComponent(msgText);
+            const whatsappUrl = `https://wa.me/919743777871?text=${whatsappMsg}`;
+
+            setTimeout(() => {
+                window.open(whatsappUrl, '_blank');
+                // Close the chat window
+                const chatWindow = document.getElementById('chatWindow');
+                const chatIcon = document.getElementById('chatIcon');
+                chatWindow.style.opacity = '0';
+                chatWindow.style.pointerEvents = 'none';
+                chatWindow.style.transform = 'translateY(20px)';
+                chatIcon.className = 'fa-brands fa-whatsapp';
+                chatIcon.style.fontSize = '32px';
+                // Reset form
+                setTimeout(() => {
+                    whatsappForm.reset();
+                    whatsappForm.style.display = 'flex';
+                    enquirySuccess.style.display = 'none';
+                    selectedPlan = '';
+                }, 400);
+            }, 1500);
+        });
+
+
+        // Reveal animations on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        function reveal() {
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("visible");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+
+</html>
